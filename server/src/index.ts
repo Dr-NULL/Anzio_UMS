@@ -1,28 +1,27 @@
-//Configurar alias de rutas
+//Configurar Alias
 import { addAlias } from "module-alias";
 addAlias(">", __dirname)
 
-//Variables iniciales
+//Configurar ORM
+import "reflect-metadata";
+import { Log } from "./tool/log";
+import { checkORM } from ">/tool/config";
+import { createConnection, Connection } from "typeorm";
 import express from "express";
-import { Service } from ">/tool/service";
 
-//Servicios
-import { srvHolaMundo } from ">/services/hola-mundo";
+
+export let orm: Connection = null
 export const app = express()
-export const srv: Service[] = [
-    srvHolaMundo
-]
 
-//Configurar Servidor
-import * as Deploy from "./deploy/";
-import Log from "./tool/log";
-Deploy.configSession()
-Deploy.configBodyParser()
-Deploy.configServices()
+checkORM()
+createConnection().then(async conn => {
+    //Exponer conexión
+    orm = conn
 
-//Levantar Servidor
-app.listen(80, () => {
-    console.clear()
-    Log.title()
-    Log.ok("Servidor listo...")
+
+
+}).catch(fail => {
+    Log.er("FATAL [ORM]:")
+    console.log(fail)
 })
+
