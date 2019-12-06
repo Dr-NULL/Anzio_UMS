@@ -6,9 +6,9 @@ addAlias(">", __dirname)
 import "reflect-metadata";
 import { Log } from "./tool/log";
 import { checkORM } from ">/tool/config";
+import { deployServer } from ">/deploy/.";
 import { createConnection, Connection } from "typeorm";
 import express from "express";
-
 
 export let orm: Connection = null
 export const app = express()
@@ -18,7 +18,8 @@ createConnection().then(async conn => {
     //Exponer conexión
     orm = conn
 
-
+    //Configurar server
+    deployServer()
 
 }).catch(fail => {
     Log.er("FATAL [ORM]:")
