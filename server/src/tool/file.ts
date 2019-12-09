@@ -15,7 +15,7 @@ export class File{
 
         this._name = v;
     }
-    
+
     private _folder : string;
     public get folder() : string {
         return this._folder;
@@ -74,7 +74,7 @@ export class File{
         return new Promise<Buffer>((resolve, reject) => {
             fs.readFile(this.fullPath, (fail, data) => {
                 if (fail != null) {
-                    reject("No es posible leer el archivo.")
+                    reject(`No es posible leer el archivo.\nPath = "${this.fullPath}"`)
                 } else {
                     resolve(data)
                 }
@@ -86,7 +86,7 @@ export class File{
         try {
             return fs.readFileSync(this.fullPath)
         } catch {
-            throw("No es posible leer el archivo.")
+            throw "No es posible leer el archivo."
         }
     }
 
@@ -94,7 +94,7 @@ export class File{
         return new Promise<string>((resolve, reject) => {
             fs.readFile(this.fullPath, (fail, data) => {
                 if (fail != null) {
-                    reject("No es posible leer el archivo.")
+                    reject(`No es posible leer el archivo.\nPath = "${this.fullPath}"`)
                 } else {
                     resolve(data.toString("utf8"))
                 }
@@ -106,7 +106,7 @@ export class File{
         try {
             return fs.readFileSync(this.fullPath).toString("utf8")
         } catch {
-            throw("No es posible leer el archivo.")
+            throw `No es posible leer el archivo.\nPath = "${this.fullPath}"`
         }
     }
 
@@ -114,7 +114,7 @@ export class File{
         return new Promise<void>((resolve, reject) => {
             fs.writeFile(this.fullPath, data, fail => {
                 if (fail != null) {
-                    reject("No es posible escribir en el archivo.")
+                    reject(`No es posible escribir el archivo.\nPath = "${this.fullPath}"`)
                 } else {
                     resolve()
                 }
@@ -126,7 +126,7 @@ export class File{
         try {
             fs.writeFileSync(this.fullPath, data)
         } catch {
-            throw("No es posible escribir en el archivo.")  
+            throw `No es posible escribir el archivo.\nPath = "${this.fullPath}"`
         }
     }
 
@@ -134,7 +134,7 @@ export class File{
         return new Promise<void>((resolve, reject) => {
             fs.writeFile(this.fullPath, data, { encoding: "utf8" }, fail => {
                 if (fail != null) {
-                    reject("No es posible escribir en el archivo.")
+                    reject(`No es posible escribir el archivo.\nPath = "${this.fullPath}"`)
                 } else {
                     resolve()
                 }
@@ -146,7 +146,7 @@ export class File{
         try {
             fs.writeFileSync(this.fullPath, data, { encoding: "utf8" })
         } catch {
-            throw("No es posible escribir en el archivo.")  
+            throw `No es posible escribir el archivo.\nPath = "${this.fullPath}"`
         }
     }
 }

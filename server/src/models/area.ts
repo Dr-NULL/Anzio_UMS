@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "Area" })
-export class Area {
+export class Area extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
     id: number;
-
-    @Column({ type: "varchar", length: 50, unique: true })
+    
+    @Column({ type:"varchar", length:"20" })
     descripc: string;
 }

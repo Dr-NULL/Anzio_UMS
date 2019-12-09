@@ -1,11 +1,14 @@
 import moment from "moment"
 
 export module Log {
-    export function title() {
+    export function title(name: string) {
+        let fill = ""
+        while (fill.length < name.length) { fill += "=" }
+
         console.clear()
-        console.log(` //===============================================\\\\`)
-        console.log(`//--------------->>>  Anzio UMS  <<<---------------\\\\`)
-        console.log(`\\\\=================================================//\n`)
+        console.log(` //===================${fill}===================\\\\`)
+        console.log(`//--------------->>>  ${name}  <<<---------------\\\\`)
+        console.log(`\\\\==================${fill}======================//\n`)
     }
 
     function show(label: string, text: string) {
@@ -13,7 +16,15 @@ export module Log {
         let out = moment().format("YYYY/MM/DD HH:mm:ss")
         out += ` -> [${label}]: `
         out += text
-        console.log(out)
+
+        let data = out.split(/\n/gi)
+        data.forEach((item, i) => {
+            if (i == 0) {
+                console.log(item)
+            } else {
+                ln(item)
+            }
+        })
     }
 
     export function ln(text: string = "") {

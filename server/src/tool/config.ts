@@ -1,50 +1,51 @@
-import { File } from "./file";
 import { join } from "path";
+import { File } from "./file";
+import { ConnectionOptions } from "typeorm";
 import Log from "./log";
 
 export module Path {
-    export const root = join(__dirname, "..", "..", "..").replace(/\\/gi, "/") + "/"
-    export const server = root + "server/"
-    export const client = root + "client/"
-    
-    export module source {
-        const source = root + "source/"
-        export const session = source + "session/"
+    export const main = join(__dirname, "..", "..", "..")
+    export const server = join(main, "server")
+    export const data = join(main, "data")
+    export module Data {
+        export const session = join(data, "session")
+        export const sources = join(data, "sources")
+        export module Sources {
+            export const rrhh = join(sources, "rrhh.csv")
+        }
     }
 }
 
-export function checkORM(){
-    const json = new File(Path.server + "ormconfig.json")
-    if (!json.exist) {
-        json.new()
-        json.writeTextSync(
-`{
-    "type": "mssql",
-    "host": "1IP_HERE",
-    "username": "USER_DB",
-    "password": "PASS_DB",
-    "database": "NAME_DB",
-    "synchronize": false,
-    "logging": false,
-    "entities": [
-       "build/model/**/*.js"
-    ],
-    "migrations": [
-       "build/migration/**/*.js"
-    ],
-    "subscribers": [
-       "build/subscriber/**/*.js"
-    ],
-    "cli": {
-       "entitiesDir": "src/entity",
-       "migrationsDir": "src/migration",
-       "subscribersDir": "src/subscriber"
-    }
- }`
-        )
+export module Config {
+    export let App: iConfig
+    export let Orm: ConnectionOptions
 
-        Log.er(`No existe "ormconfig.json", se ha creado una copia en la raiz del server.`)
-        Log.ln(`Ejecución finalizada...`)
-        process.exit()
+    try {
+        const fsApp = new File(join(Path.server, "appconfig.json"))
+        const rawApp = fsApp.readTextSync()
+        App = JSON.parse(rawApp)
+        
+        const fsOrm = new File(join(Path.server, App.omrConfig))
+        const rawOrm = fsOrm.readTextSync()
+        Orm = JSON.parse(rawOrm)
+    } catch (err) {
+        Log.er(err + "\n")
     }
+}
+
+interface iServer {
+    port: number;
+    Cors: string[];
+}
+
+interface iSession {
+    duration: 30;
+    cookieName: string;
+    isEncrypted: boolean;
+}
+
+interface iConfig {
+    omrConfig: string; 
+    Server: iServer;
+    Session: iSession;
 }

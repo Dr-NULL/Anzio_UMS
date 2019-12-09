@@ -1,8 +1,10 @@
 @echo off
+goto exec-cli
 
-rem compilar todo
-rmdir /q /s "build"
-
-rem ejecutar typeorm
+:exec-cli
+rmdir /q /s dist
+mkdir dist
 call tsc
+cls
+echo ^>^> TypeORM Cli
 npx typeorm %*

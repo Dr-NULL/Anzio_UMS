@@ -1,28 +1,17 @@
-//Configurar Alias
-import { addAlias } from "module-alias";
-addAlias(">", __dirname)
+import { deploy as deployServer } from "./server/";
+import { deploy as deploySeeds } from "./seeds/";
 
-//Configurar ORM
-import "reflect-metadata";
-import { Log } from "./tool/log";
-import { checkORM } from ">/tool/config";
-import { deployServer } from ">/deploy/.";
-import { createConnection, Connection } from "typeorm";
-import express from "express";
+//Agregar Parámetros en blanco
+while (process.argv.length < 10) { 
+    process.argv.push("")
+}
 
-export let orm: Connection = null
-export const app = express()
-
-checkORM()
-createConnection().then(async conn => {
-    //Exponer conexión
-    orm = conn
-
-    //Configurar server
-    deployServer()
-
-}).catch(fail => {
-    Log.er("FATAL [ORM]:")
-    console.log(fail)
-})
-
+//Modos de arranque
+switch(process.argv[2].trim()){
+    case "seeds":
+        deploySeeds()
+        break
+    default:
+        deployServer()
+        break
+}
