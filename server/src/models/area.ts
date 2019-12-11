@@ -5,6 +5,6 @@ export class Area extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
     id: number;
     
-    @Column({ type:"varchar", length:"20" })
+    @Column({ type:"varchar", length:"50" })
     descripc: string;
 }

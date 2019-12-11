@@ -1,9 +1,8 @@
 import { EndPoint } from "../tool/endpoint";
 
-// Importar routes aquí ↓↓↓
+// Importar Rutas aquí
+import { usuarioGetAll } from "../controllers/usuario";
 
-
-// Agregar instancias aquí ↓↓↓
 export const routes: EndPoint[] = [
-
+    usuarioGetAll
 ]

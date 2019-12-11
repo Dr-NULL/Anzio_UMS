@@ -90,6 +90,3 @@ raw.forEach((line, i) => {
         })
     }
 })
-
-//Create Entities
-seedIntRRHH.action = ()

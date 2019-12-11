@@ -1,13 +1,13 @@
+import { Log } from "./log";
 import { join } from "path";
 import { File } from "./file";
-import { ConnectionOptions } from "typeorm";
-import Log from "./log";
 
 export module Path {
     export const main = join(__dirname, "..", "..", "..")
     export const server = join(main, "server")
     export const data = join(main, "data")
     export module Data {
+        export const corrupted = join(data, "corrupted.flow")
         export const session = join(data, "session")
         export const sources = join(data, "sources")
         export module Sources {
@@ -16,21 +16,15 @@ export module Path {
     }
 }
 
-export module Config {
-    export let App: iConfig
-    export let Orm: ConnectionOptions
 
-    try {
-        const fsApp = new File(join(Path.server, "appconfig.json"))
-        const rawApp = fsApp.readTextSync()
-        App = JSON.parse(rawApp)
-        
-        const fsOrm = new File(join(Path.server, App.omrConfig))
-        const rawOrm = fsOrm.readTextSync()
-        Orm = JSON.parse(rawOrm)
-    } catch (err) {
-        Log.er(err + "\n")
-    }
+export let Config: iConfig
+try {
+    const fsApp = new File(join(Path.server, "appconfig.json"))
+    const rawApp = fsApp.readTextSync()
+    Config = JSON.parse(rawApp)
+} catch (err) {
+    Log.er("500 ERROR")
+    Log.ln(err.message + "\n")
 }
 
 interface iServer {
@@ -45,7 +39,6 @@ interface iSession {
 }
 
 interface iConfig {
-    omrConfig: string; 
     Server: iServer;
     Session: iSession;
 }

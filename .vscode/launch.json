@@ -9,12 +9,14 @@
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
-                "<node_internals>/**"
+                "server/<node_internals>/**"
             ],
-            // "program": "${workspaceFolder}\\server\\dist\\index.js",
-            "program": "${workspaceFolder}\\server\\build\\seeds.js",
+            "program": "${workspaceFolder}\\server\\src\\index.ts",
             "outFiles": [
-                "${workspaceFolder}/server/**/*.js"
+                "${workspaceFolder}/server/dist/**/*.js"
+            ],
+            "args": [
+                "nodemon"
             ]
         }
     ]

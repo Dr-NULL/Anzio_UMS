@@ -1,7 +1,6 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Genero } from "./genero";
-import { Area } from "./area";
-import { Cargo } from "./cargo";
+import { RelAreaCargo } from "./rel-area-cargo"
 
 @Entity({ name: "Usuario" })
 export class Usuario extends BaseEntity {
@@ -34,13 +33,13 @@ export class Usuario extends BaseEntity {
 
     @Column({ type: "date" })
     fechaNacim: Date;
+
+    @Column({ type: "date", nullable: true })
+    fechaCreac: Date;
     
     @ManyToOne(type => Genero, genero => genero.id)
     genero: Genero;
     
-    @ManyToOne(type => Area, area => area.id)
-    area: Area;
-    
-    @ManyToOne(type => Cargo, cargo => cargo.id)
-    cargo: Cargo;
-} 
+    @ManyToOne(type => RelAreaCargo, area => area.id)
+    relAreaCargo: RelAreaCargo;
+}

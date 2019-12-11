@@ -13,6 +13,5 @@
         "duration": 30,
         "cookieName": "session",
         "isEncrypted": true
-    },
-    "omrConfig": "ormconfig.json"
+    }
 }

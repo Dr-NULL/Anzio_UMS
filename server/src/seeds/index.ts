@@ -1,8 +1,8 @@
-import { Seed, deploy as deploySeeds } from "../tool/orm";
+import { Seed, deploy } from "../tool/orm";
 
 //Función de Despliegue
-export function deploy() {
-    deploySeeds(
+export function deploySeeds() {
+    deploy(
         entitiesClear,
         entitiesInsert,
         entitiesAction
@@ -12,10 +12,14 @@ export function deploy() {
 //Importar semillas aquí ↓↓↓
 import { seedGenero } from "./seed-genero";
 import { seedIntRRHH } from "./seed-int-rrhh";
+import { seedArea } from "./seed-area";
+import { seedCargo } from "./seed-cargo";
+import { seedUsuario } from "./seed-usuario";
 
 //Agregar el orden de limpieza aquí ↓↓↓
 const entitiesClear: Seed<any>[] = [
     seedGenero,
+    seedArea,
     seedIntRRHH
 ]
 
@@ -27,5 +31,7 @@ const entitiesInsert: Seed<any>[] = [
 
 //Agregar el orden de inserción aquí ↓↓↓
 const entitiesAction: Seed<any>[] = [
-    seedIntRRHH
+    seedArea,
+    seedCargo,
+    seedUsuario
 ]

@@ -5,13 +5,16 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rmdir /q /s dist && call tsc",
-    "test": "npm run build && nodemon dist/index.js",
-    "start": "npm run build && node dist/index.js"
+    "debug": "nodemon --inspect dist/index.js",
+    "test": "nodemon dist/index.js",
+    "start": "node dist/index.js"
   },
   "author": "Felipe Silva <silvaaguilarfelipe@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "atob": "^2.1.2",
     "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "moment": "^2.24.0",
@@ -23,7 +26,9 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
+    "@types/atob": "^2.1.2",
     "@types/body-parser": "^1.17.1",
+    "@types/btoa": "^1.2.3",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
     "@types/mssql": "^6.0.0",

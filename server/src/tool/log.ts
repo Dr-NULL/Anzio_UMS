@@ -31,7 +31,12 @@ export module Log {
         let out = "                   "
         out += `            `
         out += text
-        console.log(out)
+        
+
+        let data = out.split(/\n/gi)
+        data.forEach((item, i) => {
+            console.log(item)
+        })
     }
 
     export function ev(text: string, timestamp: boolean = true) {

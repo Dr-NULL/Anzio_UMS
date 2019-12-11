@@ -6,7 +6,7 @@ interface iClass<T extends BaseEntity> {
 
 export class Seed<T extends BaseEntity>{
     public data: Array<{[K in keyof T]?: T[K]}>
-    public action: (cls: new() => T, rep: Repository<T>) => void
+    public action: (rep: Repository<T>) => void | Promise<void>
     public type: iClass<T>
 
     constructor(entity: iClass<T>) {
@@ -23,27 +23,38 @@ export async function deploy(
     entitiesInsert: Seed<BaseEntity>[],
     entitiesAction: Seed<BaseEntity>[]
 ){
-    const orm = await createConnection(Config.Orm)
+    const orm = await createConnection()
 
     //Limpiar Entidades
     console.clear()
     Log.ev("Comenzando Limpieza de Entidades:")
     for (let inst of entitiesClear) {
-        let rep = orm.getRepository(inst.type)
-        await rep.delete({})
-        Log.ok(`Entidad lista -> [#${inst.type.name}]`)
+        try {
+            Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)
+            let rep = orm.getRepository(inst.type)
+            await rep.delete({})
+        } catch (err) {
+            Log.er('Error en la ejecución de "Actions":')
+            Log.ln(err + "\n")
+            process.exit()
+        }
     }
 
     //Llenar Entidades
     Log.ln()
     Log.ev(`Comenzando Inserción de data:`)
     for (let inst of entitiesInsert) {
-        let rep = orm.getRepository(inst.type)
-        for (let obj of inst.data) {
-            await rep.save(obj)
+        try {
+            Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)
+            let rep = orm.getRepository(inst.type)
+            for (let obj of inst.data) {
+                await rep.save(obj)
+            }
+        } catch(err) {
+            Log.er('Error en la ejecución de "Actions":')
+            Log.ln(err + "\n")
+            process.exit()
         }
-
-        Log.ok(`Entidad lista -> [#${inst.type.name}]`)
     }
 
     //Ejecutar acciones de Entidades
@@ -51,10 +62,10 @@ export async function deploy(
     Log.ev(`Comenzando ejecuciones finales:`)
     for (let inst of entitiesAction) {
         if (inst.action != null) {
+            Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)
             let rep = orm.getRepository(inst.type)
-            inst.action(inst.type, rep)
+            await inst.action(rep)
     
-            Log.ok(`Entidad lista -> [#${inst.type.name}]`)
         }
     }
 

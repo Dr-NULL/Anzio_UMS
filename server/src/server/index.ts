@@ -1,56 +1,27 @@
 import express from "express";
 import { createConnection, Connection } from "typeorm";
+import { Config } from "../tool/config";
+import { Log } from "../tool/log";
 
-import Log from "../tool/log"
-import { Path, Config } from "../tool/config"
+//Lanzamiento de configuraciones
+import { deploySession } from "./deploy-session";
+import { deployRoutes } from "./deploy-routes";
 
-import { crossover } from "session-crossover";
-import cors, { CorsOptions } from "cors";
-import { urlencoded, json  } from "body-parser";
-
+//Exportar constantes
 export const app = express()
-export let orm: Connection
+export var orm: Connection = null
 
-export async function deploy() {
-    try {
-        //Inicializar Modelos
-        const confOrm = Config.Orm
-        orm = await createConnection(confOrm)
+//Desplegar servidor
+export async function deployServer() {
+    //Levantar TypeORM
+    orm = await createConnection()
     
-        //Configurar Body Parser
-        app.use(urlencoded({ extended: false }))
-        app.use(json({ strict: false }))
-        
-        //Habilitar CORS
-        const corsOpt: CorsOptions = {
-            credentials: true,
-            methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-            origin: (origin, callback) => {
-                const allowed = Config.App.Server.Cors
-                if (allowed.includes(origin)) {
-                    callback(null, true)
-                }
-            }
-        }
-        app.use(cors(corsOpt))
-        app.options("*", cors(corsOpt))
-    
-        //Establecer Session
-        app.use(crossover({
-            cookieName: "session",
-            expires: 30,
-            isEncrypted: true,
-            path: Path.Data.session
-        }))
-    
-        //Levantar servidor
-        app.listen(Config.App.Server.port, () => {
-            Log.title("Anzio UMS")
-            Log.ev("Servidor preparado!")
-            Log.ln("Esperando peticiones...")
-        })
-    } catch(err) {
-        Log.er("Error al levantar el servidor!")
-        Log.ln(err)
-    }
+    //Ejecutar despliegues
+    deploySession()
+    deployRoutes()
+
+    app.listen(Config.Server.port, () => {
+        Log.title("Anzio UMS")
+        Log.ok("Servidor preparado")
+    })
 }
