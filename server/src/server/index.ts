@@ -6,6 +6,7 @@ import { Log } from "../tool/log";
 //Lanzamiento de configuraciones
 import { deploySession } from "./deploy-session";
 import { deployRoutes } from "./deploy-routes";
+import { deployJson } from "./deploy-json";
 
 //Exportar constantes
 export const app = express()
@@ -14,13 +15,14 @@ export var orm: Connection = null
 //Desplegar servidor
 export async function deployServer() {
     //Levantar TypeORM
-    orm = await createConnection()
+    orm = await createConnection(Config.Orm)
     
     //Ejecutar despliegues
+    deployJson()
     deploySession()
     deployRoutes()
 
-    app.listen(Config.Server.port, () => {
+    app.listen(Config.App.Server.port, () => {
         Log.title("Anzio UMS")
         Log.ok("Servidor preparado")
     })

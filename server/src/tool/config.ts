@@ -1,6 +1,7 @@
 import { Log } from "./log";
 import { join } from "path";
 import { File } from "./file";
+import { ConnectionOptions } from "typeorm";
 
 export module Path {
     export const main = join(__dirname, "..", "..", "..")
@@ -17,14 +18,21 @@ export module Path {
 }
 
 
-export let Config: iConfig
-try {
-    const fsApp = new File(join(Path.server, "appconfig.json"))
-    const rawApp = fsApp.readTextSync()
-    Config = JSON.parse(rawApp)
-} catch (err) {
-    Log.er("500 ERROR")
-    Log.ln(err.message + "\n")
+export module Config {
+    export let App: iConfig
+    export let Orm: ConnectionOptions
+
+    try {
+        const fsApp = new File(join(Path.server, "appconfig.json"))
+        const rawApp = fsApp.readTextSync()
+        App = JSON.parse(rawApp)
+        
+        const fsOrm = new File(join(Path.server, "ormconfig.json"))
+        const rawOrm = fsOrm.readTextSync()
+        Orm = JSON.parse(rawOrm)
+    } catch (err) {
+        Log.er(err + "\n")
+    }
 }
 
 interface iServer {

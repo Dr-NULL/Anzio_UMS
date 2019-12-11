@@ -7,7 +7,7 @@ export function deployCors() {
         credentials: true,
         methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
         origin: (origin, callback) => {
-            const allowed = Config.Server.Cors
+            const allowed = Config.App.Server.Cors
 
             if (allowed.includes(origin)) {
                 callback(null, true)

@@ -32,9 +32,9 @@ seedUsuario.action = async (rep) => {
         //crear usuario
         const user = new Usuario()
         user.rut = raw.rut
-        user.nombres = raw.nombres
-        user.apellidoP = raw.apellido1
-        user.apellidoM = raw.apellido2
+        user.nombres = raw.nombres.trim()
+        user.apellidoP = raw.apellido1.trim()
+        user.apellidoM = raw.apellido2.trim()
         user.fechaNacim = raw.fechaNacim
         user.genero = gene
         user.relAreaCargo = relac

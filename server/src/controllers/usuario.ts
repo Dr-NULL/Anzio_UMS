@@ -7,5 +7,14 @@ usuarioGetAll.path = "/"
 usuarioGetAll.callback = async (req, res) => {
     const data = await Usuario.find()
 
-    res.send(data)
+    //Remover campos
+    data.forEach(x => {
+        delete x.nick
+        delete x.pass
+        delete x.token
+        delete x.isActive
+    })
+
+    //Testear Error
+    res.api.success(data)
 }
