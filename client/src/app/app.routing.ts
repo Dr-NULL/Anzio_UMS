@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 export { RouterModule };
 
 // Importar componentes aquí
-import { SetupComponent } from './pages/setup/setup.component';
+import { SetupComponent } from './components/pages/setup/setup.component';
 
 // Configurar rutas aquí
 export const routes: Routes = [

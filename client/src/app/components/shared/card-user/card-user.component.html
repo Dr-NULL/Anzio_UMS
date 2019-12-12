@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Crear/Modificar Usuario:</h1>
+
+<mat-dialog-content>
+  <mat-grid-list cols="2" rowHeight="4rem">
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-form-field>
+        <input matInput #txtNombres placeholder="Nombre:" (keyup)="checkValidation()" />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-form-field>
+        <input matInput #txtApellidoP placeholder="Apellido P:" (keyup)="checkValidation()" />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-form-field>
+        <input matInput #txtApellidoM placeholder="Apellido M:" (keyup)="checkValidation()" />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-form-field>
+        <input matInput #txtEmail placeholder="Email:" (keyup)="checkValidation()" />
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [(disabled)]="!valid" (keyup)="checkValidation()">
+    <i class="fas fa-save"></i>
+    <span>Guardar</span>
+  </button>
+
+  <button mat-raised-button color="accent" type="button" (click)="onCancel()">
+    <i class="fas fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+</mat-dialog-actions>

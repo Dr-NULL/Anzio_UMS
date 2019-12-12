@@ -7,6 +7,7 @@ import { Log } from "../tool/log";
 import { deploySession } from "./deploy-session";
 import { deployRoutes } from "./deploy-routes";
 import { deployJson } from "./deploy-json";
+import { deployCors } from "./deploy-cors";
 
 //Exportar constantes
 export const app = express()
@@ -18,6 +19,7 @@ export async function deployServer() {
     orm = await createConnection(Config.Orm)
     
     //Ejecutar despliegues
+    deployCors()
     deployJson()
     deploySession()
     deployRoutes()

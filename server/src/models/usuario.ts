@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from "typeorm";
 import { Genero } from "./genero";
 import { RelAreaCargo } from "./rel-area-cargo"
 
@@ -15,6 +15,9 @@ export class Usuario extends BaseEntity {
     
     @Column({ type: "varchar", length: 512, nullable: true })
     token: string;
+
+    @Column({ type: "varchar", length: 100, nullable: true })
+    email: string;
     
     @Column({ type: "bit", default: 0 })
     isActive: boolean;
@@ -37,9 +40,11 @@ export class Usuario extends BaseEntity {
     @Column({ type: "date", nullable: true })
     fechaCreac: Date;
     
-    @ManyToOne(type => Genero, genero => genero.id)
+    @ManyToOne(type => Genero, genero => genero.id, { eager: true })
+    @JoinTable()
     genero: Genero;
     
-    @ManyToOne(type => RelAreaCargo, area => area.id)
+    @ManyToOne(type => RelAreaCargo, area => area.id, { eager: true })
+    @JoinTable()
     relAreaCargo: RelAreaCargo;
 }
