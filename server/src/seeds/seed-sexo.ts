@@ -1,8 +1,8 @@
-import { Genero } from "../models/genero";
+import { Sexo } from "../models/sexo";
 import { Seed } from "../tool/orm";
 
-export const seedGenero = new Seed(Genero)
-seedGenero.data = [
+export const seedSexo = new Seed(Sexo)
+seedSexo.data = [
     { cod: "M", descripc: "Masculino" },
     { cod: "F", descripc: "Femenino" }
 ]

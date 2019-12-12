@@ -2,9 +2,9 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatSnackBar, MatInput } from '@angular/material';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Sexo } from '../../../interfaces/sexo';
 import { Area } from '../../../interfaces/area';
 import { Cargo } from '../../../interfaces/cargo';
-import { Genero } from '../../../interfaces/genero';
 import { Usuario } from '../../../interfaces/usuario';
 
 @Component({
@@ -31,7 +31,7 @@ export class CardUserComponent implements OnInit {
   // Values
   arrArea: Area[];
   arrCargo: Cargo[];
-  arrGenero: Genero[];
+  arrGenero: Sexo[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)

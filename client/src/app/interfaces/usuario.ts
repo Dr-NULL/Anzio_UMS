@@ -1,6 +1,6 @@
-import { Genero } from './genero';
 import { Cargo } from './cargo';
 import { Area } from './area';
+import { Sexo } from './sexo';
 
 export interface Usuario {
   id: number;
@@ -15,7 +15,7 @@ export interface Usuario {
   apellidoM: string;
   fechaNacim: Date;
   fechaCreac: Date;
-  genero: Genero;
+  genero: Sexo;
   cargo: Cargo;
   area: Area;
 }

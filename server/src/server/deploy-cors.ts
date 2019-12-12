@@ -9,8 +9,10 @@ export function deployCors() {
         origin: (origin, callback) => {
             const allowed = Config.App.Server.Cors
 
-            if (allowed.includes(origin)) {
+            if (allowed.includes(origin) || (origin == undefined)) {
                 callback(null, true)
+            } else {
+                callback(null, false)
             }
         }
     }

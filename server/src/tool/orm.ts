@@ -23,7 +23,7 @@ export async function deploy(
     entitiesInsert: Seed<BaseEntity>[],
     entitiesAction: Seed<BaseEntity>[]
 ){
-    const orm = await createConnection()
+    const orm = await createConnection(Config.Orm)
 
     //Limpiar Entidades
     console.clear()
@@ -69,7 +69,13 @@ export async function deploy(
         }
     }
 
-    Log.ln()
-    Log.ok("Proceso finalizado!")
-    await orm.close()
+    try {
+        Log.ln()
+        Log.ok("Proceso finalizado!")
+        await orm.close()
+    } catch (fail) {
+        Log.er("Error al cerrar conexión!")
+        Log.ln(fail.message)
+        process.exit()
+    }
 }

@@ -19,8 +19,8 @@ export async function deployServer() {
     orm = await createConnection(Config.Orm)
     
     //Ejecutar despliegues
-    deployCors()
     deployJson()
+    deployCors()
     deploySession()
     deployRoutes()
 

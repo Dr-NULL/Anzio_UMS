@@ -2,43 +2,39 @@ import { Seed } from "../tool/orm";
 
 import { Area } from "../models/area";
 import { Cargo } from "../models/cargo";
-import { Genero } from "../models/genero";
+import { Sexo } from "../models/sexo";
 import { Usuario } from "../models/usuario";
-import { intRRHH } from "../models/int-rrhh";
 import { RelAreaCargo } from "../models/rel-area-cargo";
+import Log from "../tool/log";
 
 export const seedUsuario = new Seed(Usuario)
-seedUsuario.action = async (rep) => {
-    const rawUsers = await intRRHH.find()
-    for (let raw of rawUsers) {
-        //Obtener parámetros
-        const gene = await Genero.findOne({
-            cod: raw.genero
-        })
-
-        const area = await Area.findOne({
-            descripc: raw.area
-        })
-
-        const cargo = await Cargo.findOne({
-            descripc: raw.cargo
-        })
-
-        const relac = await RelAreaCargo.findOne({
-            area: area,
-            cargo: cargo
-        })
-
-        //crear usuario
+seedUsuario.action = async () => {
+    try {
+        //Obtener paramétricas
+        const area = await Area.findOne({ id: 1 })
+        const cargo = await Cargo.findOne({ id: 1 })
+        const sexo = await Sexo.findOne({ id: 1 })
+    
+        //Crear relación
+        const relac = new RelAreaCargo()
+        relac.area = area
+        relac.cargo = cargo
+        await relac.save()
+    
+        //Crear MasterMind
         const user = new Usuario()
-        user.rut = raw.rut
-        user.nombres = raw.nombres.trim()
-        user.apellidoP = raw.apellido1.trim()
-        user.apellidoM = raw.apellido2.trim()
-        user.fechaNacim = raw.fechaNacim
-        user.genero = gene
+        user.rut = "1-9"
+        user.nick = "hitler"
+        user.nombres = "Adolf"
+        user.apellidoP = "Hitler"
+        user.apellidoM = ""
+        user.fechaNacim = new Date(666, 5, 6)
+        user.isActive = false
+        user.genero = sexo
         user.relAreaCargo = relac
+        await user.save()
 
-        await Usuario.save(user)
+    } catch (fail) {
+        Log.er("Fallo al crear Usuario")
     }
 }

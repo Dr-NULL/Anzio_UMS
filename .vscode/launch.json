@@ -16,7 +16,7 @@
                 "${workspaceFolder}/server/dist/**/*.js"
             ],
             "args": [
-                "nodemon"
+                "seeds"
             ]
         }
     ]

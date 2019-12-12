@@ -1,190 +1,58 @@
-[2019-12-10T20:30:10.908Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-10T20:30:10.963Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-10T20:30:10.969Z]1 migrations are already loaded in the database.
-[2019-12-10T20:30:10.969Z]NewDB1575991311074 is the last executed migration. It was executed on Tue Dec 10 2019 12:21:51 GMT-0300 (GMT-03:00).
-[2019-12-10T20:30:10.970Z]Now reverting it...
-[2019-12-10T20:30:10.973Z][QUERY]: BEGIN TRANSACTION
-[2019-12-10T20:30:10.973Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
-[2019-12-10T20:30:10.981Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
-[2019-12-10T20:30:10.985Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
-[2019-12-10T20:30:10.990Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
-[2019-12-10T20:30:10.995Z][QUERY]: DROP TABLE "Usuario"
-[2019-12-10T20:30:11.003Z][QUERY]: DROP TABLE "RelAreaCargo"
-[2019-12-10T20:30:11.007Z][QUERY]: DROP TABLE "IntRRHH"
-[2019-12-10T20:30:11.012Z][QUERY]: DROP TABLE "Genero"
-[2019-12-10T20:30:11.018Z][QUERY]: DROP TABLE "Cargo"
-[2019-12-10T20:30:11.023Z][QUERY]: DROP TABLE "Area"
-[2019-12-10T20:30:11.030Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1575991311074,"type":"bigint","params":[]},{"value":"NewDB1575991311074","type":"varchar","params":[]}]
-[2019-12-10T20:30:11.034Z]Migration NewDB1575991311074 has been reverted successfully.
-[2019-12-10T20:30:11.090Z][QUERY]: COMMIT
-[2019-12-10T20:30:19.491Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-10T20:30:19.523Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-10T20:30:19.527Z]0 migrations are already loaded in the database.
-[2019-12-10T20:30:19.527Z]1 migrations were found in the source code.
-[2019-12-10T20:30:19.528Z]1 migrations are new migrations that needs to be executed.
-[2019-12-10T20:30:19.533Z][QUERY]: BEGIN TRANSACTION
-[2019-12-10T20:30:19.534Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.541Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.546Z][QUERY]: CREATE TABLE "Genero" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_b829204c76a525595b67b4dc1f0" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.551Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.557Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.562Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
-[2019-12-10T20:30:19.568Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-10T20:30:19.574Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-10T20:30:19.579Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Genero"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-10T20:30:19.583Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-10T20:30:19.590Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1575991311074,"type":"bigint","params":[]},{"value":"NewDB1575991311074","type":"varchar","params":[]}]
-[2019-12-10T20:30:19.595Z]Migration NewDB1575991311074 has been executed successfully.
-[2019-12-10T20:30:19.617Z][QUERY]: COMMIT
-[2019-12-11T12:11:10.444Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T12:11:10.497Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T12:11:10.502Z]1 migrations are already loaded in the database.
-[2019-12-11T12:11:10.502Z]NewDB1575991311074 is the last executed migration. It was executed on Tue Dec 10 2019 12:21:51 GMT-0300 (GMT-03:00).
-[2019-12-11T12:11:10.503Z]Now reverting it...
-[2019-12-11T12:11:10.506Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T12:11:10.507Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
-[2019-12-11T12:11:10.514Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
-[2019-12-11T12:11:10.519Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
-[2019-12-11T12:11:10.524Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
-[2019-12-11T12:11:10.529Z][QUERY]: DROP TABLE "Usuario"
-[2019-12-11T12:11:10.536Z][QUERY]: DROP TABLE "RelAreaCargo"
-[2019-12-11T12:11:10.542Z][QUERY]: DROP TABLE "IntRRHH"
-[2019-12-11T12:11:10.547Z][QUERY]: DROP TABLE "Genero"
-[2019-12-11T12:11:10.553Z][QUERY]: DROP TABLE "Cargo"
-[2019-12-11T12:11:10.558Z][QUERY]: DROP TABLE "Area"
-[2019-12-11T12:11:10.565Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1575991311074,"type":"bigint","params":[]},{"value":"NewDB1575991311074","type":"varchar","params":[]}]
-[2019-12-11T12:11:10.570Z]Migration NewDB1575991311074 has been reverted successfully.
-[2019-12-11T12:11:10.602Z][QUERY]: COMMIT
-[2019-12-11T12:11:19.363Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T12:11:19.395Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T12:11:19.398Z]0 migrations are already loaded in the database.
-[2019-12-11T12:11:19.399Z]1 migrations were found in the source code.
-[2019-12-11T12:11:19.399Z]1 migrations are new migrations that needs to be executed.
-[2019-12-11T12:11:19.402Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T12:11:19.403Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.424Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.430Z][QUERY]: CREATE TABLE "Genero" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_b829204c76a525595b67b4dc1f0" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.435Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.441Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.446Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
-[2019-12-11T12:11:19.453Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T12:11:19.460Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T12:11:19.465Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Genero"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T12:11:19.470Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T12:11:19.477Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1575991311074,"type":"bigint","params":[]},{"value":"NewDB1575991311074","type":"varchar","params":[]}]
-[2019-12-11T12:11:19.484Z]Migration NewDB1575991311074 has been executed successfully.
-[2019-12-11T12:11:19.490Z][QUERY]: COMMIT
-[2019-12-11T14:31:23.635Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T14:31:23.668Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T14:31:23.674Z]1 migrations are already loaded in the database.
-[2019-12-11T14:31:23.683Z]NewDB1575991311074 is the last executed migration. It was executed on Tue Dec 10 2019 12:21:51 GMT-0300 (GMT-03:00).
-[2019-12-11T14:31:23.683Z]Now reverting it...
-[2019-12-11T14:31:23.687Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T14:31:23.687Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
-[2019-12-11T14:31:23.695Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
-[2019-12-11T14:31:23.700Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
-[2019-12-11T14:31:23.705Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
-[2019-12-11T14:31:23.710Z][QUERY]: DROP TABLE "Usuario"
-[2019-12-11T14:31:23.716Z][QUERY]: DROP TABLE "RelAreaCargo"
-[2019-12-11T14:31:23.721Z][QUERY]: DROP TABLE "IntRRHH"
-[2019-12-11T14:31:23.726Z][QUERY]: DROP TABLE "Genero"
-[2019-12-11T14:31:23.730Z][QUERY]: DROP TABLE "Cargo"
-[2019-12-11T14:31:23.735Z][QUERY]: DROP TABLE "Area"
-[2019-12-11T14:31:23.741Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1575991311074,"type":"bigint","params":[]},{"value":"NewDB1575991311074","type":"varchar","params":[]}]
-[2019-12-11T14:31:23.745Z]Migration NewDB1575991311074 has been reverted successfully.
-[2019-12-11T14:31:23.791Z][QUERY]: COMMIT
-[2019-12-11T14:31:56.602Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T14:31:56.634Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T14:31:56.638Z]0 migrations are already loaded in the database.
-[2019-12-11T14:31:56.638Z]1 migrations were found in the source code.
-[2019-12-11T14:31:56.639Z]1 migrations are new migrations that needs to be executed.
-[2019-12-11T14:31:56.642Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T14:31:56.642Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.649Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.684Z][QUERY]: CREATE TABLE "Genero" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_b829204c76a525595b67b4dc1f0" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.689Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.695Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.700Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
-[2019-12-11T14:31:56.706Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:31:56.713Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:31:56.718Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Genero"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:31:56.722Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:31:56.729Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576074700659,"type":"bigint","params":[]},{"value":"MakeDB1576074700659","type":"varchar","params":[]}]
-[2019-12-11T14:31:56.734Z]Migration MakeDB1576074700659 has been executed successfully.
-[2019-12-11T14:31:56.792Z][QUERY]: COMMIT
-[2019-12-11T14:33:43.051Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T14:33:43.094Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T14:33:43.101Z]1 migrations are already loaded in the database.
-[2019-12-11T14:33:43.102Z]MakeDB1576074700659 is the last executed migration. It was executed on Wed Dec 11 2019 11:31:40 GMT-0300 (GMT-03:00).
-[2019-12-11T14:33:43.102Z]Now reverting it...
-[2019-12-11T14:33:43.105Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T14:33:43.106Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
-[2019-12-11T14:33:43.112Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
-[2019-12-11T14:33:43.117Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
-[2019-12-11T14:33:43.122Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
-[2019-12-11T14:33:43.160Z][QUERY]: DROP TABLE "Usuario"
-[2019-12-11T14:33:43.166Z][QUERY]: DROP TABLE "RelAreaCargo"
-[2019-12-11T14:33:43.171Z][QUERY]: DROP TABLE "IntRRHH"
-[2019-12-11T14:33:43.176Z][QUERY]: DROP TABLE "Genero"
-[2019-12-11T14:33:43.181Z][QUERY]: DROP TABLE "Cargo"
-[2019-12-11T14:33:43.186Z][QUERY]: DROP TABLE "Area"
-[2019-12-11T14:33:43.192Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576074700659,"type":"bigint","params":[]},{"value":"MakeDB1576074700659","type":"varchar","params":[]}]
-[2019-12-11T14:33:43.197Z]Migration MakeDB1576074700659 has been reverted successfully.
-[2019-12-11T14:33:43.218Z][QUERY]: COMMIT
-[2019-12-11T14:33:54.666Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-11T14:33:54.698Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-11T14:33:54.702Z]0 migrations are already loaded in the database.
-[2019-12-11T14:33:54.702Z]1 migrations were found in the source code.
-[2019-12-11T14:33:54.702Z]1 migrations are new migrations that needs to be executed.
-[2019-12-11T14:33:54.705Z][QUERY]: BEGIN TRANSACTION
-[2019-12-11T14:33:54.706Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.711Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.717Z][QUERY]: CREATE TABLE "Genero" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_b829204c76a525595b67b4dc1f0" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.722Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.772Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.778Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
-[2019-12-11T14:33:54.785Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:33:54.792Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:33:54.797Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Genero"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:33:54.802Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-11T14:33:54.811Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576074700659,"type":"bigint","params":[]},{"value":"MakeDB1576074700659","type":"varchar","params":[]}]
-[2019-12-11T14:33:54.816Z]Migration MakeDB1576074700659 has been executed successfully.
-[2019-12-11T14:33:54.866Z][QUERY]: COMMIT
-[2019-12-12T12:48:53.441Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-12T12:48:53.510Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-12T12:48:53.515Z]1 migrations are already loaded in the database.
-[2019-12-12T12:48:53.523Z]MakeDB1576074700659 is the last executed migration. It was executed on Wed Dec 11 2019 11:31:40 GMT-0300 (GMT-03:00).
-[2019-12-12T12:48:53.524Z]Now reverting it...
-[2019-12-12T12:48:53.527Z][QUERY]: BEGIN TRANSACTION
-[2019-12-12T12:48:53.528Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
-[2019-12-12T12:48:53.536Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
-[2019-12-12T12:48:53.541Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
-[2019-12-12T12:48:53.545Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
-[2019-12-12T12:48:53.550Z][QUERY]: DROP TABLE "Usuario"
-[2019-12-12T12:48:53.557Z][QUERY]: DROP TABLE "RelAreaCargo"
-[2019-12-12T12:48:53.562Z][QUERY]: DROP TABLE "IntRRHH"
-[2019-12-12T12:48:53.567Z][QUERY]: DROP TABLE "Genero"
-[2019-12-12T12:48:53.575Z][QUERY]: DROP TABLE "Cargo"
-[2019-12-12T12:48:53.580Z][QUERY]: DROP TABLE "Area"
-[2019-12-12T12:48:53.587Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576074700659,"type":"bigint","params":[]},{"value":"MakeDB1576074700659","type":"varchar","params":[]}]
-[2019-12-12T12:48:53.592Z]Migration MakeDB1576074700659 has been reverted successfully.
-[2019-12-12T12:48:53.657Z][QUERY]: COMMIT
-[2019-12-12T12:50:29.599Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
-[2019-12-12T12:50:29.668Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
-[2019-12-12T12:50:29.672Z]0 migrations are already loaded in the database.
-[2019-12-12T12:50:29.672Z]1 migrations were found in the source code.
-[2019-12-12T12:50:29.673Z]1 migrations are new migrations that needs to be executed.
-[2019-12-12T12:50:29.676Z][QUERY]: BEGIN TRANSACTION
-[2019-12-12T12:50:29.677Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.683Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.687Z][QUERY]: CREATE TABLE "Genero" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_b829204c76a525595b67b4dc1f0" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.692Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.696Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.725Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
-[2019-12-12T12:50:29.733Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-12T12:50:29.739Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-12T12:50:29.745Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Genero"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-12T12:50:29.749Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
-[2019-12-12T12:50:29.756Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576154950761,"type":"bigint","params":[]},{"value":"makeDB1576154950761","type":"varchar","params":[]}]
-[2019-12-12T12:50:29.760Z]Migration makeDB1576154950761 has been executed successfully.
-[2019-12-12T12:50:29.793Z][QUERY]: COMMIT
+[2019-12-12T20:31:34.218Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-12T20:31:34.252Z][QUERY]: CREATE TABLE "SYS_UMS".."migrations" ("id" int NOT NULL IDENTITY(1,1), "timestamp" bigint NOT NULL, "name" varchar(255) NOT NULL, CONSTRAINT "PK_4502b95fb39da95a6e1824456f4" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.271Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-12T20:31:34.278Z]0 migrations are already loaded in the database.
+[2019-12-12T20:31:34.278Z]1 migrations were found in the source code.
+[2019-12-12T20:31:34.279Z]1 migrations are new migrations that needs to be executed.
+[2019-12-12T20:31:34.283Z][QUERY]: BEGIN TRANSACTION
+[2019-12-12T20:31:34.293Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.299Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.304Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.309Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.314Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.340Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-12T20:31:34.347Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:31:34.353Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:31:34.359Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:31:34.364Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:31:34.371Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576182618244,"type":"bigint","params":[]},{"value":"CreateDB1576182618244","type":"varchar","params":[]}]
+[2019-12-12T20:31:34.380Z]Migration CreateDB1576182618244 has been executed successfully.
+[2019-12-12T20:31:34.401Z][QUERY]: COMMIT
+[2019-12-12T20:33:49.312Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-12T20:33:49.352Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-12T20:33:49.358Z]1 migrations are already loaded in the database.
+[2019-12-12T20:33:49.359Z]CreateDB1576182618244 is the last executed migration. It was executed on Thu Dec 12 2019 17:30:18 GMT-0300 (GMT-03:00).
+[2019-12-12T20:33:49.360Z]Now reverting it...
+[2019-12-12T20:33:49.364Z][QUERY]: BEGIN TRANSACTION
+[2019-12-12T20:33:49.365Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
+[2019-12-12T20:33:49.373Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
+[2019-12-12T20:33:49.378Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
+[2019-12-12T20:33:49.383Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
+[2019-12-12T20:33:49.388Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-12T20:33:49.394Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-12T20:33:49.399Z][QUERY]: DROP TABLE "RelAreaCargo"
+[2019-12-12T20:33:49.404Z][QUERY]: DROP TABLE "IntRRHH"
+[2019-12-12T20:33:49.409Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-12T20:33:49.414Z][QUERY]: DROP TABLE "Area"
+[2019-12-12T20:33:49.422Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576182618244,"type":"bigint","params":[]},{"value":"CreateDB1576182618244","type":"varchar","params":[]}]
+[2019-12-12T20:33:49.462Z]Migration CreateDB1576182618244 has been reverted successfully.
+[2019-12-12T20:33:49.478Z][QUERY]: COMMIT
+[2019-12-12T20:34:01.224Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-12T20:34:01.302Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-12T20:34:01.307Z]0 migrations are already loaded in the database.
+[2019-12-12T20:34:01.307Z]1 migrations were found in the source code.
+[2019-12-12T20:34:01.308Z]1 migrations are new migrations that needs to be executed.
+[2019-12-12T20:34:01.313Z][QUERY]: BEGIN TRANSACTION
+[2019-12-12T20:34:01.315Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.322Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.327Z][QUERY]: CREATE TABLE "IntRRHH" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_6e1987cc379f7c4ec102848a70e" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.332Z][QUERY]: CREATE TABLE "RelAreaCargo" ("id" int NOT NULL IDENTITY(1,1), "areaId" int, "cargoId" int, CONSTRAINT "PK_e490d17fa8ee70ab9da2383ad0f" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.337Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.343Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaCreac" date, "generoId" int, "relAreaCargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-12T20:34:01.363Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:34:01.370Z][QUERY]: ALTER TABLE "RelAreaCargo" ADD CONSTRAINT "FK_97774213d00295f64eb9aabab6a" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:34:01.376Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017" FOREIGN KEY ("generoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:34:01.382Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_9b63986068abd363d3d0b46fd67" FOREIGN KEY ("relAreaCargoId") REFERENCES "RelAreaCargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-12T20:34:01.389Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576182618244,"type":"bigint","params":[]},{"value":"CreateDB1576182618244","type":"varchar","params":[]}]
+[2019-12-12T20:34:01.395Z]Migration CreateDB1576182618244 has been executed successfully.
+[2019-12-12T20:34:01.405Z][QUERY]: COMMIT
