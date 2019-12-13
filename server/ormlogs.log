@@ -56,3 +56,380 @@
 [2019-12-12T20:34:01.389Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576182618244,"type":"bigint","params":[]},{"value":"CreateDB1576182618244","type":"varchar","params":[]}]
 [2019-12-12T20:34:01.395Z]Migration CreateDB1576182618244 has been executed successfully.
 [2019-12-12T20:34:01.405Z][QUERY]: COMMIT
+[2019-12-13T14:53:22.627Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T14:53:22.697Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T14:53:22.704Z]1 migrations are already loaded in the database.
+[2019-12-13T14:53:22.710Z]CreateDB1576182618244 is the last executed migration. It was executed on Thu Dec 12 2019 17:30:18 GMT-0300 (GMT-03:00).
+[2019-12-13T14:53:22.710Z]Now reverting it...
+[2019-12-13T14:53:22.714Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T14:53:22.715Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_9b63986068abd363d3d0b46fd67"
+[2019-12-13T14:53:22.723Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_2308ae5e0697abb9d2b2aa50017"
+[2019-12-13T14:53:22.727Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_97774213d00295f64eb9aabab6a"
+[2019-12-13T14:53:22.732Z][QUERY]: ALTER TABLE "RelAreaCargo" DROP CONSTRAINT "FK_a54d0e9b9912d156c9cf4c8b984"
+[2019-12-13T14:53:22.737Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T14:53:22.743Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T14:53:22.748Z][QUERY]: DROP TABLE "RelAreaCargo"
+[2019-12-13T14:53:22.752Z][QUERY]: DROP TABLE "IntRRHH"
+[2019-12-13T14:53:22.756Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T14:53:22.761Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T14:53:22.766Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576182618244,"type":"bigint","params":[]},{"value":"CreateDB1576182618244","type":"varchar","params":[]}]
+[2019-12-13T14:53:22.771Z]Migration CreateDB1576182618244 has been reverted successfully.
+[2019-12-13T14:53:22.848Z][QUERY]: COMMIT
+[2019-12-13T15:38:40.341Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:38:40.410Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:38:40.414Z]0 migrations are already loaded in the database.
+[2019-12-13T15:38:40.414Z]1 migrations were found in the source code.
+[2019-12-13T15:38:40.415Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T15:38:40.419Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:38:40.421Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.428Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.433Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.439Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "database" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.444Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.449Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.454Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.460Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T15:38:40.508Z][QUERY]: CREATE TABLE "usuario_menu__menu" ("usuarioId" int NOT NULL, "menuId" int NOT NULL, CONSTRAINT "PK_0fcb73c8bdd92b038b24f24e87b" PRIMARY KEY ("usuarioId", "menuId"))
+[2019-12-13T15:38:40.513Z][QUERY]: CREATE INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu" ("usuarioId") 
+[2019-12-13T15:38:40.516Z][QUERY]: CREATE INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu" ("menuId") 
+[2019-12-13T15:38:40.520Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:38:40.526Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:38:40.531Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:38:40.536Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:38:40.540Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:38:40.545Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:38:40.549Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:38:40.556Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576251502886,"type":"bigint","params":[]},{"value":"CreateDB1576251502886","type":"varchar","params":[]}]
+[2019-12-13T15:38:40.562Z]Migration CreateDB1576251502886 has been executed successfully.
+[2019-12-13T15:38:40.571Z][QUERY]: COMMIT
+[2019-12-13T15:40:13.127Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:40:13.181Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:40:13.195Z]1 migrations are already loaded in the database.
+[2019-12-13T15:40:13.200Z]CreateDB1576251502886 is the last executed migration. It was executed on Fri Dec 13 2019 12:38:22 GMT-0300 (GMT-03:00).
+[2019-12-13T15:40:13.200Z]Now reverting it...
+[2019-12-13T15:40:13.204Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:40:13.205Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be"
+[2019-12-13T15:40:13.211Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea"
+[2019-12-13T15:40:13.216Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T15:40:13.220Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T15:40:13.225Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T15:40:13.229Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T15:40:13.233Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T15:40:13.237Z][QUERY]: DROP INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu"
+[2019-12-13T15:40:13.243Z][QUERY]: DROP INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu"
+[2019-12-13T15:40:13.247Z][QUERY]: DROP TABLE "usuario_menu__menu"
+[2019-12-13T15:40:13.251Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T15:40:13.256Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T15:40:13.261Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T15:40:13.265Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T15:40:13.269Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T15:40:13.274Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T15:40:13.279Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T15:40:13.283Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T15:40:13.289Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576251502886,"type":"bigint","params":[]},{"value":"CreateDB1576251502886","type":"varchar","params":[]}]
+[2019-12-13T15:40:13.294Z]Migration CreateDB1576251502886 has been reverted successfully.
+[2019-12-13T15:40:13.309Z][QUERY]: COMMIT
+[2019-12-13T15:41:24.117Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:41:24.180Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:41:24.184Z]0 migrations are already loaded in the database.
+[2019-12-13T15:41:24.185Z]1 migrations were found in the source code.
+[2019-12-13T15:41:24.185Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T15:41:24.189Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:41:24.190Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.197Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.202Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.209Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "database" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.214Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.235Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.240Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.244Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T15:41:24.251Z][QUERY]: CREATE TABLE "usuario_menu__menu" ("usuarioId" int NOT NULL, "menuId" int NOT NULL, CONSTRAINT "PK_0fcb73c8bdd92b038b24f24e87b" PRIMARY KEY ("usuarioId", "menuId"))
+[2019-12-13T15:41:24.255Z][QUERY]: CREATE INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu" ("usuarioId") 
+[2019-12-13T15:41:24.259Z][QUERY]: CREATE INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu" ("menuId") 
+[2019-12-13T15:41:24.263Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:41:24.268Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:41:24.273Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:41:24.278Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:41:24.283Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:41:24.288Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:41:24.293Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:41:24.299Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576251670309,"type":"bigint","params":[]},{"value":"CreateDB1576251670309","type":"varchar","params":[]}]
+[2019-12-13T15:41:24.305Z]Migration CreateDB1576251670309 has been executed successfully.
+[2019-12-13T15:41:24.366Z][QUERY]: COMMIT
+[2019-12-13T15:46:49.992Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:46:50.044Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:46:50.050Z]1 migrations are already loaded in the database.
+[2019-12-13T15:46:50.050Z]CreateDB1576251670309 is the last executed migration. It was executed on Fri Dec 13 2019 12:41:10 GMT-0300 (GMT-03:00).
+[2019-12-13T15:46:50.050Z]Now reverting it...
+[2019-12-13T15:46:50.054Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:46:50.055Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be"
+[2019-12-13T15:46:50.062Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea"
+[2019-12-13T15:46:50.066Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T15:46:50.070Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T15:46:50.075Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T15:46:50.079Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T15:46:50.084Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T15:46:50.088Z][QUERY]: DROP INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu"
+[2019-12-13T15:46:50.093Z][QUERY]: DROP INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu"
+[2019-12-13T15:46:50.097Z][QUERY]: DROP TABLE "usuario_menu__menu"
+[2019-12-13T15:46:50.102Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T15:46:50.107Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T15:46:50.112Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T15:46:50.116Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T15:46:50.120Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T15:46:50.124Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T15:46:50.129Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T15:46:50.133Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T15:46:50.139Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576251670309,"type":"bigint","params":[]},{"value":"CreateDB1576251670309","type":"varchar","params":[]}]
+[2019-12-13T15:46:50.143Z]Migration CreateDB1576251670309 has been reverted successfully.
+[2019-12-13T15:46:50.159Z][QUERY]: COMMIT
+[2019-12-13T15:47:16.048Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:47:16.087Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:47:16.092Z]0 migrations are already loaded in the database.
+[2019-12-13T15:47:16.092Z]1 migrations were found in the source code.
+[2019-12-13T15:47:16.092Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T15:47:16.096Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:47:16.097Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.105Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.123Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.128Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "database" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.134Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.139Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.144Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.150Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T15:47:16.157Z][QUERY]: CREATE TABLE "usuario_menu__menu" ("usuarioId" int NOT NULL, "menuId" int NOT NULL, CONSTRAINT "PK_0fcb73c8bdd92b038b24f24e87b" PRIMARY KEY ("usuarioId", "menuId"))
+[2019-12-13T15:47:16.162Z][QUERY]: CREATE INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu" ("usuarioId") 
+[2019-12-13T15:47:16.166Z][QUERY]: CREATE INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu" ("menuId") 
+[2019-12-13T15:47:16.169Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:47:16.176Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:47:16.181Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:47:16.186Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:47:16.220Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:47:16.225Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:47:16.230Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:47:16.240Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576252025131,"type":"bigint","params":[]},{"value":"CreateDB1576252025131","type":"varchar","params":[]}]
+[2019-12-13T15:47:16.249Z]Migration CreateDB1576252025131 has been executed successfully.
+[2019-12-13T15:47:16.264Z][QUERY]: COMMIT
+[2019-12-13T15:47:51.343Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:47:51.382Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:47:51.387Z]1 migrations are already loaded in the database.
+[2019-12-13T15:47:51.387Z]CreateDB1576252025131 is the last executed migration. It was executed on Fri Dec 13 2019 12:47:05 GMT-0300 (GMT-03:00).
+[2019-12-13T15:47:51.388Z]Now reverting it...
+[2019-12-13T15:47:51.392Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:47:51.393Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be"
+[2019-12-13T15:47:51.399Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea"
+[2019-12-13T15:47:51.404Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T15:47:51.408Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T15:47:51.413Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T15:47:51.418Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T15:47:51.424Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T15:47:51.429Z][QUERY]: DROP INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu"
+[2019-12-13T15:47:51.433Z][QUERY]: DROP INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu"
+[2019-12-13T15:47:51.437Z][QUERY]: DROP TABLE "usuario_menu__menu"
+[2019-12-13T15:47:51.441Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T15:47:51.446Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T15:47:51.451Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T15:47:51.455Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T15:47:51.460Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T15:47:51.464Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T15:47:51.470Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T15:47:51.477Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T15:47:51.489Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576252025131,"type":"bigint","params":[]},{"value":"CreateDB1576252025131","type":"varchar","params":[]}]
+[2019-12-13T15:47:51.681Z]Migration CreateDB1576252025131 has been reverted successfully.
+[2019-12-13T15:47:51.695Z][QUERY]: COMMIT
+[2019-12-13T15:49:03.564Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:49:03.607Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:49:03.612Z]0 migrations are already loaded in the database.
+[2019-12-13T15:49:03.612Z]1 migrations were found in the source code.
+[2019-12-13T15:49:03.613Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T15:49:03.616Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:49:03.617Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.624Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.629Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.634Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "database" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.640Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.646Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, "perfilId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.651Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.655Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T15:49:03.679Z][QUERY]: CREATE TABLE "usuario_menu__menu" ("usuarioId" int NOT NULL, "menuId" int NOT NULL, CONSTRAINT "PK_0fcb73c8bdd92b038b24f24e87b" PRIMARY KEY ("usuarioId", "menuId"))
+[2019-12-13T15:49:03.685Z][QUERY]: CREATE INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu" ("usuarioId") 
+[2019-12-13T15:49:03.689Z][QUERY]: CREATE INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu" ("menuId") 
+[2019-12-13T15:49:03.693Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.699Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.707Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0" FOREIGN KEY ("perfilId") REFERENCES "Perfil"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.712Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.717Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.722Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:49:03.727Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:49:03.732Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:49:03.738Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576252131015,"type":"bigint","params":[]},{"value":"CreateDB1576252131015","type":"varchar","params":[]}]
+[2019-12-13T15:49:03.743Z]Migration CreateDB1576252131015 has been executed successfully.
+[2019-12-13T15:49:03.759Z][QUERY]: COMMIT
+[2019-12-13T15:55:53.881Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:55:53.963Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:55:53.969Z]1 migrations are already loaded in the database.
+[2019-12-13T15:55:53.970Z]CreateDB1576252131015 is the last executed migration. It was executed on Fri Dec 13 2019 12:48:51 GMT-0300 (GMT-03:00).
+[2019-12-13T15:55:53.970Z]Now reverting it...
+[2019-12-13T15:55:53.974Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:55:53.975Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be"
+[2019-12-13T15:55:53.983Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea"
+[2019-12-13T15:55:53.988Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T15:55:53.993Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T15:55:53.997Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T15:55:54.002Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0"
+[2019-12-13T15:55:54.008Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T15:55:54.013Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T15:55:54.019Z][QUERY]: DROP INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu"
+[2019-12-13T15:55:54.024Z][QUERY]: DROP INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu"
+[2019-12-13T15:55:54.029Z][QUERY]: DROP TABLE "usuario_menu__menu"
+[2019-12-13T15:55:54.034Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T15:55:54.040Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T15:55:54.044Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T15:55:54.048Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T15:55:54.052Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T15:55:54.057Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T15:55:54.062Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T15:55:54.067Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T15:55:54.074Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576252131015,"type":"bigint","params":[]},{"value":"CreateDB1576252131015","type":"varchar","params":[]}]
+[2019-12-13T15:55:54.079Z]Migration CreateDB1576252131015 has been reverted successfully.
+[2019-12-13T15:55:54.110Z][QUERY]: COMMIT
+[2019-12-13T15:57:08.050Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:57:08.106Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:57:08.110Z]0 migrations are already loaded in the database.
+[2019-12-13T15:57:08.110Z]1 migrations were found in the source code.
+[2019-12-13T15:57:08.111Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T15:57:08.114Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:57:08.116Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.122Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.127Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.133Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "db" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.139Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.159Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, "perfilId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.164Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.170Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.176Z][QUERY]: CREATE TABLE "RelUsuarioMenu" ("id" int NOT NULL IDENTITY(1,1), "usuarioId" int, "menuId" int, CONSTRAINT "PK_6980f10351c3f42c7736a87e633" PRIMARY KEY ("id"))
+[2019-12-13T15:57:08.181Z][QUERY]: CREATE TABLE "usuario_menu__menu" ("usuarioId" int NOT NULL, "menuId" int NOT NULL, CONSTRAINT "PK_0fcb73c8bdd92b038b24f24e87b" PRIMARY KEY ("usuarioId", "menuId"))
+[2019-12-13T15:57:08.186Z][QUERY]: CREATE INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu" ("usuarioId") 
+[2019-12-13T15:57:08.190Z][QUERY]: CREATE INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu" ("menuId") 
+[2019-12-13T15:57:08.193Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.198Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.202Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0" FOREIGN KEY ("perfilId") REFERENCES "Perfil"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.207Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.212Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.217Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.221Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_23db456b96410360b3985782906" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.225Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_717493a7b2e421d1aafcc67cfa6" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T15:57:08.229Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:57:08.245Z][QUERY]: ALTER TABLE "usuario_menu__menu" ADD CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2019-12-13T15:57:08.252Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576252597355,"type":"bigint","params":[]},{"value":"CreateDB1576252597355","type":"varchar","params":[]}]
+[2019-12-13T15:57:08.259Z]Migration CreateDB1576252597355 has been executed successfully.
+[2019-12-13T15:57:08.274Z][QUERY]: COMMIT
+[2019-12-13T15:59:04.798Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T15:59:04.850Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T15:59:04.857Z]1 migrations are already loaded in the database.
+[2019-12-13T15:59:04.858Z]CreateDB1576252597355 is the last executed migration. It was executed on Fri Dec 13 2019 12:56:37 GMT-0300 (GMT-03:00).
+[2019-12-13T15:59:04.859Z]Now reverting it...
+[2019-12-13T15:59:04.863Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T15:59:04.865Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_8bcfe07927db98bd14b3612e3be"
+[2019-12-13T15:59:04.873Z][QUERY]: ALTER TABLE "usuario_menu__menu" DROP CONSTRAINT "FK_3f2e47c5f7b73c1305e88f7a2ea"
+[2019-12-13T15:59:04.878Z][QUERY]: ALTER TABLE "RelUsuarioMenu" DROP CONSTRAINT "FK_717493a7b2e421d1aafcc67cfa6"
+[2019-12-13T15:59:04.883Z][QUERY]: ALTER TABLE "RelUsuarioMenu" DROP CONSTRAINT "FK_23db456b96410360b3985782906"
+[2019-12-13T15:59:04.888Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T15:59:04.893Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T15:59:04.898Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T15:59:04.903Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0"
+[2019-12-13T15:59:04.907Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T15:59:04.912Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T15:59:04.917Z][QUERY]: DROP INDEX "IDX_8bcfe07927db98bd14b3612e3b" ON "usuario_menu__menu"
+[2019-12-13T15:59:04.921Z][QUERY]: DROP INDEX "IDX_3f2e47c5f7b73c1305e88f7a2e" ON "usuario_menu__menu"
+[2019-12-13T15:59:04.926Z][QUERY]: DROP TABLE "usuario_menu__menu"
+[2019-12-13T15:59:04.930Z][QUERY]: DROP TABLE "RelUsuarioMenu"
+[2019-12-13T15:59:04.934Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T15:59:04.940Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T15:59:04.944Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T15:59:04.949Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T15:59:04.953Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T15:59:04.958Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T15:59:04.962Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T15:59:04.967Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T15:59:04.973Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576252597355,"type":"bigint","params":[]},{"value":"CreateDB1576252597355","type":"varchar","params":[]}]
+[2019-12-13T15:59:04.979Z]Migration CreateDB1576252597355 has been reverted successfully.
+[2019-12-13T15:59:04.994Z][QUERY]: COMMIT
+[2019-12-13T16:01:32.559Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T16:01:32.613Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T16:01:32.617Z]0 migrations are already loaded in the database.
+[2019-12-13T16:01:32.617Z]1 migrations were found in the source code.
+[2019-12-13T16:01:32.618Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T16:01:32.621Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T16:01:32.622Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.630Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.635Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.640Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "db" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.645Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.649Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, "perfilId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.654Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.658Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.665Z][QUERY]: CREATE TABLE "RelUsuarioMenu" ("id" int NOT NULL IDENTITY(1,1), "fechaCreac" date NOT NULL CONSTRAINT "DF_42ce0f8ce0d5c64eabf2a105126" DEFAULT GETDATE(), "usuarioId" int, "menuId" int, CONSTRAINT "PK_6980f10351c3f42c7736a87e633" PRIMARY KEY ("id"))
+[2019-12-13T16:01:32.695Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.700Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.705Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0" FOREIGN KEY ("perfilId") REFERENCES "Perfil"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.710Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.714Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.719Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.723Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_23db456b96410360b3985782906" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.729Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_717493a7b2e421d1aafcc67cfa6" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:01:32.737Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576252874639,"type":"bigint","params":[]},{"value":"CreateDB1576252874639","type":"varchar","params":[]}]
+[2019-12-13T16:01:32.741Z]Migration CreateDB1576252874639 has been executed successfully.
+[2019-12-13T16:01:32.748Z][QUERY]: COMMIT
+[2019-12-13T16:03:46.349Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T16:03:46.392Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T16:03:46.398Z]1 migrations are already loaded in the database.
+[2019-12-13T16:03:46.399Z]CreateDB1576252874639 is the last executed migration. It was executed on Fri Dec 13 2019 13:01:14 GMT-0300 (GMT-03:00).
+[2019-12-13T16:03:46.399Z]Now reverting it...
+[2019-12-13T16:03:46.403Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T16:03:46.404Z][QUERY]: ALTER TABLE "RelUsuarioMenu" DROP CONSTRAINT "FK_717493a7b2e421d1aafcc67cfa6"
+[2019-12-13T16:03:46.411Z][QUERY]: ALTER TABLE "RelUsuarioMenu" DROP CONSTRAINT "FK_23db456b96410360b3985782906"
+[2019-12-13T16:03:46.415Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7"
+[2019-12-13T16:03:46.420Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5"
+[2019-12-13T16:03:46.424Z][QUERY]: ALTER TABLE "Usuario" DROP CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa"
+[2019-12-13T16:03:46.429Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0"
+[2019-12-13T16:03:46.433Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"
+[2019-12-13T16:03:46.437Z][QUERY]: ALTER TABLE "Menu" DROP CONSTRAINT "FK_ac12259d8810919fe216b47ddd9"
+[2019-12-13T16:03:46.441Z][QUERY]: DROP TABLE "RelUsuarioMenu"
+[2019-12-13T16:03:46.445Z][QUERY]: DROP TABLE "Usuario"
+[2019-12-13T16:03:46.450Z][QUERY]: DROP TABLE "Sexo"
+[2019-12-13T16:03:46.455Z][QUERY]: DROP TABLE "Menu"
+[2019-12-13T16:03:46.460Z][QUERY]: DROP TABLE "Perfil"
+[2019-12-13T16:03:46.463Z][QUERY]: DROP TABLE "Sistema"
+[2019-12-13T16:03:46.467Z][QUERY]: DROP TABLE "IntLoad"
+[2019-12-13T16:03:46.471Z][QUERY]: DROP TABLE "Cargo"
+[2019-12-13T16:03:46.475Z][QUERY]: DROP TABLE "Area"
+[2019-12-13T16:03:46.482Z][QUERY]: DELETE FROM "SYS_UMS".."migrations" WHERE "timestamp" = @0 AND "name" = @1 -- PARAMETERS: [{"value":1576252874639,"type":"bigint","params":[]},{"value":"CreateDB1576252874639","type":"varchar","params":[]}]
+[2019-12-13T16:03:46.490Z]Migration CreateDB1576252874639 has been reverted successfully.
+[2019-12-13T16:03:46.508Z][QUERY]: COMMIT
+[2019-12-13T16:04:14.467Z][QUERY]: SELECT * FROM "SYS_UMS"."INFORMATION_SCHEMA"."TABLES" WHERE "TABLE_NAME" = 'migrations' AND "TABLE_SCHEMA" = SCHEMA_NAME()
+[2019-12-13T16:04:14.512Z][QUERY]: SELECT * FROM "SYS_UMS".."migrations" "migrations" ORDER BY "id" DESC
+[2019-12-13T16:04:14.524Z]0 migrations are already loaded in the database.
+[2019-12-13T16:04:14.525Z]1 migrations were found in the source code.
+[2019-12-13T16:04:14.525Z]1 migrations are new migrations that needs to be executed.
+[2019-12-13T16:04:14.530Z][QUERY]: BEGIN TRANSACTION
+[2019-12-13T16:04:14.531Z][QUERY]: CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.537Z][QUERY]: CREATE TABLE "Cargo" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_6f39d228c1565b713adcde8edae" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.542Z][QUERY]: CREATE TABLE "IntLoad" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(15), "nombres" varchar(100), "apellido1" varchar(100), "apellido2" varchar(100), "area" varchar(100), "cargo" varchar(100), "genero" varchar(2), "fechaNacim" date, "jefeNombres" varchar(100), "jefeApellido1" varchar(100), "jefeApellido2" varchar(100), CONSTRAINT "PK_33a19cb6473d221e8c0e5e11adc" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.548Z][QUERY]: CREATE TABLE "Sistema" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "logo" image, "url" varchar(248) NOT NULL, "db" varchar(128) NOT NULL, CONSTRAINT "PK_a12ba8cfb3b84749fcaf19ee20e" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.553Z][QUERY]: CREATE TABLE "Perfil" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, CONSTRAINT "PK_e6e3a57f5744ed15a5d411a5340" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.559Z][QUERY]: CREATE TABLE "Menu" ("id" int NOT NULL IDENTITY(1,1), "nombre" varchar(50) NOT NULL, "descripc" varchar(512) NOT NULL, "url" varchar(128) NOT NULL, "icono" varchar(50) NOT NULL, "padreId" int, "sistemaId" int, "perfilId" int, CONSTRAINT "PK_b2683c330c5e6d700266a6f46d0" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.590Z][QUERY]: CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.597Z][QUERY]: CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date, "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.603Z][QUERY]: CREATE TABLE "RelUsuarioMenu" ("id" int NOT NULL IDENTITY(1,1), "fechaCreac" date NOT NULL CONSTRAINT "DF_42ce0f8ce0d5c64eabf2a105126" DEFAULT GETDATE(), "usuarioId" int, "menuId" int, CONSTRAINT "PK_6980f10351c3f42c7736a87e633" PRIMARY KEY ("id"))
+[2019-12-13T16:04:14.609Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_ac12259d8810919fe216b47ddd9" FOREIGN KEY ("padreId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.614Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.618Z][QUERY]: ALTER TABLE "Menu" ADD CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0" FOREIGN KEY ("perfilId") REFERENCES "Perfil"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.623Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_d70c2f339b4a8218ec881c72efa" FOREIGN KEY ("sexoId") REFERENCES "Sexo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.627Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_e962024d0aa9a2e5c5444ddeeb5" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.632Z][QUERY]: ALTER TABLE "Usuario" ADD CONSTRAINT "FK_0e15649a7d070fa0e18f86884c7" FOREIGN KEY ("cargoId") REFERENCES "Cargo"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.637Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_23db456b96410360b3985782906" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.642Z][QUERY]: ALTER TABLE "RelUsuarioMenu" ADD CONSTRAINT "FK_717493a7b2e421d1aafcc67cfa6" FOREIGN KEY ("menuId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+[2019-12-13T16:04:14.650Z][QUERY]: INSERT INTO "SYS_UMS".."migrations"("timestamp", "name") VALUES (@0, @1) -- PARAMETERS: [{"value":1576253039496,"type":"bigint","params":[]},{"value":"CreateDB1576253039496","type":"varchar","params":[]}]
+[2019-12-13T16:04:14.658Z]Migration CreateDB1576253039496 has been executed successfully.
+[2019-12-13T16:04:14.674Z][QUERY]: COMMIT

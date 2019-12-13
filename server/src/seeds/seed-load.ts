@@ -2,13 +2,10 @@ import moment from "moment";
 import { Seed } from "../tool/orm";
 import { File } from "../tool/file";
 import { Path } from "../tool/config";
+import { IntLoad } from "../models/int-load";
 
-import { intRRHH } from "../models/int-rrhh";
-import { Area } from "../models/area";
-import { Cargo } from "../models/cargo";
-
-export const seedIntRRHH = new Seed(intRRHH)
-seedIntRRHH.data = []
+export const seedIntLoad = new Seed(IntLoad)
+seedIntLoad.data = []
 
 //Read File
 const rrhh = new File(Path.Data.Sources.rrhh)
@@ -32,6 +29,7 @@ const raw = (() => {
     return out.split(/\n/gi)
 })()
 
+//Parse Data
 raw.forEach((line, i) => {
     let row = line.trim().split(/;/gi)
     row = row.map(x => x.trim())
@@ -64,7 +62,7 @@ raw.forEach((line, i) => {
         boss.pop()
         const bossName = boss.reduce((prev, curr) => `${prev} ${curr}`, "")
 
-        seedIntRRHH.data.push({
+        seedIntLoad.data.push({
             rut: row[0],
             nombres: userName[1],
             apellido1: userLast[0],
@@ -78,7 +76,7 @@ raw.forEach((line, i) => {
             jefeApellido2: bossLast[1]
         })
     } else {
-        seedIntRRHH.data.push({
+        seedIntLoad.data.push({
             rut: row[0],
             nombres: userName[1],
             apellido1: userLast[0],

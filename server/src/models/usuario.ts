@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from "typeorm";
+import { Cargo } from "./cargo";
+import { Area } from "./area";
 import { Sexo } from "./sexo";
-import { RelAreaCargo } from "./rel-area-cargo"
 
 @Entity({ name: "Usuario" })
 export class Usuario extends BaseEntity {
@@ -38,13 +39,26 @@ export class Usuario extends BaseEntity {
     fechaNacim: Date;
 
     @Column({ type: "date", nullable: true })
-    fechaCreac: Date;
+    fechaInserc: Date;
+
+    @Column({ type: "date", nullable: true })
+    fechaElimin: Date;
+
+    @Column({ type: "date", nullable: true })
+    fechaActivac: Date;
+
+    @Column({ type: "date", nullable: true })
+    fechaDesact: Date;
     
-    @ManyToOne(type => Sexo, genero => genero.id, { eager: true })
+    @ManyToOne(type => Sexo, sexo => sexo.id, { eager: true })
     @JoinTable()
-    genero: Sexo;
+    sexo: Sexo;
     
-    @ManyToOne(type => RelAreaCargo, area => area.id, { eager: true })
+    @ManyToOne(type => Area, area => area.id, { eager: true })
     @JoinTable()
-    relAreaCargo: RelAreaCargo;
+    area: Area;
+    
+    @ManyToOne(type => Cargo, cargo => cargo.id, { eager: true })
+    @JoinTable()
+    cargo: Cargo;
 }
