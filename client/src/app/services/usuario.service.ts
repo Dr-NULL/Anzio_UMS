@@ -13,7 +13,19 @@ export class UsuarioService {
 
   getAll() {
     return this.httpCtrl.get<Usuario[]>(
-      urlServer + '/daemon/usuario/get/'
+      urlServer + '/api/usuario/get/'
+    );
+  }
+
+  getById(id: number) {
+    return this.httpCtrl.get<Usuario[]>(
+      urlServer + '/api/usuario/get/' + String(id)
+    );
+  }
+
+  getActive() {
+    return this.httpCtrl.get<Usuario[]>(
+      urlServer + '/api/usuario/get-active'
     );
   }
 }

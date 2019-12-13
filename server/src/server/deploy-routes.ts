@@ -3,6 +3,8 @@ import { app } from ".";
 
 export function deployRoutes(){
     routes.forEach(route => {
+        route.path = "/api" + route.path
+
         switch (route.method) {
             case "get":
                 app.get(route.path, route.callback)

@@ -8,6 +8,7 @@ import * as Cargo from "../controllers/cargo";
 export const routes: EndPoint[] = [
     Usuario.getAll,
     Usuario.getById,
+    Usuario.getActive,
     Area.getAll,
     Area.getById,
     Cargo.getAll,

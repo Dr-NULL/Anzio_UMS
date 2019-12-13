@@ -4,6 +4,7 @@ import { Config } from "../tool/config";
 import { Log } from "../tool/log";
 
 //Lanzamiento de configuraciones
+import { deployCorrupted } from "./deploy-corrupted";
 import { deploySession } from "./deploy-session";
 import { deployRoutes } from "./deploy-routes";
 import { deployJson } from "./deploy-json";
@@ -19,6 +20,7 @@ export async function deployServer() {
     orm = await createConnection(Config.Orm)
     
     //Ejecutar despliegues
+    deployCorrupted()
     deployJson()
     deployCors()
     deploySession()

@@ -1,1 +1,26 @@
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <div class="brand">
+    <i class="fas fa-biohazard fa-2x"></i>
+    <span>SYS UMS</span>
+  </div>
+  <div class="middle">
+
+  </div>
+  <div class="right">
+    <button id="btnToggle" mat-flat-button color="primary" (click)="navToggle()">
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [(opened)]="navOpened">
+    <span>LOOOL</span>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet>
+    </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -149,4 +149,12 @@ export class File{
             throw `No es posible escribir el archivo.\nPath = "${this.fullPath}"`
         }
     }
+
+    public kill() {
+        try {
+            fs.unlinkSync(this.fullPath)
+        } catch {
+            throw `No es posible eliminar el archivo.\nPath = "${this.fullPath}"`
+        }
+    }
 }

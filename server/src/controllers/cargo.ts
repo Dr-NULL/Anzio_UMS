@@ -3,7 +3,7 @@ import { Cargo } from "../models/cargo";
 
 export const getAll = new EndPoint()
 getAll.method = "get"
-getAll.path = "/daemon/cargo/get"
+getAll.path = "/cargo/get"
 getAll.callback = async (req, res) => {
     try {
         const data = await Cargo.find()
@@ -18,7 +18,7 @@ getAll.callback = async (req, res) => {
 
 export const getById = new EndPoint()
 getById.method = "get"
-getById.path = "/daemon/cargo/get/:id"
+getById.path = "/cargo/get/:id"
 getById.callback = async (req, res) => {
     try {
         const data = await Cargo.find({

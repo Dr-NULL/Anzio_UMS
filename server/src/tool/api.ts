@@ -39,7 +39,7 @@ interface ApiError extends Fail {
 
 interface ApiErrorSource {
     pointer: string;
-    parameter: string;
+    parameter: any;
 }
 
 export class Api {
@@ -72,7 +72,7 @@ export class Api {
         const errors = fail.map((x: ApiError) => {
             x.source = {
                 pointer: this.req.originalUrl,
-                parameter: ""
+                parameter: this.req.params
             }
 
             switch (x.status) {

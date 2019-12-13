@@ -1,0 +1,39 @@
+mat-toolbar {
+  height: 4rem;
+
+  .brand {
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      margin-right: 0.75rem;
+    }
+
+    span {
+      font-size: 25px;
+      padding-top: 0.25rem;
+    }
+  }
+
+  .middle {
+    flex: 1;
+    height: 100%;
+  }
+}
+
+mat-sidenav-container {
+  height: calc(100% - 4rem);
+
+  mat-sidenav {
+    width: 40vw;
+    min-width: 320px;
+    max-width: 480px;
+  }
+
+  mat-sidenav-content {
+    width: 100vw;
+  }
+}

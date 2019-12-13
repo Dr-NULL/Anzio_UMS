@@ -3,7 +3,7 @@ import { Area } from "../models/area";
 
 export const getAll = new EndPoint()
 getAll.method = "get"
-getAll.path = "/daemon/area/get"
+getAll.path = "/area/get"
 getAll.callback = async (req, res) => {
     try {
         const data = await Area.find()
@@ -18,7 +18,7 @@ getAll.callback = async (req, res) => {
 
 export const getById = new EndPoint()
 getById.method = "get"
-getById.path = "/daemon/area/get/:id"
+getById.path = "/area/get/:id"
 getById.callback = async (req, res) => {
     try {
         const data = await Area.find({

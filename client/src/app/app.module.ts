@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Components
 import { ShowOnDirtyErrorStateMatcher, ErrorStateMatcher } from '@angular/material';
-import { routes , RouterModule } from './app.routing';
-import { materialModules } from './app.material';
-import { sharedObjects, entryObjects } from './app.shared.comp';
+import { routes , RouterModule } from './configuration/app.routing';
+import { materialModules } from './configuration/app.material';
+import { sharedObjects, entryObjects } from './configuration/app.shared.comp';
 
 // Services Constructor
 import { HttpService } from './services/config/http.service';
