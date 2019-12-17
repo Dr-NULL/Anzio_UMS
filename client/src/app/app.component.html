@@ -1,8 +1,8 @@
 <mat-toolbar>
-  <div class="brand">
+  <a routerLink="" class="brand" (click)="navOpened = false">
     <i class="fas fa-biohazard fa-2x"></i>
     <span>SYS UMS</span>
-  </div>
+  </a>
   <div class="middle">
 
   </div>
@@ -15,7 +15,16 @@
 
 <mat-sidenav-container>
   <mat-sidenav mode="side" [(opened)]="navOpened">
-    <span>LOOOL</span>
+    <mat-list>
+      <a mat-list-item routerLink="login" routerLinkActive="active" (click)="navToggle()">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Iniciar Sesión</span>
+      </a>
+      <a mat-list-item routerLink="setup" routerLinkActive="active" (click)="navToggle()">
+        <i class="fas fa-cog"></i>
+        <span>Configuración</span>
+      </a>
+    </mat-list>
 
   </mat-sidenav>
 

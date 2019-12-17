@@ -1,1 +1,29 @@
-ESTE ES EL SETUP NOJODA AHHHHHHHH
+<div class="main">
+  <mat-card>
+    <mat-card-title>
+      <span>Usuario System</span>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <p>El usuario System posee <strong>acceso total</strong> a todos los sistemas. Solo debe de ser utilizado cuando se requiera realizar una acción que los Administradores <strong>no puedan realizar</strong>, como por ejemplo, inhabilitar manualmente a otro Administrador.</p>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <mat-form-field>
+            <input type="text" #txtNick matInput placeholder="Nombre de Usuario:" readonly />
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-form-field>
+            <input type="text" #txtPass matInput placeholder="{{ txtPassPH }}" readonly />
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+      <br />
+      <button mat-raised-button color="accent" (click)="onReqNewPass()">
+        <i class="fas fa-random"></i>
+        <span>Generar Contraseña</span>
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

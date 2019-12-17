@@ -1,7 +1,10 @@
+/* MENU */
 mat-toolbar {
   height: 4rem;
 
   .brand {
+    color: #000;
+    text-decoration: none;
     height: 100%;
     display: flex;
     flex-flow: row nowrap;
@@ -31,6 +34,32 @@ mat-sidenav-container {
     width: 40vw;
     min-width: 320px;
     max-width: 480px;
+
+    mat-list {
+      padding: 0;
+
+      .mat-list-item {
+        color: #000;
+        text-decoration: none;
+      }
+      .mat-list-item {
+        transition-duration: 250ms;
+        color: #000;
+        background: initial;
+      }
+
+      .mat-list-item:hover {
+        transition-duration: 250ms;
+        color: #000;
+        background: #d5d5d5;
+      }
+
+      .mat-list-item.active {
+        transition-duration: 250ms;
+        color: #000;
+        background: #e5e5e5;
+      }
+    }
   }
 
   mat-sidenav-content {

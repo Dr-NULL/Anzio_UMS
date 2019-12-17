@@ -11,20 +11,16 @@ export function deploySeeds() {
     
 //Importar semillas aquí ↓↓↓
 import { seedSexo } from "./seed-sexo";
-import { seedIntLoad } from "./seed-load";
 import { seedArea } from "./seed-area";
 import { seedCargo } from "./seed-cargo";
 import { seedUsuario } from "./seed-usuario";
 import { seedSistema } from "./seed-sistema";
-import { seedMenu } from "./seed-menu";
 
 //Agregar el orden de limpieza aquí ↓↓↓
 const entitiesClear: Seed<any>[] = [
     //Maestros
     seedUsuario,
-    seedIntLoad,
-    seedMenu,
-
+    
     //Paramétricas
     seedSistema,
     seedCargo,
@@ -38,12 +34,10 @@ const entitiesInsert: Seed<any>[] = [
     seedSexo,
     seedCargo,
     seedArea,
-
-    //Interfaces de Paso
-    seedIntLoad
+    seedSistema
 ]
 
-//Agregar el orden de inserción aquí ↓↓↓
+//Agregar el orden de ejecución aquí ↓↓↓
 const entitiesAction: Seed<any>[] = [
     //Maestros
     seedUsuario

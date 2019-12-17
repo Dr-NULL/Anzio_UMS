@@ -9,12 +9,17 @@ export interface Usuario {
   token: string;
   email: string;
   isActive: boolean;
+  isSystem: boolean;
+  isAdmin: boolean;
   rut: string;
   nombres: string;
   apellidoP: string;
   apellidoM: string;
   fechaNacim: Date;
-  fechaCreac: Date;
+  fechaInserc: Date;
+  fechaElimin: Date;
+  fechaActivac: Date;
+  fechaDesact: Date;
   genero: Sexo;
   cargo: Cargo;
   area: Area;

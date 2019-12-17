@@ -10,10 +10,7 @@ export module Path {
     export module Data {
         export const corrupted = join(data, "corrupted.flow")
         export const session = join(data, "session")
-        export const sources = join(data, "sources")
-        export module Sources {
-            export const rrhh = join(sources, "rrhh.csv")
-        }
+        export const uploaded = join(data, "uploaded")
     }
 }
 

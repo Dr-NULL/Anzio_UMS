@@ -1,0 +1,70 @@
+.container {
+  box-sizing: border-box;
+  text-decoration: none;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+
+  .view {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    padding: 1rem;
+    width: 100%;
+    min-height: calc(100% - 3rem);
+
+    img {
+      box-sizing: border-box;
+      width: calc(100% - 2rem);
+    }
+  }
+
+  .text {
+    color: #000;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3rem;
+    padding: 1rem;
+  }
+}
+
+:host {
+  margin: 0;
+  padding: 0;
+}
+
+.view.yellow {
+  background: rgb(241, 215, 65);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+}
+
+.view.blue {
+  background: rgb(77, 65, 241);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+}
+
+.view.green {
+  background: rgb(50, 185, 80);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+}
+
+.view.red {
+  background: rgb(207, 47, 47);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+}
+
+:host .view {
+  transition-duration: 250ms;
+  filter: brightness(1) contrast(1);
+}
+
+:host:hover .view {
+  transition-duration: 250ms;
+  filter: brightness(2.5) contrast(0.5);
+}

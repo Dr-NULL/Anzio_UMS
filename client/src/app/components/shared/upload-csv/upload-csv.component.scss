@@ -1,0 +1,15 @@
+input[type=file] {
+  display: none;
+}
+
+.actions {
+  padding-top: 1.5rem;
+
+  button {
+    margin-left: 1rem;
+  }
+
+  :first-child {
+    margin-left: initial;
+  }
+}

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from './services/usuario.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { UsuarioService } from './services/usuario/usuario.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,9 +18,13 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     // Redirects
-    const data = await this.usuarioCtrl.getActive();
-    if (data.length === 0) {
-      this.routerCtrl.navigate(['/setup']);
+    try {
+      const data = await this.usuarioCtrl.getActive();
+      if (data.data.length === 0) {
+        this.routerCtrl.navigate(['/setup']);
+      }
+    } catch (err) {
+      console.log(err);
     }
 
     // Starting Point
@@ -29,7 +33,5 @@ export class AppComponent implements OnInit {
 
   navToggle() {
     this.navOpened = !this.navOpened;
-    console.clear();
-    console.log(`nav -> ${this.navOpened}`);
   }
 }

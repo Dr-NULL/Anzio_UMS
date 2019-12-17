@@ -7,12 +7,9 @@ getAll.path = "/area/get"
 getAll.callback = async (req, res) => {
     try {
         const data = await Area.find()
-        res.api.success(data)
+        res.api.send(data)
     } catch(err) {
-        res.api.failed({
-            status: "500",
-            detail: err
-        })
+        res.api.catch(err)
     }
 }
 
@@ -24,11 +21,8 @@ getById.callback = async (req, res) => {
         const data = await Area.find({
             where: { id: req.params.id }
         })
-        res.api.success(data)
+        res.api.send(data)
     } catch(err) {
-        res.api.failed({
-            status: "500",
-            detail: err
-        })
+        res.api.catch(err)
     }
 }

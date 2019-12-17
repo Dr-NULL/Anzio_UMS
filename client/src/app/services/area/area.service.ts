@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './config/http.service';
+import { HttpService } from '../http/http.service';
 
-import { Area } from '../interfaces/area';
-import { urlServer } from '../app.global';
+import { Area } from '../../interfaces/area';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class AreaService {
 
   getAll() {
     return this.httpCtrl.get<Area[]>(
-      urlServer + '/daemon/cargo/get/'
+      '/cargo/get/'
     );
   }
 }

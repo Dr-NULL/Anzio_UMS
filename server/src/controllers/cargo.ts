@@ -1,5 +1,6 @@
 import { EndPoint } from "../tool/endpoint";
 import { Cargo } from "../models/cargo";
+import { StatusCodes } from "../tool/api";
 
 export const getAll = new EndPoint()
 getAll.method = "get"
@@ -7,11 +8,11 @@ getAll.path = "/cargo/get"
 getAll.callback = async (req, res) => {
     try {
         const data = await Cargo.find()
-        res.api.success(data)
+        res.api.send(data)
     } catch(err) {
         res.api.failed({
-            status: "500",
-            detail: err
+            HttpResponse: StatusCodes.cod500,
+            details: err.message
         })
     }
 }
@@ -24,11 +25,12 @@ getById.callback = async (req, res) => {
         const data = await Cargo.find({
             where: { id: req.params.id }
         })
-        res.api.success(data)
+
+        res.api.send(data)
     } catch(err) {
         res.api.failed({
-            status: "500",
-            detail: err
+            HttpResponse: StatusCodes.cod500,
+            details: err.message
         })
     }
 }

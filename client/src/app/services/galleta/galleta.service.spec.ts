@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HeadersService } from './headers.service';
+import { GalletaService } from './galleta.service';
 
-describe('HeadersService', () => {
+describe('GalletaService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: HeadersService = TestBed.get(HeadersService);
+    const service: GalletaService = TestBed.get(GalletaService);
     expect(service).toBeTruthy();
   });
 });

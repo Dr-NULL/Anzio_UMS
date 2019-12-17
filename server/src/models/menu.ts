@@ -23,11 +23,11 @@ export class Menu extends BaseEntity {
     @JoinTable()
     padre: Promise<Menu[]>;
 
-    @ManyToOne(type => Sistema, x => x.id)
+    @ManyToOne(type => Sistema, x => x.id, { eager: true })
     @JoinTable()
-    sistema: Promise<Sistema>;
+    sistema: Sistema;
 
-    @ManyToOne(type => Perfil, x => x.id)
+    @ManyToOne(type => Perfil, x => x.id, { eager: true })
     @JoinTable()
-    perfil: Promise<Perfil>;
+    perfil: Perfil;
 }

@@ -11,12 +11,11 @@ import { materialModules } from './configuration/app.material';
 import { sharedObjects, entryObjects } from './configuration/app.shared.comp';
 
 // Services Constructor
-import { HttpService } from './services/config/http.service';
+import { HttpService } from './services/http/http.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Services User
-import { HeadersService } from './services/config/headers.service';
-import { UsuarioService } from './services/usuario.service';
+import { UsuarioService } from './services/usuario/usuario.service';
 
 
 @NgModule({
@@ -37,13 +36,6 @@ import { UsuarioService } from './services/usuario.service';
   providers: [
     HttpService,
     UsuarioService,
-    [
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: HeadersService,
-        multi: true
-      }
-    ],
     {
       provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher

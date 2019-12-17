@@ -23,6 +23,12 @@ export class Usuario extends BaseEntity {
     @Column({ type: "bit", default: 0 })
     isActive: boolean;
     
+    @Column({ type: "bit", default: 0 })
+    isSystem: boolean;
+    
+    @Column({ type: "bit", default: 0 })
+    isAdmin: boolean;
+    
     @Column({ type: "varchar", length: 12 })
     rut: string;
     
@@ -38,7 +44,7 @@ export class Usuario extends BaseEntity {
     @Column({ type: "date" })
     fechaNacim: Date;
 
-    @Column({ type: "date", nullable: true })
+    @Column({ type: "date", nullable: true, default: () =>  "CURRENT_TIMESTAMP" })
     fechaInserc: Date;
 
     @Column({ type: "date", nullable: true })

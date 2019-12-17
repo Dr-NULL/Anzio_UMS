@@ -1,0 +1,107 @@
+.container {
+  padding: 1rem;
+  height: calc(100% - 2rem);
+
+  mat-card {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    padding: 0;
+
+    mat-card-title {
+      box-sizing: border-box;
+      padding: 1rem 1rem 0 1rem;
+      width: 100%;
+    }
+
+    mat-card-subtitle {
+      box-sizing: border-box;
+      padding: 0 1rem 0 1rem;
+      width: 100%;
+    }
+
+    mat-card-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex: 1;
+    }
+
+    @media screen and (orientation: portrait) {
+      mat-card-content {
+        flex-flow: column;
+
+        app-proj-tarjet:first-child:nth-last-child(1),
+        app-proj-tarjet:first-child:nth-last-child(1) ~ app-proj-tarjet  {
+          width: 100%;
+          min-height: 100%;
+        }
+
+        app-proj-tarjet  {
+          width: 100%;
+          min-height: 50%;
+        }
+      }
+    }
+
+    @media screen and (orientation: landscape) {
+      mat-card-content {
+        flex-flow: row wrap;
+        width: 100%;
+
+        app-proj-tarjet {
+          width: 100%;
+          height: 100%;
+        }
+
+        @media screen and (min-width: 480px) {
+          app-proj-tarjet:first-child:nth-last-child(1),
+          app-proj-tarjet:first-child:nth-last-child(1) ~ app-proj-tarjet  {
+            width: 100%;
+          }
+
+          app-proj-tarjet {
+            width: 50%;
+          }
+        }
+
+        @media screen and (min-width: 800px) {
+          app-proj-tarjet:first-child:nth-last-child(1),
+          app-proj-tarjet:first-child:nth-last-child(1) ~ app-proj-tarjet  {
+            width: 100%;
+          }
+
+          app-proj-tarjet:first-child:nth-last-child(2),
+          app-proj-tarjet:first-child:nth-last-child(2) ~ app-proj-tarjet  {
+            width: 50%;
+          }
+
+          app-proj-tarjet {
+            width: calc(100% / 3);
+          }
+        }
+
+        @media screen and (min-width: 1024px) {
+          app-proj-tarjet:first-child:nth-last-child(1),
+          app-proj-tarjet:first-child:nth-last-child(1) ~ app-proj-tarjet  {
+            width: 100%;
+          }
+
+          app-proj-tarjet:first-child:nth-last-child(2),
+          app-proj-tarjet:first-child:nth-last-child(2) ~ app-proj-tarjet  {
+            width: 50%;
+          }
+
+          app-proj-tarjet:first-child:nth-last-child(3),
+          app-proj-tarjet:first-child:nth-last-child(3) ~ app-proj-tarjet  {
+            width: calc(100% / 3);
+          }
+
+          app-proj-tarjet {
+            width: 25%;
+          }
+        }
+      }
+    }
+  }
+}

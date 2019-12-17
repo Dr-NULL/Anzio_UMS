@@ -1,9 +1,9 @@
-// import { NavbarComponent } from './components/shared/navbar/navbar.component';
-// import { CardUserComponent } from './components/shared/card-user/card-user.component';
+import { UploadCsvComponent } from '../components/shared/upload-csv/upload-csv.component';
+import { ProjTarjetComponent } from '../components/shared/proj-tarjet/proj-tarjet.component';
 
 export const sharedObjects: any[] = [
-  // NavbarComponent,
-  // CardUserComponent
+  UploadCsvComponent,
+  ProjTarjetComponent
 ];
 
 export const entryObjects: any[] = [

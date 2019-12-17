@@ -1,0 +1,20 @@
+<input #btnFile mat-raised-button color="primary" type="file" (change)="onChange()" multiple="false" accept=".csv" />
+<mat-list>
+  <mat-list-item>
+    <i class="fas fa-angle-right"></i>
+    <span *ngIf="file===null">Ningún archivo seleccionado.</span>
+    <span *ngIf="file!=null">{{ file.name }}</span>
+  </mat-list-item>
+  <mat-divider>
+  </mat-divider>
+</mat-list>
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="onClick()">
+    <i class="fas fa-plus"></i>
+    <span>Examinar...</span>
+  </button>
+  <button #btnUpload mat-raised-button color="accent" (click)="onUpload()">
+    <i class="fas fa-file-upload"></i>
+    <span>Subir Archivo/s</span>
+  </button>
+</div>

@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  min-width: 320px;
+  max-width: 480px;
+  width: 50vw;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}

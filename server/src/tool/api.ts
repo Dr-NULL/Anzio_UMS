@@ -1,6 +1,320 @@
 import { Request, Response } from "express";
 
-//Extender Response
+//Interface de Entrada para errores
+export interface HttpResponse {
+    status: string;
+    title: string;
+}
+
+interface ApiError extends HttpResponse {
+    details: string;
+    source: ApiErrorSource;
+    stack?: string;
+}
+
+interface ApiErrorSource {
+    pointer: string;
+    parameter: any;
+}
+
+export module StatusCodes {
+    // Respuestas Informativas
+    export const cod100: HttpResponse = {
+        status: "100",
+        title: "Continue",
+    };
+    
+    export const cod101: HttpResponse = {
+        status: "101",
+        title: "Switching Protocol"
+    };
+    
+    export const cod102: HttpResponse = {
+        status: "102",
+        title: "Processing"
+    };
+    
+    // Respuestas correctas
+    export const cod200: HttpResponse = {
+        status: "200",
+        title: "OK"
+    };
+    
+    export const cod201: HttpResponse = {
+        status: "201",
+        title: "Created"
+    };
+    
+    export const cod202: HttpResponse = {
+        status: "202",
+        title: "Accepted"
+    };
+    
+    export const cod203: HttpResponse = {
+        status: "203",
+        title: "Non-Authoritative Information"
+    };
+    
+    export const cod204: HttpResponse = {
+        status: "204",
+        title: "No Content"
+    };
+    
+    export const cod205: HttpResponse = {
+        status: "205",
+        title: "Reset Content"
+    };
+    
+    export const cod206: HttpResponse = {
+        status: "206",
+        title: "Partial Content"
+    };
+    
+    export const cod226: HttpResponse = {
+        status: "226",
+        title: "IM Used"
+    };
+    
+    // Redirecciones
+    export const cod300: HttpResponse = {
+        status: "300",
+        title: "Multiple choice"
+    };
+    
+    export const cod301: HttpResponse = {
+        status: "301",
+        title: "Moved Permently"
+    };
+    
+    export const cod302: HttpResponse = {
+        status: "302",
+        title: "Found"
+    };
+    
+    export const cod303: HttpResponse = {
+        status: "303",
+        title: "See Other"
+    };
+    
+    export const cod304: HttpResponse = {
+        status: "304",
+        title: "Not Modified"
+    };
+    
+    export const cod305: HttpResponse = {
+        status: "305",
+        title: "Use Proxy"
+    };
+    
+    export const cod306: HttpResponse = {
+        status: "306",
+        title: "Unused"
+    };
+    
+    export const cod307: HttpResponse = {
+        status: "307",
+        title: "Temporaly Redirect"
+    };
+    
+    export const cod308: HttpResponse = {
+        status: "308",
+        title: "Permanently Redirect"
+    };
+    
+    // Errores de Cliente
+    export const cod400: HttpResponse = {
+        status: "400",
+        title: "Bad Request"
+    };
+    
+    export const cod401: HttpResponse = {
+        status: "401",
+        title: "Unauthorized"
+    };
+    
+    export const cod402: HttpResponse = {
+        status: "402",
+        title: "Payment Required"
+    };
+    
+    export const cod403: HttpResponse = {
+        status: "403",
+        title: "Forbidden"
+    };
+    
+    export const cod404: HttpResponse = {
+        status: "404",
+        title: "Not Found"
+    };
+    
+    export const cod405: HttpResponse = {
+        status: "405",
+        title: "Method Not Allowed"
+    };
+    
+    export const cod406: HttpResponse = {
+        status: "406",
+        title: "Not Acceptable"
+    };
+    
+    export const cod407: HttpResponse = {
+        status: "407",
+        title: "Proxy Authentication Required"
+    };
+    
+    export const cod408: HttpResponse = {
+        status: "408",
+        title: "Request Timeout"
+    };
+    
+    export const cod409: HttpResponse = {
+        status: "409",
+        title: "Conflict"
+    };
+    
+    export const cod410: HttpResponse = {
+        status: "410",
+        title: "Gone"
+    };
+    
+    export const cod411: HttpResponse = {
+        status: "411",
+        title: "Length Required"
+    };
+    
+    export const cod412: HttpResponse = {
+        status: "412",
+        title: "Precondition Failed"
+    };
+    
+    export const cod413: HttpResponse = {
+        status: "413",
+        title: "Payload Too Large"
+    };
+    
+    export const cod414: HttpResponse = {
+        status: "414",
+        title: "URI Too Long"
+    };
+    
+    export const cod415: HttpResponse = {
+        status: "415",
+        title: "Unsupported Media Type"
+    };
+    
+    export const cod416: HttpResponse = {
+        status: "416",
+        title: "Requested Range Not Satisfiable"
+    };
+    
+    export const cod417: HttpResponse = {
+        status: "417",
+        title: "Expectation Failed"
+    };
+    
+    export const cod418: HttpResponse = {
+        status: "418",
+        title: "I'm A Teapot"
+    };
+    
+    export const cod421: HttpResponse = {
+        status: "421",
+        title: "Misdirected Request"
+    };
+    
+    export const cod422: HttpResponse = {
+        status: "422",
+        title: "Unprocessable Entity"
+    };
+    
+    export const cod423: HttpResponse = {
+        status: "423",
+        title: "Locked"
+    };
+    
+    export const cod424: HttpResponse = {
+        status: "424",
+        title: "Failed Dependency"
+    };
+    
+    export const cod426: HttpResponse = {
+        status: "426",
+        title: "Upgrade Required"
+    };
+    
+    export const cod428: HttpResponse = {
+        status: "428",
+        title: "Precondition Required"
+    };
+    
+    export const cod429: HttpResponse = {
+        status: "429",
+        title: "Too Many Requests"
+    };
+    
+    export const cod431: HttpResponse = {
+        status: "431",
+        title: "Request Header Fields Too Large"
+    };
+    
+    export const cod451: HttpResponse = {
+        status: "451",
+        title: "Unavailable For Legal Reasons"
+    };
+
+    // Errores del servidor
+    export const cod500: HttpResponse = {
+        status: "500",
+        title: "Internal Server Error"
+    };
+    
+    export const cod501: HttpResponse = {
+        status: "501",
+        title: "Not Implemented"
+    };
+    
+    export const cod502: HttpResponse = {
+        status: "502",
+        title: "Bad Gateway"
+    };
+    
+    export const cod503: HttpResponse = {
+        status: "503",
+        title: "Service Unavailable"
+    };
+    
+    export const cod504: HttpResponse = {
+        status: "504",
+        title: "Gateway Timeout"
+    };
+    
+    export const cod505: HttpResponse = {
+        status: "505",
+        title: "HTTP Version Not Supported"
+    };
+    
+    export const cod506: HttpResponse = {
+        status: "506",
+        title: "Variant Also Negotiates"
+    };
+    
+    export const cod508: HttpResponse = {
+        status: "508",
+        title: "Loop Detected"
+    };
+    
+    export const cod510: HttpResponse = {
+        status: "510",
+        title: "Not Extended"
+    };
+    
+    export const cod511: HttpResponse = {
+        status: "511",
+        title: "Network Authentication Required"
+    };
+}
+
+// Extender Response
 declare global {
     namespace Express {
         export interface Response{
@@ -9,39 +323,7 @@ declare global {
     }
 }
 
-//Interface de Entrada para errores
-export interface Fail{
-    status: 
-    /* Informational responses */
-    "100" | "101" | "102" | "103" | 
-
-    /* Successful responses */ 
-    "200" | "201" | "202" | "203" | "204" | "205" | "206" | "207" | "208" | "226" |
-
-    /* Redirection messages */
-    "300" | "301" | "302" | "303" | "304" | "306" | "307" | "308" |
-
-    /* Client error response */
-    "400" | "401" | "402" | "403" | "404" | "405" | "406" | "407" | "408" | "409" | "410" | 
-    "411" | "412" | "413" | "414" | "415" | "416" | "417" | "418" | "421" | "422" | "423" | 
-    "424" | "425" | "426" | "428" | "429" | "431" | "451" | 
-
-    /* Server error responses */
-    "500" | "501" | "502" | "503" | "504" | "505" | "506" | "507" | "508" | "510" | "511"
-
-    detail: string;
-}
-
-interface ApiError extends Fail {
-    title?: string;
-    source?: ApiErrorSource;
-}
-
-interface ApiErrorSource {
-    pointer: string;
-    parameter: any;
-}
-
+// API Wrapper
 export class Api {
     private meta = {
         brand: "Frigosorno S.A.",
@@ -59,214 +341,73 @@ export class Api {
         this.res = res
     }
 
-    public success(data: any) {
+    public send(data: any = null) {
         this.res.contentType("application/vnd.api+json")
+        if (data != null) {
+            this.res.send({
+                data: data,
+                meta: this.meta
+            })
+        }
+    }
+
+    public failed(...fail: Array<{
+        HttpResponse: HttpResponse;
+        details: string;
+    }>) {
+        // Configurar errores
+        this.res.contentType("application/vnd.api+json")
+        
+        // Get Parameters
+        let param: any = {}
+        if (this.req.method.toLowerCase() == "get") {
+            param = this.req.params
+        } else {
+            param = this.req.body
+        }
+
+        let arrFail: ApiError[] = []
+        for (let item of fail) {
+            arrFail.push({
+                status: item.HttpResponse.status,
+                title: item.HttpResponse.title,
+                details: item.details,
+                source: {
+                    pointer: this.req.originalUrl,
+                    parameter: param
+                }
+            })
+        }
+
         this.res.send({
-            data: data,
+            errors: arrFail,
             meta: this.meta
         })
     }
 
-    public failed(...fail: Fail[]) {
-        //Configurar errores
-        const errors = fail.map((x: ApiError) => {
-            x.source = {
-                pointer: this.req.originalUrl,
-                parameter: this.req.params
-            }
-
-            switch (x.status) {
-                case "100":
-                    x.title = "Continue"
-                    break
-                case "101":
-                    x.title = "Switching Protocol"
-                    break
-                case "102":
-                    x.title = "Processing (WebDAV)"
-                    break
-                case "103":
-                    x.title = "Early Hints"
-                    break
-                case "200":
-                    x.title = "OK"
-                    break
-                case "201":
-                    x.title = "Created"
-                    break
-                case "202":
-                    x.title = "Accepted"
-                    break
-                case "203":
-                    x.title = "Non-Authoritative Information"
-                    break
-                case "204":
-                    x.title = "No Content"
-                    break
-                case "205":
-                    x.title = "Reset Content"
-                    break
-                case "206":
-                    x.title = "Partial content"
-                    break
-                case "207":
-                    x.title = "Multi-Status"
-                    break
-                case "208":
-                    x.title = "Already Reported"
-                    break
-                case "226":
-                    x.title = "IM Used"
-                    break
-                case "300":
-                    x.title = "Multiple Choice"
-                    break
-                case "301":
-                    x.title = "Moved Permanently"
-                    break
-                case "302":
-                    x.title = "Found"
-                    break
-                case "303":
-                    x.title = "See Other"
-                    break
-                case "304":
-                    x.title = "Not Modified"
-                    break
-                case "306":
-                    x.title = "Unused"
-                    break
-                case "307":
-                    x.title = "Temporary Redirect"
-                    break
-                case "308":
-                    x.title = "Permanent Redirect"
-                    break
-                case "400":
-                    x.title = "Bad Request"
-                    break
-                case "401":
-                    x.title = "Unauthorized"
-                    break
-                case "402":
-                    x.title = "Payment Required"
-                    break
-                case "403":
-                    x.title = "Forbidden"
-                    break
-                case "404":
-                    x.title = "Not Found"
-                    break
-                case "405":
-                    x.title = "Method Not Allowed"
-                    break
-                case "406":
-                    x.title = "Not Acceptable"
-                    break
-                case "407":
-                    x.title = "Proxy Authentication Required"
-                    break
-                case "408":
-                    x.title = "Request Timeout"
-                    break
-                case "409":
-                    x.title = "Conflict"
-                    break
-                case "410":
-                    x.title = "Gone"
-                    break
-                case "411":
-                    x.title = "length Required"
-                    break
-                case "412":
-                    x.title = "Precondition Failed"
-                    break
-                case "413":
-                    x.title = "Payload Too Large"
-                    break
-                case "414":
-                    x.title = "URI Too Long"
-                    break
-                case "415":
-                    x.title = "Unsupported Media Type"
-                    break
-                case "416":
-                    x.title = "Requested Range Not Satisfiable"
-                    break
-                case "417":
-                    x.title = "Expectation Failed"
-                    break
-                case "418":
-                    x.title = "I'm a teapot"
-                    break
-                case "421":
-                    x.title = "Misdirected Required"
-                    break
-                case "422":
-                    x.title = "Unprocessable Entity"
-                    break
-                case "423":
-                    x.title = "Locked"
-                    break
-                case "424":
-                    x.title = "Failed Dependency"
-                    break
-                case "425":
-                    x.title = "Too Early"
-                    break
-                case "426":
-                    x.title = "Upgrade Required"
-                    break
-                case "428":
-                    x.title = "Precondition Required"
-                    break
-                case "429":
-                    x.title = "Too Many Requests"
-                    break
-                case "431":
-                    x.title = "Request Header Fields Too Large"
-                    break
-                case "451":
-                    x.title = "Unavailable For Legal Reasons"
-                    break
-                case "500":
-                    x.title = "Internal Server Error"
-                    break
-                case "501":
-                    x.title = "Not Implemented"
-                    break
-                case "502":
-                    x.title = "Bad Gateway"
-                    break
-                case "503":
-                    x.title = "Service Unavailable"
-                    break
-                case "504":
-                    x.title = "Gateway Timeout"
-                    break
-                case "505":
-                    x.title = "HTTP Version Not Supported"
-                    break
-                case "506":
-                    x.title = "Variant Also Negotiates"
-                    break
-                case "507":
-                    x.title = "Insuficient Storage(WebDAV)"
-                    break
-                case "508":
-                    x.title = "Loop Detected(WebDAV)"
-                    break
-                case "510":
-                    x.title = "Not Extended"
-                    break
-                case "511":
-                    x.title = "Network Authentication Required"
-            }
-        })
-
+    public catch(fail: Error) {
+        // Configurar errores
         this.res.contentType("application/vnd.api+json")
+        
+        // Get Parameters
+        let param: any = {}
+        if (this.req.method.toLowerCase() == "get") {
+            param = this.req.params
+        } else {
+            param = this.req.body
+        }
+
         this.res.send({
-            errors: fail,
+            errors: [{
+                status: StatusCodes.cod500.status,
+                title: StatusCodes.cod500.title,
+                details: fail.message,
+                stack: fail.stack,
+                source: {
+                    pointer: this.req.originalUrl,
+                    parameter: param
+                }
+            } as ApiError],
             meta: this.meta
         })
     }

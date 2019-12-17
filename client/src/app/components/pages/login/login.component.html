@@ -1,0 +1,18 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Inicio de Sesión</mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <input type="text" #txtNick matInput placeholder="Usuario:" maxlength="15" />
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" #txtPass matInput placeholder="Contraseña:" maxlength="20" />
+      </mat-form-field>
+      <br />
+      <button #btnLogin mat-flat-button color="primary" (click)="onLogin()">
+        <i class="fas fa-user-alt"></i>
+        <span>Ingresar</span>
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

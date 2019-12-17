@@ -23,8 +23,9 @@ seedUsuario.action = async () => {
         user.apellidoM = ""
         user.fechaNacim = new Date(666, 5, 6)
         user.fechaInserc = new Date(666, 5, 6)
-        user.fechaActivac = new Date(666, 5, 6)
         user.isActive = false
+        user.isSystem = true
+        user.isAdmin = true
         user.sexo = sexo
         user.area = area
         user.cargo = cargo

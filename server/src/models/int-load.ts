@@ -12,10 +12,10 @@ export class IntLoad extends BaseEntity{
     nombres: string;
     
     @Column({ type: "varchar", length: 100, nullable: true})
-    apellido1: string;
+    apellidoP: string;
     
     @Column({ type: "varchar", length: 100, nullable: true})
-    apellido2: string;
+    apellidoM: string;
     
     @Column({ type: "varchar", length: 100, nullable: true})
     area: string;
@@ -24,17 +24,14 @@ export class IntLoad extends BaseEntity{
     cargo: string;
     
     @Column({ type: "varchar", length: 2, nullable: true})
-    genero: string;
+    sexo: string;
     
     @Column({ type: "date", nullable: true})
     fechaNacim: Date;
     
     @Column({ type: "varchar", length: 100, nullable: true})
-    jefeNombres: string;
-    
-    @Column({ type: "varchar", length: 100, nullable: true})
-    jefeApellido1: string;
-    
-    @Column({ type: "varchar", length: 100, nullable: true})
-    jefeApellido2: string;
+    jefeRUT: string;
+
+    @Column({ type: "varchar", length: 100, nullable: true })
+    email: string;
 }

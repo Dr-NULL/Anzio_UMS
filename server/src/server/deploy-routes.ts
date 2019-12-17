@@ -1,7 +1,12 @@
 import { routes } from "./routes";
+import { Path } from "../tool/config";
 import { app } from ".";
+import multer from "multer";
 
 export function deployRoutes(){
+    //Obtener archivos que se han subido
+    const upload = multer({ dest: Path.Data.uploaded })
+
     routes.forEach(route => {
         route.path = "/api" + route.path
 
@@ -24,6 +29,12 @@ export function deployRoutes(){
             case "delete":
                 app.delete(route.path, route.callback)
                 break
+            case "form-data":
+                app.post(
+                    route.path,
+                    upload.fields(route.fileReceive),
+                    route.callback
+                )
         }
     })
 }

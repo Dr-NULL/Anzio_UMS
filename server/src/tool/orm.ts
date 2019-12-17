@@ -33,8 +33,9 @@ export async function deploy(
             Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)
             let rep = orm.getRepository(inst.type)
             await rep.delete({})
+
         } catch (err) {
-            Log.er('Error en la ejecución de "Actions":')
+            Log.er('Error en la ejecución de "Limpieza":')
             Log.ln(err + "\n")
             process.exit()
         }
@@ -59,7 +60,7 @@ export async function deploy(
 
     //Ejecutar acciones de Entidades
     Log.ln()
-    Log.ev(`Comenzando ejecuciones finales:`)
+    Log.ev(`Comenzando Ejecuciones finales:`)
     for (let inst of entitiesAction) {
         if (inst.action != null) {
             Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import { Usuario } from '../../../interfaces/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-setup',
@@ -6,10 +9,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./setup.component.scss']
 })
 export class SetupComponent implements OnInit {
+  @ViewChild('txtNick', { static: true })
+  txtNick: { nativeElement: HTMLInputElement };
 
-  constructor() { }
+  @ViewChild('txtPass', { static: true })
+  txtPass: { nativeElement: HTMLInputElement };
+  txtPassPH = 'Presione en "Generar Contraseña"...';
 
-  ngOnInit() {
+  user: Usuario;
+
+  constructor(
+    private usuarioServ: UsuarioService,
+    private routerCtrl: Router
+  ) { }
+
+  async ngOnInit() {
+    try {
+      const res = await this.usuarioServ.getById(1);
+      this.user = res.data;
+      this.txtNick.nativeElement.value = this.user.nick;
+    } catch (err) {
+      this.routerCtrl.navigate(['']);
+    }
   }
 
+  async onReqNewPass() {
+    try {
+      this.user.pass = (await this.usuarioServ.getNewSysPass()).data;
+      this.txtPassPH = 'Nueva Contraseña:';
+      this.txtPass.nativeElement.value = this.user.pass;
+    } catch (err) {
+      this.routerCtrl.navigate(['']);
+    }
+  }
 }
