@@ -68,6 +68,5 @@ export class AppComponent implements OnInit, DoCheck {
         snack.dismiss();
       }, 2000);
     }
-
   }
 }
