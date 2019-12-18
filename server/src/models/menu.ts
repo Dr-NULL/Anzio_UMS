@@ -13,21 +13,21 @@ export class Menu extends BaseEntity {
     @Column({ type: "varchar", length: 512 })
     descripc: string;
     
-    @Column({ type: "varchar", length: 128 })
+    @Column({ type: "varchar", length: 128, nullable: true })
     url: string;
     
     @Column({ type: "varchar", length: 50 })
     icono: string;
     
-    @ManyToOne(type => Menu, x => x.id, { nullable: true })
+    @ManyToOne(type => Menu, x => x.id, { eager: true, nullable: true })
     @JoinTable()
-    padre: Promise<Menu[]>;
+    children: Menu[];
 
     @ManyToOne(type => Sistema, x => x.id, { eager: true })
     @JoinTable()
     sistema: Sistema;
 
-    @ManyToOne(type => Perfil, x => x.id, { eager: true })
+    @ManyToOne(type => Perfil, x => x.id, { eager: true, nullable: true })
     @JoinTable()
     perfil: Perfil;
 }
