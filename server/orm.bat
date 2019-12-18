@@ -31,7 +31,6 @@ exit
 for /r %%f in (src/migrations/*.*) do (
     call npx typeorm migration:revert
 )
-
 cd src/migrations
 for /r %%f in (*.*) do (
     del /f %%f
