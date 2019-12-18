@@ -3,11 +3,22 @@ import { Menu } from "../models/menu";
 import { Sistema } from "../models/sistema";
 
 export const seedMenu = new Seed(Menu)
-seedMenu.action = async () => {
+seedMenu.action = async (orm) => {
+    //Instanciar árbol
+    const repo = orm.getTreeRepository(Menu)
+
     //Buscar sistema al cual vincular
     const sistema = await Sistema.findOne({
         db: "SYS_UMS"
     })
+    
+    //Crear Raíz de mantenedor de sistemas
+    const menuSist = new Menu()
+    menuSist.nombre = "Sistema"
+    menuSist.descripc = "Contiene mantenedores de los sistemas ya implementados."
+    menuSist.icono = "fas fa-terminal"
+    menuSist.sistema = sistema
+    await repo.save(menuSist)
 
     //Agregar Sistema
     const menuSistAdd = new Menu()
@@ -16,7 +27,8 @@ seedMenu.action = async () => {
     menuSistAdd.descripc = "Crea nuevos proyectos para ser insertados en el sistema."
     menuSistAdd.icono = "fas fa-plus"
     menuSistAdd.sistema = sistema
-    await menuSistAdd.save()
+    menuSistAdd.parent = menuSist
+    await repo.save(menuSistAdd)
 
     //Modificar Sistema
     const menuSistAlt = new Menu()
@@ -25,17 +37,6 @@ seedMenu.action = async () => {
     menuSistAlt.descripc = "Edita o elimina las referencias a proyectos ya implementados."
     menuSistAlt.icono = "fas fa-edit"
     menuSistAlt.sistema = sistema
-    await menuSistAlt.save()
-    
-    //Crear Raíz de mantenedor de sistemas
-    const menuSist = new Menu()
-    menuSist.nombre = "Sistema"
-    menuSist.descripc = "Contiene mantenedores de los sistemas ya implementados."
-    menuSist.icono = "fas fa-terminal"
-    menuSistAdd.sistema = sistema
-    menuSistAdd.children = [
-        menuSistAdd,
-        menuSistAlt
-    ]
-    await menuSist.save()
+    menuSistAlt.parent = menuSist
+    await repo.save(menuSistAlt)
 }

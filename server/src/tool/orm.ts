@@ -1,4 +1,4 @@
-import { createConnection, BaseEntity, Repository } from "typeorm";
+import { createConnection, BaseEntity, Connection } from "typeorm";
 
 interface iClass<T extends BaseEntity> {
     new(): T
@@ -6,7 +6,7 @@ interface iClass<T extends BaseEntity> {
 
 export class Seed<T extends BaseEntity>{
     public data: Array<{[K in keyof T]?: T[K]}>
-    public action: (rep: Repository<T>) => void | Promise<void>
+    public action: (rep: Connection) => void | Promise<void>
     public type: iClass<T>
 
     constructor(entity: iClass<T>) {
@@ -64,8 +64,7 @@ export async function deploy(
     for (let inst of entitiesAction) {
         if (inst.action != null) {
             Log.ok(`Procesando Entidad -> [#${inst.type.name}]`)
-            let rep = orm.getRepository(inst.type)
-            await inst.action(rep)
+            await inst.action(orm)
     
         }
     }

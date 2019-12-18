@@ -15,6 +15,7 @@ import { seedArea } from "./seed-area";
 import { seedCargo } from "./seed-cargo";
 import { seedUsuario } from "./seed-usuario";
 import { seedSistema } from "./seed-sistema";
+import { seedMenu } from "./seed-menu";
 
 //Agregar el orden de limpieza aquí ↓↓↓
 const entitiesClear: Seed<any>[] = [
@@ -40,5 +41,6 @@ const entitiesInsert: Seed<any>[] = [
 //Agregar el orden de ejecución aquí ↓↓↓
 const entitiesAction: Seed<any>[] = [
     //Maestros
-    seedUsuario
+    seedUsuario,
+    seedMenu
 ]

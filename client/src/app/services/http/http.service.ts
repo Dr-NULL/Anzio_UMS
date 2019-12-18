@@ -27,7 +27,7 @@ export class HttpService {
     let res: RespSuccess<T> | RespFailed;
 
     try {
-      const obs = this.httpCtrl.get<RespSuccess<T> | RespFailed>(path);
+      const obs = this.httpCtrl.get<RespSuccess<T> | RespFailed>(path, opt);
       const prm = obs.toPromise<RespSuccess<T> | RespFailed>();
       res = await prm;
 
@@ -81,18 +81,7 @@ export class HttpService {
     });
 
     try {
-      const obs = this.httpCtrl.post<RespSuccess<T> | RespFailed>(
-        path,
-        form,
-        {
-          withCredentials: true,
-          headers: new HttpHeaders({
-            // 'content-type': 'multipart/form-data',
-            'Access-Control-Allow-Origin': urlClient,
-            'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict'
-          })
-        }
-      );
+      const obs = this.httpCtrl.post<RespSuccess<T> | RespFailed>(path, form, opt);
       const prm = obs.toPromise<RespSuccess<T> | RespFailed>();
       res = await prm;
     } catch (err) {

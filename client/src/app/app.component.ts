@@ -4,6 +4,7 @@ import { UsuarioService } from './services/usuario/usuario.service';
 import { GalletaService } from './services/galleta/galleta.service';
 import { Router } from '@angular/router';
 import { RespFailed } from './interfaces/api';
+import { MenuService } from './services/menu/menu.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { RespFailed } from './interfaces/api';
 })
 export class AppComponent implements OnInit, DoCheck {
   title = 'client';
+  isLoggedBefore = false;
   isLogged = false;
   navOpened = false;
 
@@ -19,11 +21,17 @@ export class AppComponent implements OnInit, DoCheck {
     private usuarioServ: UsuarioService,
     private galletaServ: GalletaService,
     private routerCtrl: Router,
-    private snackCtrl: MatSnackBar
+    private snackCtrl: MatSnackBar,
+    private menuServ: MenuService
   ) {}
 
   ngDoCheck() {
     this.isLogged = (this.galletaServ.get('data') != null);
+
+    if (this.isLogged !== this.isLoggedBefore) {
+      this.isLoggedBefore = this.isLogged;
+      this.loadMenu();
+    }
   }
 
   async ngOnInit() {
@@ -33,12 +41,23 @@ export class AppComponent implements OnInit, DoCheck {
       if (data.data.length === 0) {
         this.routerCtrl.navigate(['/setup']);
       }
+
+      this.loadMenu();
     } catch (err) {
       console.log(err);
     }
 
     // Starting Point
     this.navOpened = false;
+  }
+
+  async loadMenu() {
+    try {
+      const res = await this.menuServ.load();
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   navToggle() {

@@ -1,8 +1,9 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable, Tree, TreeChildren, TreeParent } from "typeorm";
 import { Sistema } from "./sistema";
 import { Perfil } from "./perfil";
 
 @Entity({ name: "Menu" })
+@Tree("materialized-path")
 export class Menu extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
     id: number;
@@ -19,15 +20,17 @@ export class Menu extends BaseEntity {
     @Column({ type: "varchar", length: 50 })
     icono: string;
     
-    @ManyToOne(type => Menu, x => x.id, { eager: true, nullable: true })
-    @JoinTable()
+    @TreeChildren()
     children: Menu[];
+    
+    @TreeParent()
+    parent: Menu;
 
-    @ManyToOne(type => Sistema, x => x.id, { eager: true })
+    @ManyToOne(type => Sistema, x => x.id)
     @JoinTable()
     sistema: Sistema;
 
-    @ManyToOne(type => Perfil, x => x.id, { eager: true, nullable: true })
+    @ManyToOne(type => Perfil, x => x.id, { nullable: true })
     @JoinTable()
-    perfil: Perfil;
+    perfil: Perfil[];
 }

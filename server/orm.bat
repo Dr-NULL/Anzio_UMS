@@ -1,11 +1,11 @@
 @echo off
 cls
-goto %1
-
-:migration
 rmdir /q /s dist
 mkdir dist
 call tsc
+goto %1
+
+:migration
 call npx typeorm %*
 echo ^>^> TypeORM Cli
 echo -^> Listo!
@@ -38,4 +38,14 @@ for /r %%f in (*.*) do (
 echo ^>^> TypeORM Cli
 echo  - Base de Datos Eliminada!
 echo  - Migraciones eliminadas!
+exit
+
+:cmd-add
+call npx typeorm migration:generate -n %3
+call npx typeorm migration:run
+echo ^>^> TypeORM Cli
+echo  - Migracion creada!
+echo    nombre: [...]-%3.ts
+echo.
+echo  - Migracion insertada en DB.
 exit
