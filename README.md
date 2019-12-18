@@ -6,7 +6,7 @@ Este proyecto tiene como finalidad el gestionar a los usuarios que utilicen los 
 
 El servidor viene con CORS activado por defecto, esto con la idea de facilitar las pruebas con el cliente de Angular. Además trabaja con TypeORM, el cual también posee su propio archivo de configuración. Para crear ambos archivos, debe de hacerlo en la raíz de la carpeta "server". Estos archivos son:
 
-### appcoinfig.json
+### appconfig.json
 
 Posee la configuración inicial del server:
 ```json
