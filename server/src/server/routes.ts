@@ -5,9 +5,11 @@ import * as Usuario from "../controllers/usuario";
 import * as Area from "../controllers/area";
 import * as Cargo from "../controllers/cargo";
 import * as CSV from "../controllers/csv";
+import * as Sistema from "../controllers/sistema";
 
 export const routes: EndPoint[] = [
     Usuario.login,
+    Usuario.logout,
     Usuario.getAll,
     Usuario.getById,
     Usuario.getActive,
@@ -17,5 +19,6 @@ export const routes: EndPoint[] = [
     Area.getById,
     Cargo.getAll,
     Cargo.getById,
-    CSV.upload
+    CSV.upload,
+    Sistema.getAll
 ]

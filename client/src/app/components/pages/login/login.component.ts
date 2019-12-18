@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { GalletaService } from '../../../services/galleta/galleta.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RespFailed } from '../../../interfaces/api';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,13 @@ export class LoginComponent implements OnInit, DoCheck {
   btnLogin: { _disabled: boolean };
 
   constructor(
+    private snackCtrl: MatSnackBar,
     private routerCtrl: Router,
     private usuarioServ: UsuarioService,
     private galletaServ: GalletaService
   ) { }
 
   ngOnInit() {
-    console.log(this.btnLogin);
   }
 
   ngDoCheck() {
@@ -49,7 +51,14 @@ export class LoginComponent implements OnInit, DoCheck {
       this.galletaServ.new(res.data, 'data', 30);
       this.routerCtrl.navigate(['']);
     } catch (err) {
-      console.log(err);
+      const snack = this.snackCtrl.open(
+        (err as RespFailed).errors[0].details,
+        'Aceptar'
+      );
+
+      setTimeout(() => {
+        snack.dismiss();
+      }, 2000);
     }
   }
 }

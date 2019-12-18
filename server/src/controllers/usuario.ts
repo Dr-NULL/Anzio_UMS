@@ -193,3 +193,14 @@ login.callback = async (req, res) => {
         res.api.catch(err)
     }
 }
+
+export const logout = new EndPoint()
+logout.method = "get"
+logout.path = "/usuario/logout"
+logout.callback = (req, res) => {
+    if (req.session.isCreated) {
+        req.session.kill()
+    }
+    
+    res.api.send()
+}

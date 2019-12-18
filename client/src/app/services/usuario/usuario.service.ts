@@ -46,4 +46,10 @@ export class UsuarioService {
       { nick, pass }
     );
   }
+
+  logout() {
+    return this.httpCtrl.get<void>(
+      '/usuario/logout'
+    );
+  }
 }

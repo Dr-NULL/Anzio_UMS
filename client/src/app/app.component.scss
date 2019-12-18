@@ -41,6 +41,12 @@ mat-sidenav-container {
       .mat-list-item {
         color: #000;
         text-decoration: none;
+        cursor: pointer;
+
+        // Iconos
+        i {
+          width: 1rem;
+        }
       }
       .mat-list-item {
         transition-duration: 250ms;

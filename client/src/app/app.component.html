@@ -16,14 +16,14 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" [(opened)]="navOpened">
     <mat-list>
-      <a mat-list-item routerLink="login" routerLinkActive="active" (click)="navToggle()">
+      <a mat-list-item routerLink="login" routerLinkActive="active" (click)="navToggle()" *ngIf="!isLogged">
         <i class="fas fa-sign-in-alt"></i>
         <span>Iniciar Sesión</span>
       </a>
-      <a mat-list-item routerLink="setup" routerLinkActive="active" (click)="navToggle()">
-        <i class="fas fa-cog"></i>
-        <span>Configuración</span>
-      </a>
+      <mat-list-item routerLinkActive="active" (click)="onLogout()" *ngIf="isLogged">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Cerrar Sesión</span>
+      </mat-list-item>
     </mat-list>
 
   </mat-sidenav>

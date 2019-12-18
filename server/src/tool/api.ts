@@ -343,12 +343,10 @@ export class Api {
 
     public send(data: any = null) {
         this.res.contentType("application/vnd.api+json")
-        if (data != null) {
-            this.res.send({
-                data: data,
-                meta: this.meta
-            })
-        }
+        this.res.send({
+            data: data,
+            meta: this.meta
+        })
     }
 
     public failed(...fail: Array<{

@@ -30,7 +30,9 @@ import { UsuarioService } from './services/usuario/usuario.service';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload'
+    })
   ].concat(materialModules),
   entryComponents: entryObjects,
   providers: [

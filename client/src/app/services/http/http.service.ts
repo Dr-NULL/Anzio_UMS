@@ -24,55 +24,66 @@ export class HttpService {
 
   async get<T = any>(url: string) {
     const path = urlServer + url;
+    let res: RespSuccess<T> | RespFailed;
+
     try {
       const obs = this.httpCtrl.get<RespSuccess<T> | RespFailed>(path);
       const prm = obs.toPromise<RespSuccess<T> | RespFailed>();
+      res = await prm;
 
-      const res = await prm;
-      if ((res as RespFailed).errors != null) {
-        // Error Procesado por el servidor
-        throw res;
-      } else {
-        // Respuesta correcta
-        return res as RespSuccess<T>;
-      }
     } catch (err) {
       // Error desde el cliente
       throw this.makeGenericErr(err, path);
+    }
+
+    if ((res as RespFailed).errors != null) {
+      // Error Procesado por el servidor
+      throw res;
+    } else {
+      // Respuesta correcta
+      return res as RespSuccess<T>;
     }
   }
 
   async post<T = any>(url: string, data: any) {
     const path = urlServer + url;
+    let res: RespSuccess<T> | RespFailed;
+
     try {
       const obs = this.httpCtrl.post<RespSuccess<T> | RespFailed>(path, JSON.stringify(data), opt);
       const prm = obs.toPromise<RespSuccess<T> | RespFailed>();
-
-      const res = await prm;
-      if ((res as RespFailed).errors != null) {
-        // Error Procesado por el servidor
-        throw res;
-      } else {
-        // Respuesta correcta
-        return res as RespSuccess<T>;
-      }
+      res = await prm;
     } catch (err) {
       // Error desde el cliente
       throw this.makeGenericErr(err, path);
     }
+
+    if ((res as RespFailed).errors != null) {
+      // Error Procesado por el servidor
+      throw res;
+    } else {
+      // Respuesta correcta
+      return res as RespSuccess<T>;
+    }
   }
 
-  async uploadFile<T = any>(url: string, files: File[]) {
+  async uploadFile<T = any>(url: string, files: File[], data: any = null) {
     const path = urlServer + url;
-    const data = new FormData();
+    const form = new FormData();
+    let res: RespSuccess<T> | RespFailed;
+
+    if (data != null) {
+      form.append('data', data);
+    }
+
     files.forEach(file => {
-      data.append('data', file);
+      form.append('file', file);
     });
 
     try {
       const obs = this.httpCtrl.post<RespSuccess<T> | RespFailed>(
         path,
-        data,
+        form,
         {
           withCredentials: true,
           headers: new HttpHeaders({
@@ -83,18 +94,18 @@ export class HttpService {
         }
       );
       const prm = obs.toPromise<RespSuccess<T> | RespFailed>();
-
-      const res = await prm;
-      if ((res as RespFailed).errors != null) {
-        // Error Procesado por el servidor
-        throw res;
-      } else {
-        // Respuesta correcta
-        return res as RespSuccess<T>;
-      }
+      res = await prm;
     } catch (err) {
       // Error desde el cliente
       throw this.makeGenericErr(err, path);
+    }
+
+    if ((res as RespFailed).errors != null) {
+      // Error Procesado por el servidor
+      throw res;
+    } else {
+      // Respuesta correcta
+      return res as RespSuccess<T>;
     }
   }
 
