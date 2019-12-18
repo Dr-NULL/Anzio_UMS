@@ -44,7 +44,7 @@ export class Usuario extends BaseEntity {
     @Column({ type: "date" })
     fechaNacim: Date;
 
-    @Column({ type: "date", nullable: true, default: () =>  "CURRENT_TIMESTAMP" })
+    @Column({ type: "date", nullable: true, default: () =>  "GETDATE()" })
     fechaInserc: Date;
 
     @Column({ type: "date", nullable: true })

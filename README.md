@@ -67,3 +67,8 @@ npx orm migration:revert
 npx orm migration:generate -n Test-DB
 npx orm migration:run
 ```
+
+También posee un comando que automatiza el proceso de rearmar toda la base de datos (con sus respectivas semillas), ejecutando el siguiente comando:
+```npm
+npx orm rebuild
+```
