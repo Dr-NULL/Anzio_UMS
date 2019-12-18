@@ -16,10 +16,12 @@ import { seedCargo } from "./seed-cargo";
 import { seedUsuario } from "./seed-usuario";
 import { seedSistema } from "./seed-sistema";
 import { seedMenu } from "./seed-menu";
+import { seedRelUsuarioMenu } from "./seed-rel-usuario-menu";
 
 //Agregar el orden de limpieza aquí ↓↓↓
 const entitiesClear: Seed<any>[] = [
     //Maestros
+    seedRelUsuarioMenu,
     seedUsuario,
     
     //Paramétricas
@@ -42,5 +44,6 @@ const entitiesInsert: Seed<any>[] = [
 const entitiesAction: Seed<any>[] = [
     //Maestros
     seedUsuario,
-    seedMenu
+    seedMenu,
+    seedRelUsuarioMenu
 ]

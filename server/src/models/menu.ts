@@ -25,6 +25,9 @@ export class Menu extends BaseEntity {
     
     @TreeParent()
     parent: Menu;
+    
+    @Column({ nullable: true })
+    sistemaId: number;
 
     @ManyToOne(type => Sistema, x => x.id)
     @JoinTable()

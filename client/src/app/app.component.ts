@@ -4,7 +4,9 @@ import { UsuarioService } from './services/usuario/usuario.service';
 import { GalletaService } from './services/galleta/galleta.service';
 import { Router } from '@angular/router';
 import { RespFailed } from './interfaces/api';
-import { MenuService } from './services/menu/menu.service';
+import { MenuService, Menu } from './services/menu/menu.service';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,10 @@ export class AppComponent implements OnInit, DoCheck {
   isLoggedBefore = false;
   isLogged = false;
   navOpened = false;
+
+  // Menu recursivo
+  treeControl = new NestedTreeControl<Menu>(x => x.children);
+  dataSource = new MatTreeNestedDataSource<Menu>();
 
   constructor(
     private usuarioServ: UsuarioService,
@@ -54,7 +60,7 @@ export class AppComponent implements OnInit, DoCheck {
   async loadMenu() {
     try {
       const res = await this.menuServ.load();
-      console.log(res.data);
+      this.dataSource.data = res.data;
     } catch (err) {
       console.log(err);
     }

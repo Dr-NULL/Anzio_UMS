@@ -24,6 +24,22 @@
         <i class="fas fa-sign-out-alt"></i>
         <span>Cerrar Sesión</span>
       </mat-list-item>
+
+      <mat-list-item routerLinkActive="active">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Cerrar Sesión</span>
+      </mat-list-item>
+
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- Plantilla para Nodos Finales -->
+        <a *matTreeNodeDef="let node"
+            routerLinkActive="active"
+            mat-list-item routerLink="node.url"
+            >
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Iniciar Sesión</span>
+        </a>
+      </mat-tree>
     </mat-list>
 
   </mat-sidenav>
