@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-title>Agregar Sistema</mat-card-title>
+  <mat-card-subtitle>Permite registrar nuevos proyectos para poder configurar sus accesos y permisos.</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="row">
+      <mat-form-field class="col-12 col-sm-5">
+        <input matInput placeholder="Nombre:" />
+      </mat-form-field>
+      <app-file-picker class="col-12 col-sm-7" text="Imagen:" [(value)]="files" (change)="onChange()">
+      </app-file-picker>
+      <mat-form-field class="col-12">
+        <textarea matInput placeholder="Descripción:"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>

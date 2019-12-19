@@ -12,3 +12,13 @@ getAll.callback = async (req, res) => {
         res.api.catch(err)
     }
 }
+
+export const add = new EndPoint()
+add.method = "form-data"
+add.path = "/sistema/add"
+add.fileReceive = [{ name: "file" }]
+add.callback = (req, res) => {
+    console.log(req.body)
+
+    res.send()
+}

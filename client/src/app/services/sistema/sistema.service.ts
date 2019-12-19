@@ -16,4 +16,12 @@ export class SistemaService {
       '/sistema/get'
     );
   }
+
+  add(img: File, data: Sistema) {
+    return this.httpServ.uploadFile(
+      '/sistema/add',
+      [img],
+      data
+    );
+  }
 }

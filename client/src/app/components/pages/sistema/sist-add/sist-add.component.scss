@@ -1,0 +1,14 @@
+/* VARIABLES */
+$size-sm: 480px;
+$size-md: 800px;
+$size-lg: 1024px;
+
+:host {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+
+
