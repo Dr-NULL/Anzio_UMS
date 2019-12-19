@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, DoCheck {
   // Menu recursivo
   treeControl = new NestedTreeControl<Menu>(x => x.children);
   dataSource = new MatTreeNestedDataSource<Menu>();
+  hasChild = (_: number, node: Menu) => node.children.length > 0;
 
   constructor(
     private usuarioServ: UsuarioService,
@@ -29,14 +30,16 @@ export class AppComponent implements OnInit, DoCheck {
     private routerCtrl: Router,
     private snackCtrl: MatSnackBar,
     private menuServ: MenuService
-  ) {}
+  ) {
+    this.dataSource.data = [];
+  }
 
   ngDoCheck() {
     this.isLogged = (this.galletaServ.get('data') != null);
 
     if (this.isLogged !== this.isLoggedBefore) {
-      this.isLoggedBefore = this.isLogged;
       this.loadMenu();
+      this.isLoggedBefore = this.isLogged;
     }
   }
 
@@ -46,9 +49,10 @@ export class AppComponent implements OnInit, DoCheck {
       const data = await this.usuarioServ.getActive();
       if (data.data.length === 0) {
         this.routerCtrl.navigate(['/setup']);
+      } else {
+        this.loadMenu();
       }
 
-      this.loadMenu();
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +66,8 @@ export class AppComponent implements OnInit, DoCheck {
       const res = await this.menuServ.load();
       this.dataSource.data = res.data;
     } catch (err) {
-      console.log(err);
+      this.onLogout();
+      this.dataSource.data = [];
     }
   }
 
@@ -74,10 +79,13 @@ export class AppComponent implements OnInit, DoCheck {
     let snack: MatSnackBarRef<SimpleSnackBar>;
     try {
       const res = await this.usuarioServ.logout();
-      snack = this.snackCtrl.open(
-        'La sessión se ha cerrado correctamente',
-        'Aceptar'
-      );
+
+      if (this.isLogged) {
+        snack = this.snackCtrl.open(
+          'La sessión se ha cerrado correctamente',
+          'Aceptar'
+        );
+      }
     } catch (err) {
       snack = this.snackCtrl.open(
         (err as RespFailed).errors[0].details,
@@ -89,9 +97,11 @@ export class AppComponent implements OnInit, DoCheck {
       this.galletaServ.kill('session');
       this.galletaServ.kill('data');
 
-      setTimeout(() => {
-        snack.dismiss();
-      }, 2000);
+      if (this.isLogged) {
+        setTimeout(() => {
+          snack.dismiss();
+        }, 2000);
+      }
     }
   }
 }

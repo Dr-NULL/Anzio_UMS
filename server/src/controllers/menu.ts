@@ -13,30 +13,58 @@ getByDomain.path = "/menu/domain"
 getByDomain.callback = async (req, res) => {
     try {
         if (req.session.isCreated) {
+            //Constantes de entorno
             const user = await Usuario.findOne({
                 id: req.session.data.id
-            })
-            const rel = await RelUsuarioMenu.find({
-                usuario: user
             })
             const sist = await Sistema.findOne({
                 where: { url: Like(req.headers.origin) }
             })
+            const rela = await RelUsuarioMenu.find({
+                usuario: user
+            })
 
-            const root: Menu[] = []
-            const data: Menu[] = []
-            for (let item of rel) {
-                if (sist.id == item.menu.sistemaId) {
-                    root.push(item.menu)
+            //Cargar árbol
+            const tree = orm.getTreeRepository(Menu)
+            const root = await tree.findRoots()
+            const init: Menu[] = []
+
+            //comprobar si existe el menú en la relación
+            function exist(obj: Menu) {
+                return rela.find(y => y.menu.id == obj.id) != null
+            }
+            
+            //Cargar rutas principales
+            for (let x of root) {
+                if (exist(x) || user.isSystem) {
+                    //Cargar descendencia
+                    init.push(await tree.findDescendantsTree(x))
                 }
             }
 
-            const tree = orm.getTreeRepository(Menu)
-            for (let item of root) {
-                data.push(await tree.findDescendantsTree(item))
+            //Asesinar de forma recursiva
+            function recursive(obj: Menu[]) {
+                let i = 0
+                while (i < obj.length) {
+                    //Recursive patterns :^)
+                    if (obj[i].children.length > 0) {
+                        recursive(obj[i].children)
+                    }
+
+                    //Eliminar objeto
+                    if (!exist(obj[i])) {
+                        obj.splice(i, 1)
+                    } else {
+                        i++
+                    }
+                }
             }
             
-            res.api.send(data)
+            if (!user.isSystem) {
+                recursive(init)
+            }
+
+            res.api.send(init)
         } else {
             res.api.failed({
                 HttpResponse: StatusCodes.cod401,
