@@ -27,7 +27,7 @@
 
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- Plantilla para Nodos Finales -->
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle (click)="navToggle()">
           <a mat-list-item routerLinkActive="active" mat-list-item routerLink="{{ node.url }}">
             <i class="{{ node.icono }}"></i>
             <span>{{ node.nombre }}</span>
