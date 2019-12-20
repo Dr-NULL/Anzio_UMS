@@ -5,12 +5,20 @@ $size-lg: 1024px;
 
 /* COLUMNS SYSTEM */
 .row {
-  display: flex;
-  display: -webkit-flex;
+  display: flex!important;
+  display: -webkit-flex!important;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
+}
+
+.row.center {
+  justify-content: center;
+}
+
+.row.right {
+  justify-content: flex-end;
 }
 
 .row > * {

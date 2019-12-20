@@ -1,7 +1,7 @@
 <!-- Input con el nombre del archivo -->
 <div class="container">
   <mat-form-field>
-    <input #txtFile matInput placeholder="{{ text }}" value="{{ placeholder }}" />
+    <input #txtFile matInput placeholder="{{ text }}" value="{{ placeholder }}" tabindex="-1" />
   </mat-form-field>
 
   <!-- Botón desencadenador -->
@@ -10,5 +10,5 @@
   </button>
 
   <!-- Input que realmente capturará el archivo -->
-  <input #objFile (change)="onObjChange()" type="file" accept="{{ accept }}" />
+  <input #objFile (change)="onObjChange()" type="file" accept="{{ accept }}" tabindex="-1" />
 </div>

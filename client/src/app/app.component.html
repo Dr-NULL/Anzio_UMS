@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <a routerLink="" class="brand" (click)="navOpened = false">
     <i class="fas fa-biohazard fa-2x"></i>
     <span>SYS UMS</span>
@@ -7,8 +7,8 @@
 
   </div>
   <div class="right">
-    <button id="btnToggle" mat-flat-button color="primary" (click)="navToggle()">
-      <i class="fas fa-ellipsis-v"></i>
+    <button id="btnToggle" mat-button (click)="navToggle()">
+      <i class="fas fa-bars"></i>
     </button>
   </div>
 </mat-toolbar>
@@ -16,19 +16,20 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" [(opened)]="navOpened">
     <mat-list>
-      <a mat-list-item routerLink="login" routerLinkActive="active" (click)="navToggle()" *ngIf="!isLogged">
+      <a mat-button routerLink="login" routerLinkActive="active" (click)="navToggle()" *ngIf="!isLogged">
         <i class="fas fa-sign-in-alt"></i>
         <span>Iniciar Sesión</span>
       </a>
-      <mat-list-item routerLinkActive="active" (click)="onLogout()" *ngIf="isLogged">
+
+      <button mat-button routerLinkActive="active" (click)="onLogout()" *ngIf="isLogged">
         <i class="fas fa-sign-out-alt"></i>
         <span>Cerrar Sesión</span>
-      </mat-list-item>
+      </button>
 
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- Plantilla para Nodos Finales -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle (click)="navToggle()">
-          <a mat-list-item routerLinkActive="active" mat-list-item routerLink="{{ node.url }}">
+          <a mat-button routerLinkActive="active" routerLink="{{ node.url }}">
             <i class="{{ node.icono }}"></i>
             <span>{{ node.nombre }}</span>
           </a>
@@ -36,15 +37,15 @@
 
         <!-- Plantilla para Nodos con hijos -->
         <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-          <mat-list-item>
+          <button mat-button matTreeNodeToggle>
             <i class="{{ node.icono }}"></i>
             <span>{{ node.nombre }}</span>
-            <button mat-icon-button matTreeNodeToggle>
+            <button mat-icon-button>
               <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
             </button>
-          </mat-list-item>
+          </button>
           <div [class.visible]="!treeControl.isExpanded(node)">
             <ng-container matTreeNodeOutlet></ng-container>
           </div>

@@ -1,8 +1,3 @@
-/* VARIABLES */
-$size-sm: 480px;
-$size-md: 800px;
-$size-lg: 1024px;
-
 :host {
   display: block;
   box-sizing: border-box;
@@ -11,4 +6,22 @@ $size-lg: 1024px;
   padding: 1rem;
 }
 
+mat-card {
+  margin-bottom: 1rem;
+}
 
+.fa-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  mat-form-field {
+    width: calc(100% - 4.5rem);
+  }
+
+  a {
+    width: 4rem;
+    padding-top: 0.15rem;
+  }
+}
