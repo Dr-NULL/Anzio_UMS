@@ -1,7 +1,10 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { SistemaService, Sistema } from '../../../../services/sistema/sistema.service';
 import { RespFailed } from 'src/app/interfaces/api';
+
+import { SisDeleteComponent } from '../../../shared/dialog/sis-delete/sis-delete.component';
 
 @Component({
   selector: 'app-sist-alt',
@@ -14,7 +17,8 @@ export class SistAltComponent implements AfterViewInit {
 
   constructor(
     private sistemaServ: SistemaService,
-    private snackCtrl: MatSnackBar
+    private snackCtrl: MatSnackBar,
+    private dialogCtrl: MatDialog
   ) { }
 
   async ngAfterViewInit() {
@@ -33,7 +37,18 @@ export class SistAltComponent implements AfterViewInit {
 
   }
 
-  onDelete(id: number) {
+  onDelete(ref: Sistema) {
+    try {
+      const dialRef = this.dialogCtrl.open(
+        SisDeleteComponent,
+        {
+          width: '320px',
+          height: '240px',
+          data: ref
+        }
+      );
+    } catch (err) {
 
+    }
   }
 }

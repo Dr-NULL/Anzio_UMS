@@ -4,6 +4,9 @@ import { BaseEntity, Entity, Column, PrimaryGeneratedColumn,  } from "typeorm";
 export class Sistema extends BaseEntity{
     @PrimaryGeneratedColumn({ type: "int" })
     id: number;
+
+    @Column({ type: "bit", default: 1 })
+    isActive: boolean;
     
     @Column({ type: "varchar", length: 50 })
     nombre: string;
