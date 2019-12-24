@@ -11,11 +11,14 @@ export class Sistema extends BaseEntity{
     @Column({ type: "varchar", length: 512 })
     descripc: string;
     
-    @Column({ type: "varbinary", nullable: true })
-    img: Buffer;
+    @Column({ type: "varchar", length: 50, nullable: true })
+    imgType: string;
+
+    @Column({ type: "varbinary", length: "max", nullable: true })
+    imgData: Buffer;
     
-    @Column({ type: "varbinary", nullable: true })
-    logo: Buffer;
+    @Column({ type: "varchar", length: 20, nullable: true })
+    icon: string;
     
     @Column({ type: "varchar", length: 248 })
     url: string;

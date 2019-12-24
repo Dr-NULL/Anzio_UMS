@@ -21,6 +21,16 @@ seedMenu.action = async (orm) => {
     await repo.save(menuSist)
 
     //Agregar Sistema
+    const menuSetup = new Menu()
+    menuSetup.url = "setup"
+    menuSetup.nombre = "Setup"
+    menuSetup.descripc = "Establece una contraseña aleatoria nueva para el usuario System"
+    menuSetup.icono = "fas fa-brain"
+    menuSetup.sistema = sistema
+    menuSetup.parent = menuSist
+    await repo.save(menuSetup)
+
+    //Agregar Sistema
     const menuSistAdd = new Menu()
     menuSistAdd.url = "sistema/add"
     menuSistAdd.nombre = "Agregar"

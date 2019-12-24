@@ -22,5 +22,6 @@ export const routes: EndPoint[] = [
     Cargo.getAll,
     Cargo.getById,
     CSV.upload,
-    Sistema.getAll
+    Sistema.getAll,
+    Sistema.add
 ]

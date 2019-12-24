@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-proj-tarjet',
@@ -21,6 +21,8 @@ export class ProjTarjetComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('Archivo:');
+    console.log(this.img);
   }
 
 }

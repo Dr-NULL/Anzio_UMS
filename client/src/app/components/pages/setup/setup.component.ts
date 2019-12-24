@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { Usuario } from '../../../interfaces/usuario';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.scss']
 })
-export class SetupComponent implements OnInit {
+export class SetupComponent implements AfterViewInit {
   @ViewChild('txtNick', { static: true })
   txtNick: { nativeElement: HTMLInputElement };
 
@@ -23,12 +23,13 @@ export class SetupComponent implements OnInit {
     private routerCtrl: Router
   ) { }
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     try {
       const res = await this.usuarioServ.getById(1);
       this.user = res.data;
       this.txtNick.nativeElement.value = this.user.nick;
     } catch (err) {
+      console.log(err);
       this.routerCtrl.navigate(['']);
     }
   }

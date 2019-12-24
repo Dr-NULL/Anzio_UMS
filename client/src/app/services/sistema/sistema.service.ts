@@ -17,10 +17,9 @@ export class SistemaService {
     );
   }
 
-  add(img: File, data: Sistema) {
-    return this.httpServ.uploadFile(
+  async add(data: Sistema) {
+    return this.httpServ.post(
       '/sistema/add',
-      [img],
       data
     );
   }

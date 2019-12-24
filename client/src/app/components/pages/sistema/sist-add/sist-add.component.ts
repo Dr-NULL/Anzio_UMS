@@ -1,7 +1,9 @@
-import { Component, OnInit, DoCheck, AfterViewInit } from '@angular/core';
+import { SistemaService, Sistema } from '../../../../services/sistema/sistema.service';
+import { Component, DoCheck, AfterViewInit } from '@angular/core';
 import { HtmlElem } from 'src/app/decorators';
-
-
+import { toBase64 } from '../../../../tool/file';
+import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { RespFailed } from 'src/app/interfaces/api';
 
 class InputCtrl {
   private nativeElement: HTMLInputElement;
@@ -42,16 +44,18 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
   btnSave: HTMLButtonElement;
 
   constructor(
+    private sistemaServ: SistemaService,
+    private snackCtrl: MatSnackBar
   ) { }
 
   ngAfterViewInit() {
+    this.btnSave.disabled = true;
     this.files = [];
     this.txtNombre.value = '';
     this.txtDescripc.value = '';
     this.txtUrl.value = '';
     this.txtDb.value = '';
     this.txtIcon.value = '';
-    this.btnSave.disabled = true;
   }
 
   ngDoCheck() {
@@ -113,8 +117,23 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
             break;
         }
       }
-    } else if (raw.replace(/^https?.\/\//gi, '').match(/^localhost(:[0-9]{1,5})?$/gi) === null) {
+    } else if (
+      (raw.replace(/^https?.\/\//gi, '').match(/^localhost(:[0-9]{1,5})?$/gi) === null) &&
+      (raw.replace(/^https?.\/\//gi, '').match(/^(([a-z]|[0-9]|-|_)+\.)+([a-z]|[0-9]|-|_)+(:[0-9]{1,5})?$/gi) === null)
+    ) {
       raw = '';
+    } else {
+      // Comprobar Puerto
+      const port  = raw.match(/:[0-9]+/gi);
+      if (port !== null) {
+        if (
+          (port.length > 1) ||
+          (parseInt(port[0], 10) < 1) ||
+          (parseInt(port[0], 10) > 65535)
+        ) {
+          raw = '';
+        }
+      }
     }
 
     this.txtUrl.value = raw;
@@ -124,5 +143,39 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
     let raw = this.txtIcon.value.trim();
     raw = raw.replace(/(<i\s+class="|"><\/i>)/gi, '');
     this.txtIcon.value = raw;
+  }
+
+  async onSave() {
+    let snack: MatSnackBarRef<SimpleSnackBar>;
+
+    try {
+      const data: Sistema = {
+        nombre: this.txtNombre.value,
+        descripc: this.txtDescripc.value,
+        url: this.txtUrl.value,
+        db: this.txtDb.value,
+        icon: this.txtIcon.value,
+        img: await toBase64(this.files[0])
+      };
+
+      await this.sistemaServ.add(data);
+      this.btnSave.disabled = true;
+      this.files = [];
+      this.txtNombre.value = '';
+      this.txtDescripc.value = '';
+      this.txtUrl.value = '';
+      this.txtDb.value = '';
+      this.txtIcon.value = '';
+
+      snack = this.snackCtrl.open('Sistema Agregado Correctamente!', 'Aceptar');
+    } catch (err) {
+      snack = this.snackCtrl.open((err as RespFailed).errors[0].details, 'Aceptar');
+    } finally {
+      setTimeout(() => {
+        if (snack !== null) {
+          snack.dismiss();
+        }
+      }, 2500);
+    }
   }
 }

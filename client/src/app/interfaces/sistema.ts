@@ -3,7 +3,7 @@ export interface Sistema {
   nombre: string;
   descripc: string;
   img?: string;
-  logo?: string;
+  icon?: string;
   url: string;
   db: string;
 }

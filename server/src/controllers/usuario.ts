@@ -30,19 +30,43 @@ getById.method = "get"
 getById.path = "/usuario/get/:id"
 getById.callback = async (req, res) => {
     try {
-        const data: Usuario = await Usuario.findOne({
-            where: {
-                id: req.params.id
-            }
+        let data = await Usuario.findOne({
+            id: parseInt(req.params.id)
         })
 
-        if ((data.isSystem) && (data.isActive)) {
-            res.api.failed({
-                HttpResponse: StatusCodes.cod401,
-                details: "Solo el usuario System tiene acceso a sus propios datos."
-            })
+        // Borrar información sensible
+        if (data != null) {
+            delete data.pass
+            delete data.token
+        }
+
+        if (!req.session.isCreated) {
+            if ((data.isSystem) && (!data.isActive)) {
+                res.api.send(data)
+            } else {
+                res.api.failed({
+                    HttpResponse: StatusCodes.cod401,
+                    details: "Tiene que iniciar sessión para obtener los datos solicitados."
+                })
+            }
         } else {
-            res.api.send(data)
+            const user = await Usuario.findOne({
+                id: req.session.data.id
+            })
+
+            if ((!user.isSystem) && (data.isSystem)) {
+                res.api.failed({
+                    HttpResponse: StatusCodes.cod403,
+                    details: "No tiene los permisos suficientes para ver los datos del usuario System."
+                })
+            } else if (!user.isAdmin) {
+                res.api.failed({
+                    HttpResponse: StatusCodes.cod403,
+                    details: "No tiene los permisos suficientes para ver los datos de un usuario."
+                })
+            } else {
+                res.api.send(data)
+            }
         }
     } catch (err) {
         res.api.catch(err)

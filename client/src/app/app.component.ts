@@ -1,8 +1,8 @@
 import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from './services/usuario/usuario.service';
 import { GalletaService } from './services/galleta/galleta.service';
-import { Router } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { RespFailed } from './interfaces/api';
 import { MenuService, Menu } from './services/menu/menu.service';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -13,9 +13,8 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, DoCheck {
+export class AppComponent implements OnInit {
   title = 'client';
-  isLoggedBefore = false;
   isLogged = false;
   navOpened = false;
 
@@ -32,31 +31,41 @@ export class AppComponent implements OnInit, DoCheck {
     private menuServ: MenuService
   ) {
     this.dataSource.data = [];
-  }
+    this.routerCtrl.events.subscribe(async (lol) => {
+      // Salir en caso de que no sea un cambio de ruta
+      if ((lol as any).routerEvent == null) {
+        return;
+      }
 
-  ngDoCheck() {
-    this.isLogged = (this.galletaServ.get('data') != null);
+      try {
+        // Comprobar usuario System
+        const data = await this.usuarioServ.getActive();
+        if (data.data.length === 0) {
+          this.routerCtrl.navigate(['/setup']);
+        }
 
-    if (this.isLogged !== this.isLoggedBefore) {
-      this.loadMenu();
-      this.isLoggedBefore = this.isLogged;
-    }
+        // Comprobar Permisos
+        this.isLogged = (this.galletaServ.get('data') != null);
+        if (this.isLogged) {
+          this.loadMenu();
+          const path = location.pathname;
+
+        } else if (
+          (location.pathname !== '/') &&
+          (location.pathname !== '/login') &&
+          (location.pathname !== '/setup')
+        ) {
+          this.routerCtrl.navigate(['']);
+        }
+      } catch (err) {
+        console.log(err);
+
+        this.routerCtrl.navigate(['']);
+      }
+    });
   }
 
   async ngOnInit() {
-    // Redirects
-    try {
-      const data = await this.usuarioServ.getActive();
-      if (data.data.length === 0) {
-        this.routerCtrl.navigate(['/setup']);
-      } else {
-        this.loadMenu();
-      }
-
-    } catch (err) {
-      console.log(err);
-    }
-
     // Starting Point
     this.navOpened = false;
   }
@@ -96,6 +105,7 @@ export class AppComponent implements OnInit, DoCheck {
       this.routerCtrl.navigate(['']);
       this.galletaServ.kill('session');
       this.galletaServ.kill('data');
+      this.dataSource.data = [];
 
       if (this.isLogged) {
         setTimeout(() => {
