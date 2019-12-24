@@ -2,7 +2,7 @@ import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/s
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from './services/usuario/usuario.service';
 import { GalletaService } from './services/galleta/galleta.service';
-import { Router, RouterEvent } from '@angular/router';
+import { Router } from '@angular/router';
 import { RespFailed } from './interfaces/api';
 import { MenuService, Menu } from './services/menu/menu.service';
 import { NestedTreeControl } from '@angular/cdk/tree';

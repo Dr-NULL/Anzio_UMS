@@ -5,18 +5,6 @@ import { toBase64 } from '../../../../tool/file';
 import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { RespFailed } from 'src/app/interfaces/api';
 
-class InputCtrl {
-  private nativeElement: HTMLInputElement;
-  public get value(): string {
-    return this.nativeElement.value;
-  }
-  public set value(v: string) {
-    this.nativeElement.value = v;
-  }
-
-  constructor() {}
-}
-
 @Component({
   selector: 'app-sist-add',
   templateUrl: './sist-add.component.html',
