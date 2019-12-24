@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  padding: 1rem;
+
+  mat-card {
+    display: block;
+    width: 100%;
+
+    table {
+      width: 100%;
+
+      tr > th, tr > td {
+        box-sizing: border-box;
+        padding: 0.5rem;
+      }
+
+      tr > td:nth-child(1) {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      tr > td:nth-child(4) {
+        text-align: center;
+      }
+
+      tr > td:nth-child(5) {
+        width: 10rem;
+
+        button:last-child {
+          margin-left: 1rem;
+        }
+      }
+
+      @media screen and (max-width: 640px) {
+        tr > th:nth-child(3), tr > td:nth-child(3) {
+          display: none;
+        }
+      }
+    }
+  }
+}

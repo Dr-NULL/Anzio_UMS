@@ -1,1 +1,43 @@
-<p>sist-alt works!</p>
+<mat-card>
+  <mat-card-title>Editar Sistemas</mat-card-title>
+  <mat-card-subtitle>Aquí podrá editar o eliminar los sistemas ya existentes.</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let item"><i class="{{ item.icon }}"></i></td>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let item">{{ item.nombre }}</td>
+      </ng-container>
+      <ng-container matColumnDef="descripc">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let item">{{ item.descripc }}</td>
+      </ng-container>
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef>URL</th>
+        <td mat-cell *matCellDef="let item">
+          <a mat-raised-button color="accent" href="{{ item.url }}" target="__blank">
+            <i class="fas fa-link"></i>
+          </a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-raised-button color="primary">
+            <i class="far fa-edit"></i>
+          </button>
+          <button mat-raised-button color="warn">
+            <i class="fas fa-times"></i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="dataCols"></tr>
+      <tr mat-row *matRowDef="let row; columns: dataCols;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

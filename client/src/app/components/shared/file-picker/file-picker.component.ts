@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-file-picker',
@@ -18,15 +18,20 @@ export class FilePickerComponent implements OnInit {
     return this.value;
   }
   set value(v: File[]) {
-      this.modelValue = v;
-      this.valueChange.emit(v);
+    this.modelValue = v;
+    this.valueChange.emit(v);
+
+    if (v.length === 0) {
+      this.placeholder = this.hintIdle;
+    } else if (v.length === 1) {
+      this.placeholder = v[0].name;
+    } else {
+      this.placeholder = this.hintMany;
+    }
   }
 
   @Output()
   valueChange = new EventEmitter<File[]>();
-
-  @Output()
-  change: EventEmitter<void> = new EventEmitter<void>();
 
   // Propiedades
   text = 'Archivo:';
@@ -90,6 +95,5 @@ export class FilePickerComponent implements OnInit {
     }
 
     this.value = data;
-    // this.change.emit();
   }
 }

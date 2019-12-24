@@ -21,8 +21,8 @@ export class ProjTarjetComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('Archivo:');
-    console.log(this.img);
+    if (this.url.match(/^https?:\/\//gi) === null) {
+      this.url = 'http:\/\/' + this.url;
+    }
   }
-
 }

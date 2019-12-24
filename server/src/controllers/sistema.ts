@@ -42,12 +42,16 @@ add.callback = async (req, res) => {
         const base64 = req.body.img.split(",")
         const file = Buffer.from(base64[1], 'base64')
 
+        if (data.url.match(/^https?:\/\//gi) == null) {
+            data.url = "http://" + data.url
+        }
+
         const sys = new Sistema()
         sys.nombre = data.nombre
         sys.descripc = data.descripc
         sys.db = data.db
         sys.url = data.url
-        sys.icon = sys.icon
+        sys.icon = data.icon
         sys.imgType = base64[0]
         sys.imgData = file
         await sys.save()

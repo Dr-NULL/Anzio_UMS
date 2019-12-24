@@ -12,6 +12,7 @@ seedSistema.data = [
                   "el cual permite establecer los permisos de acceso para cada " +
                   "trabajador de Frigosorno.",
         db: "SYS_UMS",
+        icon: "fas fa-users",
         url: "http://localhost:4200",
         imgType: "data:image/png;base64",
         imgData: file
