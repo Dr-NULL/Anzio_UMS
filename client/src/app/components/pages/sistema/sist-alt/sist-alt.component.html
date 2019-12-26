@@ -24,14 +24,18 @@
           </a>
         </td>
       </ng-container>
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let item" (click)="onToggle(item)">
+          <i *ngIf="item.isActive" class="fas fa-toggle-on"></i>
+          <i *ngIf="!item.isActive" class="fas fa-toggle-off"></i>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
         <td mat-cell *matCellDef="let item">
-          <button mat-raised-button color="primary">
+          <button mat-raised-button color="primary" (click)="onEdit(item)">
             <i class="far fa-edit"></i>
-          </button>
-          <button mat-raised-button color="warn" (click)="onDelete(item)">
-            <i class="fas fa-times"></i>
           </button>
         </td>
       </ng-container>

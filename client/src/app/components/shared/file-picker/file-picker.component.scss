@@ -1,28 +1,30 @@
-.container {
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  position: relative;
-}
+:host {
+  .container {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
 
-mat-form-field {
-  z-index: 100;
-  width: calc(100% - 4.5rem);
-}
+  mat-form-field {
+    z-index: 100;
+    width: calc(100% - 4.5rem);
+  }
 
-button {
-  z-index: 100;
-  margin-top: 0.15rem;
-}
+  button {
+    z-index: 100;
+    margin-top: 0.15rem;
+  }
 
-input[type=file] {
-  z-index: 1000;
-  opacity: 0;
-  position: absolute;
-  width: calc(100% - 4rem);
-  height: 100%;
+  input[type=file] {
+    z-index: 1000;
+    opacity: 0;
+    position: absolute;
+    width: calc(100% - 4rem);
+    height: 100%;
 
-  background: #000000;
+    background: #000000;
+  }
 }

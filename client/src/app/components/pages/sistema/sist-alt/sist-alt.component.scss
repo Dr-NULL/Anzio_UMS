@@ -20,15 +20,7 @@
       }
 
       tr > td:nth-child(4) {
-        text-align: center;
-      }
-
-      tr > td:nth-child(5) {
-        width: 10rem;
-
-        button:last-child {
-          margin-left: 1rem;
-        }
+        font-size: 1.5rem;
       }
 
       @media screen and (max-width: 640px) {

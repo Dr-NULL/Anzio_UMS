@@ -1,16 +1,17 @@
-import { SistemaService, Sistema } from '../../../../services/sistema/sistema.service';
-import { Component, DoCheck, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, DoCheck, Inject } from '@angular/core';
 import { HtmlElem } from 'src/app/decorators';
-import { toBase64 } from '../../../../tool/file';
+import { SistemaService, Sistema } from 'src/app/services/sistema/sistema.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { RespFailed } from 'src/app/interfaces/api';
+import { toBase64 } from 'src/app/tool/file';
 
 @Component({
-  selector: 'app-sist-add',
-  templateUrl: './sist-add.component.html',
-  styleUrls: ['./sist-add.component.scss']
+  selector: 'app-sistema-edit',
+  templateUrl: './sistema-edit.component.html',
+  styleUrls: ['./sistema-edit.component.scss']
 })
-export class SistAddComponent implements AfterViewInit, DoCheck {
+export class SistemaEditComponent implements OnInit, AfterViewInit, DoCheck {
   files: File[] = [];
 
   @HtmlElem()
@@ -33,17 +34,23 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
 
   constructor(
     private sistemaServ: SistemaService,
-    private snackCtrl: MatSnackBar
+    private dialogRef: MatDialogRef<SistemaEditComponent>,
+    private snackCtrl: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA)
+    private data: Sistema
   ) { }
+
+  ngOnInit() {
+    this.files = [];
+    this.txtNombre.value = this.data.nombre;
+    this.txtDescripc.value = this.data.descripc;
+    this.txtUrl.value = this.data.url;
+    this.txtDb.value = this.data.db;
+    this.txtIcon.value = this.data.icon;
+  }
 
   ngAfterViewInit() {
     this.btnSave.disabled = true;
-    this.files = [];
-    this.txtNombre.value = '';
-    this.txtDescripc.value = '';
-    this.txtUrl.value = '';
-    this.txtDb.value = '';
-    this.txtIcon.value = '';
   }
 
   ngDoCheck() {
@@ -61,15 +68,7 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
       this.btnSave.disabled = true;
     } else if (this.txtIcon.value.trim().length === 0) {
       this.btnSave.disabled = true;
-    } else if (this.files.length === 0) {
-      this.btnSave.disabled = true;
     } else {
-      this.txtNombre.value = this.txtNombre.value.trim();
-      this.txtDescripc.value = this.txtDescripc.value.trim();
-      this.txtUrl.value = this.txtUrl.value.trim();
-      this.txtDb.value = this.txtDb.value.trim();
-      this.txtIcon.value = this.txtIcon.value.trim();
-
       this.btnSave.disabled = false;
     }
   }
@@ -125,6 +124,8 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
     }
 
     this.txtUrl.value = raw;
+
+    this.onFocusOut();
   }
 
   checkIcon() {
@@ -133,20 +134,34 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
     this.txtIcon.value = raw;
   }
 
+  onFocusOut() {
+    this.txtNombre.value = this.txtNombre.value.trim();
+    this.txtDescripc.value = this.txtDescripc.value.trim();
+    this.txtUrl.value = this.txtUrl.value.trim();
+    this.txtDb.value = this.txtDb.value.trim();
+    this.txtIcon.value = this.txtIcon.value.trim();
+  }
+
   async onSave() {
     let snack: MatSnackBarRef<SimpleSnackBar>;
 
     try {
       const data: Sistema = {
+        id: this.data.id,
         nombre: this.txtNombre.value,
         descripc: this.txtDescripc.value,
         url: this.txtUrl.value,
         db: this.txtDb.value,
-        icon: this.txtIcon.value,
-        img: await toBase64(this.files[0])
+        icon: this.txtIcon.value
       };
 
-      await this.sistemaServ.add(data);
+      if (this.files.length > 0) {
+        data.img = await toBase64(this.files[0]);
+      } else {
+        data.img = null;
+      }
+
+      await this.sistemaServ.edit(data);
       this.btnSave.disabled = true;
       this.files = [];
       this.txtNombre.value = '';
@@ -155,15 +170,15 @@ export class SistAddComponent implements AfterViewInit, DoCheck {
       this.txtDb.value = '';
       this.txtIcon.value = '';
 
-      snack = this.snackCtrl.open('Sistema Agregado Correctamente!', 'Aceptar');
+      snack = this.snackCtrl.open('Sistema Editado Correctamente!', 'Aceptar', { duration: 2500 });
     } catch (err) {
-      snack = this.snackCtrl.open((err as RespFailed).errors[0].details, 'Aceptar');
+      snack = this.snackCtrl.open((err as RespFailed).errors[0].details, 'Aceptar', { duration: 2500 });
     } finally {
-      setTimeout(() => {
-        if (snack !== null) {
-          snack.dismiss();
-        }
-      }, 2500);
+      this.dialogRef.close();
     }
+  }
+
+  onDismiss() {
+    this.dialogRef.close();
   }
 }

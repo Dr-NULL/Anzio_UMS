@@ -43,7 +43,7 @@ seedMenu.action = async (orm) => {
     //Modificar Sistema
     const menuSistAlt = new Menu()
     menuSistAlt.url = "sistema/alt"
-    menuSistAlt.nombre = "Modificar/Eliminar"
+    menuSistAlt.nombre = "Editar"
     menuSistAlt.descripc = "Edita o elimina las referencias a proyectos ya implementados."
     menuSistAlt.icono = "fas fa-edit"
     menuSistAlt.sistema = sistema

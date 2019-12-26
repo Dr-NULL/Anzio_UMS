@@ -11,16 +11,41 @@ export class SistemaService {
     private httpServ: HttpService
   ) { }
 
-  getAll() {
+  getById(id: number) {
     return this.httpServ.get<Sistema[]>(
-      '/sistema/get'
+      '/sistema/get/' + String(id)
     );
   }
 
-  async add(data: Sistema) {
+  getActive() {
+    return this.httpServ.get<Sistema[]>(
+      '/sistema/get/true'
+    );
+  }
+
+  getAll() {
+    return this.httpServ.get<Sistema[]>(
+      '/sistema/get/all'
+    );
+  }
+
+  add(data: Sistema) {
     return this.httpServ.post(
       '/sistema/add',
       data
+    );
+  }
+
+  edit(data: Sistema) {
+    return this.httpServ.post(
+      '/sistema/edit',
+      data
+    );
+  }
+
+  toggle(id: number) {
+    return this.httpServ.get(
+      '/sistema/toggle/' + String(id)
     );
   }
 }

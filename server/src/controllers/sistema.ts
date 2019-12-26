@@ -2,13 +2,55 @@ import { EndPoint } from "../tool/endpoint";
 import { Sistema } from "../models/sistema";
 import { Usuario } from "../models/usuario";
 import { StatusCodes } from "../tool/api";
+import { isAdmin } from "../tool/check-session";
 
 export const getAll = new EndPoint()
 getAll.method = "get"
-getAll.path = "/sistema/get"
+getAll.path = "/sistema/get/:isActive?/:id?"
 getAll.callback = async (req, res) => {
     try {
-        const data = await Sistema.find({ isActive: true });
+        let query: any = {}
+
+        // Filtro por estado
+        if (req.params.isActive == "true" || req.params.isActive == null) {
+            query.isActive = true
+        } else if (req.params.isActive == "false") {
+            query.isActive = false
+        } else if (req.params.isActive != "all") {
+            res.api.failed({
+                HttpResponse: StatusCodes.cod400,
+                details: 'Formato incorrecto para el Parámetro "isActive", solo puede ser "true" (vacío igual cuenta como true), "false" o "all".'
+            })
+
+            return
+        }
+
+        // Filtro por ID
+        if (req.params.id != undefined) {
+            let id = parseInt(req.params.id)
+            if (!isNaN(id)) {
+                query.id = id
+            } else {
+                res.api.failed({
+                    HttpResponse: StatusCodes.cod400,
+                    details: 'Formato incorrecto para el Parámetro "id", solo acepta vacío (todos) o un valor numérico.'
+                })
+
+                return
+            }
+        }
+
+        // Autentificar
+        if (query.isActive != true) {
+            if (!await isAdmin(req, res, {
+                isNotLogged: "Necesita de Autentificar para consultar por todos los sistemas.",
+                isUnauthorized: "No tiene los permisos suficientes para consultar por todos los productos."
+            })) {
+                return
+            }
+        }
+
+        const data: Sistema[] = await Sistema.find({ where: query })
         let arrData: any[] = []
 
         for (let x of data) {
@@ -19,6 +61,8 @@ getAll.callback = async (req, res) => {
             }
 
             arrData.push({
+                id: x.id,
+                isActive: x.isActive,
                 nombre: x.nombre,
                 descripc: x.descripc,
                 db: x.db,
@@ -85,10 +129,10 @@ add.callback = async (req, res) => {
     }
 }
 
-export const kill = new EndPoint()
-kill.method = "get"
-kill.path = "/sistema/kill/:id"
-kill.callback = async (req, res) => {
+export const toggle = new EndPoint()
+toggle.method = "get"
+toggle.path = "/sistema/toggle/:id"
+toggle.callback = async (req, res) => {
     try {
         if (req.session.isCreated) {
             // Get User
@@ -97,34 +141,83 @@ kill.callback = async (req, res) => {
             })
 
             // Validar permisos
-            if ((!user.isSystem) && (!user.isAdmin)) {
-                res.api.failed({
-                    HttpResponse: StatusCodes.cod403,
-                    details: "Usted no posee los permisos suficientes para agregar sistemas."
-                })
-
+            if (!await isAdmin(req, res, {
+                isNotLogged: "Necesita de Autentificar para cambiar el estado del sistema.",
+                isUnauthorized: "No tiene los permisos suficientes para cambiar el estado del sistema."
+            })) {
+                return
             } else {
-                const sist = await Sistema.findOne({
-                    id: parseInt(req.params.id)
-                })
+                // Cambiar Estado
+                const sist = await Sistema.findOne({ id: parseInt(req.params.id) })
 
-                if (sist == null) {
-                    // El sistema no existe
+                if (sist.db == "SYS_UMS") {
                     res.api.failed({
-                        HttpResponse: StatusCodes.cod404,
-                        details: "El sistema especificado no existe."
+                        HttpResponse: StatusCodes.cod403,
+                        details: "No se puede desactivar el sistema de UMS, acceso denegado."
                     })
                 } else {
-                    // Eliminar el sistema
-                    await sist.remove()
+                    sist.isActive = !sist.isActive
+                    await sist.save()
                     res.api.send()
                 }
             }
         } else {
             res.api.failed({
                 HttpResponse: StatusCodes.cod401,
-                details: "Credenciales de acceso incorrectas, reintente..."
+                details: "Necesita de Autentificarse para cambiar el estado de un sistema."
             })
+        }
+    } catch (err) {
+        console.log(err)
+        res.api.catch(err)
+    }
+}
+
+export const edit = new EndPoint()
+edit.method = "post"
+edit.path = "/sistema/edit"
+edit.callback = async (req, res) => {
+    try {
+        // Checar Privilegios
+        if (!await isAdmin(req, res, {
+            isNotLogged: "Necesita autentificarse para modificar un sistema.",
+            isUnauthorized: "No posee los permisos necesarios para modificar un sistema."
+        })) {
+            return
+        }
+    
+        // Get the current system
+        const sist = await Sistema.findOne({
+            id: parseInt(req.body.id)
+        })
+    
+        if (sist == null) {
+            res.api.failed({
+                HttpResponse: StatusCodes.cod404,
+                details: "El sistema que se desea editar no existe, por favor ingrese un id válido."
+            })
+        } else {
+            sist.nombre = req.body.nombre
+            sist.descripc = req.body.descripc
+            sist.db = req.body.db
+            sist.icon = req.body.icon
+    
+            if (req.body.url.match(/^https?:\/\//gi) == null) {
+                sist.url = "http://" + req.body.url
+            } else {
+                sist.url = req.body.url
+            }
+    
+            if (req.body.img != null) {
+                const base64 = req.body.img.split(",")
+                const file = Buffer.from(base64[1], 'base64')
+    
+                sist.imgType = base64[0]
+                sist.imgData = file
+            }
+    
+            await sist.save()
+            res.api.send()
         }
     } catch (err) {
         console.log(err)

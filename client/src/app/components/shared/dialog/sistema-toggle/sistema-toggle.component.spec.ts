@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SisDeleteComponent } from './sis-delete.component';
+import { SistemaToggleComponent } from './sistema-toggle.component';
 
-describe('SisDeleteComponent', () => {
-  let component: SisDeleteComponent;
-  let fixture: ComponentFixture<SisDeleteComponent>;
+describe('ToggleSistemaComponent', () => {
+  let component: SistemaToggleComponent;
+  let fixture: ComponentFixture<SistemaToggleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SisDeleteComponent ]
+      declarations: [ SistemaToggleComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SisDeleteComponent);
+    fixture = TestBed.createComponent(SistemaToggleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

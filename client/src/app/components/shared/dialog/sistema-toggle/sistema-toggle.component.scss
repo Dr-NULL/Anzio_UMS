@@ -1,0 +1,28 @@
+mat-dialog-content {
+  text-align: justify;
+}
+
+mat-dialog-actions {
+  > div {
+    padding: 0;
+    padding-bottom: 1rem;
+  }
+
+  > div:first-child {
+    padding-right: 0.5rem;
+  }
+
+  > div:last-child {
+    padding-left: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+}

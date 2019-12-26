@@ -3,7 +3,6 @@ import { Usuario } from '../../../interfaces/usuario';
 import { GalletaService } from '../../../services/galleta/galleta.service';
 import { SistemaService, Sistema } from '../../../services/sistema/sistema.service';
 
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -26,7 +25,7 @@ export class MainComponent implements DoCheck, AfterViewInit {
   async ngAfterViewInit() {
     try {
       // Cargar Sistemas
-      const res = await this.sistemaServ.getAll();
+      const res = await this.sistemaServ.getActive();
       if (this.pages !== res.data) {
         this.pages = res.data;
       }

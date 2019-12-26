@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Editar Sistema</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <div class="row">
+    <mat-form-field class="col-12 col-sm-5">
+      <input matInput h="txtNombre" placeholder="Nombre:" (focusout)="onFocusOut()" />
+    </mat-form-field>
+    <app-file-picker class="col-12 col-sm-7" text="Imagen:" accept=".jpg, .jpeg, .png, .bmp, .gif" [(value)]="files" placeholder="Mantener Imagen...">
+    </app-file-picker>
+    <mat-form-field class="col-12">
+      <textarea matInput h="txtDescripc" placeholder="Descripción:" (focusout)="onFocusOut()" ></textarea>
+    </mat-form-field>
+    <mat-form-field class="col-12 col-sm-12 col-md-4">
+      <input matInput h="txtUrl" type="text" placeholder="URL:" (focusout)="checkUrl()">
+    </mat-form-field>
+    <mat-form-field class="col-12 col-sm-6 col-md-4">
+      <input matInput h="txtDb" type="text" placeholder="DataBase:" (focusout)="onFocusOut()" >
+    </mat-form-field>
+    <div class="fa-wrapper col-12 col-sm-6 col-md-4">
+      <mat-form-field>
+        <input type="text" h="txtIcon" matInput placeholder="Ícono:" (focusout)="onFocusOut()" />
+      </mat-form-field>
+      <a mat-raised-button color="accent" target="_blank" href="https://fontawesome.com/icons?d=gallery&m=free">
+        <i class="fas fa-icons"></i>
+      </a>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions class="row right">
+  <button h="btnSave" (click)="onSave()" mat-raised-button color="accent" class="col-6 col-sm-4 col-md-3 col-lg-2">
+    <i class="fas fa-save"></i>
+    <span>Guardar</span>
+  </button>
+  <button (click)="onDismiss()" mat-raised-button color="primary" class="col-6 col-sm-4 col-md-3 col-lg-2">
+    <i class="fas fa-times"></i>
+    <span>Cancelar</span>
+  </button>
+</mat-dialog-actions>

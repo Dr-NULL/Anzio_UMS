@@ -1,5 +1,6 @@
 export interface Sistema {
   id?: number;
+  isActive?: boolean;
   nombre: string;
   descripc: string;
   img?: string;

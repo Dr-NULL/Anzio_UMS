@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Cambiar estado del Sistema</h2>
+<mat-dialog-content>
+  <p>Está seguro que desea cambiar el estado del sistema "{{ data.nombre }}" a <strong *ngIf="data.isActive">"Desactivado"</strong><strong *ngIf="!data.isActive">"Activado"</strong>?</p>
+</mat-dialog-content>
+<mat-dialog-actions class="row">
+  <div class="col-7">
+    <button mat-raised-button color="warn" *ngIf="data.isActive" (click)="onToggle()">
+      <i class="fas fa-skull"></i>
+      <span>Sí, lo quiero desactivar!</span>
+    </button>
+    <button mat-raised-button color="accent" *ngIf="!data.isActive" (click)="onToggle()">
+      <i class="fas fa-laugh"></i>
+      <span>Sí, lo quiero activar!</span>
+    </button>
+  </div>
+  <div class="col-5">
+    <button mat-raised-button color="primary" (click)="onDismiss()">
+      <i class="fas fa-times"></i>
+      <span>Cancelar</span>
+    </button>
+  </div>
+</mat-dialog-actions>

@@ -2,17 +2,19 @@ import { UploadCsvComponent } from '../components/shared/upload-csv/upload-csv.c
 import { ProjTarjetComponent } from '../components/shared/proj-tarjet/proj-tarjet.component';
 import { FilePickerComponent } from '../components/shared/file-picker/file-picker.component';
 
-import { SisDeleteComponent } from '../components/shared/dialog/sis-delete/sis-delete.component';
+import { SistemaToggleComponent } from '../components/shared/dialog/sistema-toggle/sistema-toggle.component';
+import { SistemaEditComponent } from '../components/shared/dialog/sistema-edit/sistema-edit.component';
 
 export const sharedObjects: any[] = [
   UploadCsvComponent,
   ProjTarjetComponent,
   FilePickerComponent,
-
-  SisDeleteComponent
+  SistemaToggleComponent,
+  SistemaEditComponent
 ];
 
 export const entryObjects: any[] = [
   // CardUserComponent
-  SisDeleteComponent
+  SistemaToggleComponent,
+  SistemaEditComponent
 ];

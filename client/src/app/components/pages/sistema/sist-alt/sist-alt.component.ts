@@ -1,10 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ɵConsole } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SistemaService, Sistema } from '../../../../services/sistema/sistema.service';
 import { RespFailed } from 'src/app/interfaces/api';
 
-import { SisDeleteComponent } from '../../../shared/dialog/sis-delete/sis-delete.component';
+import { SistemaToggleComponent } from '../../../shared/dialog/sistema-toggle/sistema-toggle.component';
+import { SistemaEditComponent } from '../../../shared/dialog/sistema-edit/sistema-edit.component';
 
 @Component({
   selector: 'app-sist-alt',
@@ -13,7 +14,7 @@ import { SisDeleteComponent } from '../../../shared/dialog/sis-delete/sis-delete
 })
 export class SistAltComponent implements AfterViewInit {
   dataSource: Sistema[] = [];
-  dataCols = [ 'icon', 'nombre', 'descripc', 'url', 'actions' ];
+  dataCols = [ 'icon', 'nombre', 'descripc', 'status', 'url', 'edit' ];
 
   constructor(
     private sistemaServ: SistemaService,
@@ -33,22 +34,33 @@ export class SistAltComponent implements AfterViewInit {
     }
   }
 
-  onEdit(id: number) {
+  onToggle(ref: Sistema) {
+    const dialRef = this.dialogCtrl.open(
+      SistemaToggleComponent,
+      {
+        width: '480px',
+        height: 'auto',
+        data: ref
+      }
+    );
 
+    dialRef.beforeClosed().subscribe(() => {
+      this.ngAfterViewInit();
+    });
   }
 
-  onDelete(ref: Sistema) {
-    try {
-      const dialRef = this.dialogCtrl.open(
-        SisDeleteComponent,
-        {
-          width: '320px',
-          height: '240px',
-          data: ref
-        }
-      );
-    } catch (err) {
+  onEdit(ref: Sistema) {
+    const dialRef = this.dialogCtrl.open(
+      SistemaEditComponent,
+      {
+        width: '100vw',
+        height: 'fit-content',
+        data: ref
+      }
+    );
 
-    }
+    dialRef.beforeClosed().subscribe(() => {
+      this.ngAfterViewInit();
+    });
   }
 }
