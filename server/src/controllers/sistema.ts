@@ -197,9 +197,19 @@ edit.callback = async (req, res) => {
                 details: "El sistema que se desea editar no existe, por favor ingrese un id válido."
             })
         } else {
+            // Comprobar cambio de base de datos
+            if (sist.db == "SYS_UMS" &&  sist.db != req.body.db) {
+                res.api.failed({
+                    HttpResponse: StatusCodes.cod400,
+                    details: "Sabes muy bien que cambiar la base de datos del UMS es tremenda pendejada... >:^)"
+                })
+
+                return
+            }
+
+            sist.db = req.body.db
             sist.nombre = req.body.nombre
             sist.descripc = req.body.descripc
-            sist.db = req.body.db
             sist.icon = req.body.icon
     
             if (req.body.url.match(/^https?:\/\//gi) == null) {

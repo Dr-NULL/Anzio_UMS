@@ -11,6 +11,15 @@ seedMenu.action = async (orm) => {
     const sistema = await Sistema.findOne({
         db: "SYS_UMS"
     })
+
+    //Contraseña Random
+    const menuSetup = new Menu()
+    menuSetup.url = "setup"
+    menuSetup.nombre = "Gen Random Pass"
+    menuSetup.descripc = "Establece una contraseña aleatoria nueva para el usuario System"
+    menuSetup.icono = "fas fa-brain"
+    menuSetup.sistema = sistema
+    await repo.save(menuSetup)
     
     //Crear Raíz de mantenedor de sistemas
     const menuSist = new Menu()
@@ -19,16 +28,6 @@ seedMenu.action = async (orm) => {
     menuSist.icono = "fas fa-terminal"
     menuSist.sistema = sistema
     await repo.save(menuSist)
-
-    //Agregar Sistema
-    const menuSetup = new Menu()
-    menuSetup.url = "setup"
-    menuSetup.nombre = "Setup"
-    menuSetup.descripc = "Establece una contraseña aleatoria nueva para el usuario System"
-    menuSetup.icono = "fas fa-brain"
-    menuSetup.sistema = sistema
-    menuSetup.parent = menuSist
-    await repo.save(menuSetup)
 
     //Agregar Sistema
     const menuSistAdd = new Menu()
@@ -44,7 +43,7 @@ seedMenu.action = async (orm) => {
     const menuSistAlt = new Menu()
     menuSistAlt.url = "sistema/alt"
     menuSistAlt.nombre = "Editar"
-    menuSistAlt.descripc = "Edita o elimina las referencias a proyectos ya implementados."
+    menuSistAlt.descripc = "Edita los proyectos ya implementados."
     menuSistAlt.icono = "fas fa-edit"
     menuSistAlt.sistema = sistema
     menuSistAlt.parent = menuSist

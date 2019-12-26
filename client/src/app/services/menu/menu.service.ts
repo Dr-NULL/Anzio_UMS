@@ -12,7 +12,7 @@ export class MenuService {
 
   load() {
     return this.httpServ.get<Menu[]>(
-      '/menu/domain'
+      '/menu/domain/SYS_UMS'
     );
   }
 }

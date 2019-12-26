@@ -9,7 +9,7 @@ import { orm } from "../server/.";
 
 export const getByDomain = new EndPoint()
 getByDomain.method = "get"
-getByDomain.path = "/menu/domain"
+getByDomain.path = "/menu/domain/:db_name"
 getByDomain.callback = async (req, res) => {
     try {
         if (req.session.isCreated) {
@@ -18,7 +18,7 @@ getByDomain.callback = async (req, res) => {
                 id: req.session.data.id
             })
             const sist = await Sistema.findOne({
-                where: { url: Like(req.headers.origin) }
+                where: { db: Like(req.params.db_name) }
             })
             const rela = await RelUsuarioMenu.find({
                 usuario: user
@@ -31,7 +31,7 @@ getByDomain.callback = async (req, res) => {
 
             //comprobar si existe el menú en la relación
             function exist(obj: Menu) {
-                return rela.find(y => y.menu.id == obj.id) != null
+                return rela.find(y => (y.menu.id == obj.id) && (obj.sistemaId == sist.id)) != null
             }
             
             //Cargar rutas principales
