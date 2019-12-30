@@ -8,6 +8,7 @@ const urlClient = 'http://localhost:4200';
 const opt = {
   withCredentials: true,
   headers: new HttpHeaders({
+    'Access-Control-Allow-Credentials': 'true',
     'content-type': 'application/vnd.api+json',
     'Access-Control-Allow-Origin': urlClient,
     'Set-Cookie': 'HttpOnly;Secure;SameSite=Strict'
@@ -98,27 +99,29 @@ export class HttpService {
     }
   }
 
-  private makeGenericErr(err: Error, url: string) {
-    const fail: ApiError = {
-      status: '409',
-      title: 'Conflict',
-      details: err.message,
-      stack: err.stack,
-      source: {
-        pointer: url,
-        parameter: null
-      }
-    };
+  private makeGenericErr(err: any, url: string) {
+    return err.error;
 
-    return {
-      errors: [fail],
-      meta: {
-        company: 'Frigosorno S.A.',
-        country: 'Chile',
-        authors: [
-            'Felipe Silva'
-        ]
-      }
-    } as RespFailed;
+    // const fail: ApiError = {
+    //   status: '409',
+    //   title: 'Conflict',
+    //   details: err.message,
+    //   stack: err.stack,
+    //   source: {
+    //     pointer: url,
+    //     parameter: null
+    //   }
+    // };
+
+    // return {
+    //   errors: [fail],
+    //   meta: {
+    //     company: 'Frigosorno S.A.',
+    //     country: 'Chile',
+    //     authors: [
+    //         'Felipe Silva'
+    //     ]
+    //   }
+    // } as RespFailed;
   }
 }

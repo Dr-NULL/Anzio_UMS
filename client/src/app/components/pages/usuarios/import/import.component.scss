@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-vertical-stepper {
+  .action {
+    padding-top: 0.5rem;
+
+    button {
+      margin-left: 0.5rem;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .loading {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+}

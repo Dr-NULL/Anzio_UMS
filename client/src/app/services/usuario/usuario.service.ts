@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http/http.service';
+import { toBase64 } from '../../tool/file';
+
+import { UsuarioInt } from '../../interfaces/usuario-int';
 import { Usuario } from '../../interfaces/usuario';
 
 @Injectable({
@@ -50,6 +53,29 @@ export class UsuarioService {
   logout() {
     return this.httpCtrl.get<void>(
       '/usuario/logout'
+    );
+  }
+
+  async etlUpload(file: File) {
+    const raw = await toBase64(file);
+    const name = file.name.split(/\./gi);
+
+    return this.httpCtrl.post<{
+      vinc: UsuarioInt[],
+      edit: UsuarioInt[],
+      desv: Usuario[]
+    }>(
+      '/usuario/etl/import',
+      {
+        file: raw,
+        ext: name[name.length - 1]
+      }
+    );
+  }
+
+  async etlExecute() {
+    return this.httpCtrl.get(
+      '/usuario/etl/execute'
     );
   }
 }

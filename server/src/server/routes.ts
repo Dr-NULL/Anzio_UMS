@@ -2,6 +2,7 @@ import { EndPoint } from "../tool/endpoint";
 
 // Importar Rutas aquí
 import * as Usuario from "../controllers/usuario";
+import * as UsuarioEtl from "../controllers/usuario-etl";
 import * as Area from "../controllers/area";
 import * as Cargo from "../controllers/cargo";
 import * as CSV from "../controllers/csv";
@@ -16,6 +17,8 @@ export const routes: EndPoint[] = [
     Usuario.getActive,
     Usuario.gotoSetup,
     Usuario.setSystemPass,
+    UsuarioEtl.importFile,
+    UsuarioEtl.etlExecute,
     Menu.getByDomain,
     Area.getAll,
     Area.getById,

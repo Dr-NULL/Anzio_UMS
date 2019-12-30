@@ -9,6 +9,7 @@ import { deploySession } from "./deploy-session";
 import { deployRoutes } from "./deploy-routes";
 import { deployJson } from "./deploy-json";
 import { deployCors } from "./deploy-cors";
+import { deployErrors } from "./deploy-errors";
 
 //Exportar constantes
 export const app = express()
@@ -25,6 +26,7 @@ export async function deployServer() {
     deployCors()
     deploySession()
     deployRoutes()
+    deployErrors()
 
     app.listen(Config.App.Server.port, () => {
         Log.title("Anzio UMS")

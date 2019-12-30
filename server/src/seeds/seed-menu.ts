@@ -21,6 +21,24 @@ seedMenu.action = async (orm) => {
     menuSetup.sistema = sistema
     await repo.save(menuSetup)
     
+    //Crear Raíz de Usuarios
+    const menuUser = new Menu()
+    menuUser.nombre = "Usuarios"
+    menuUser.descripc = "Contiene mantenedores de usuarios."
+    menuUser.icono = "fas fa-users-cog"
+    menuUser.sistema = sistema
+    await repo.save(menuUser)
+
+    //ETL de Usuarios
+    const menuUserEtl = new Menu()
+    menuUserEtl.url = "usuarios/import"
+    menuUserEtl.nombre = "Importar desde CSV"
+    menuUserEtl.descripc = "Realiza una migración de datos desde un archivo CSV."
+    menuUserEtl.icono = "fas fa-file-import"
+    menuUserEtl.sistema = sistema
+    menuUserEtl.parent = menuUser
+    await repo.save(menuUserEtl)
+    
     //Crear Raíz de mantenedor de sistemas
     const menuSist = new Menu()
     menuSist.nombre = "Sistema"

@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class CreateDB1577201095392 implements MigrationInterface {
-    name = 'CreateDB1577201095392'
+export class NewDB1577392526636 implements MigrationInterface {
+    name = 'NewDB1577392526636'
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query(`CREATE TABLE "Area" ("id" int NOT NULL IDENTITY(1,1), "descripc" varchar(50) NOT NULL, CONSTRAINT "PK_341ae1b6d91d85710f16035b885" PRIMARY KEY ("id"))`, undefined);
@@ -13,6 +13,7 @@ export class CreateDB1577201095392 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "Sexo" ("id" int NOT NULL IDENTITY(1,1), "cod" varchar(1) NOT NULL, "descripc" varchar(20) NOT NULL, CONSTRAINT "PK_3fd2ddb3927f7fe489558616b1d" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE TABLE "Usuario" ("id" int NOT NULL IDENTITY(1,1), "nick" varchar(15), "pass" varchar(512), "token" varchar(512), "email" varchar(100), "isActive" bit NOT NULL CONSTRAINT "DF_24c7df5582a4e4b2d3b200c6e4d" DEFAULT 0, "isSystem" bit NOT NULL CONSTRAINT "DF_e665656f264b6e485f73a1529b2" DEFAULT 0, "isAdmin" bit NOT NULL CONSTRAINT "DF_f807cced337595af8a9e8807fce" DEFAULT 0, "rut" varchar(12) NOT NULL, "nombres" varchar(100) NOT NULL, "apellidoP" varchar(100) NOT NULL, "apellidoM" varchar(100) NOT NULL, "fechaNacim" date NOT NULL, "fechaInserc" date CONSTRAINT "DF_a702dda5433280f0fea0b506e43" DEFAULT GETDATE(), "fechaElimin" date, "fechaActivac" date, "fechaDesact" date, "sexoId" int, "areaId" int, "cargoId" int, CONSTRAINT "PK_925c3fc5494373e254405c000eb" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`CREATE TABLE "RelUsuarioMenu" ("id" int NOT NULL IDENTITY(1,1), "fechaCreac" date NOT NULL CONSTRAINT "DF_42ce0f8ce0d5c64eabf2a105126" DEFAULT GETDATE(), "usuarioId" int, "menuId" int, CONSTRAINT "PK_6980f10351c3f42c7736a87e633" PRIMARY KEY ("id"))`, undefined);
+        await queryRunner.query(`CREATE TABLE "iUsuario" ("id" int NOT NULL IDENTITY(1,1), "rut" varchar(100), "nombres" varchar(100), "apellidoP" varchar(100), "apellidoM" varchar(100), "area" varchar(100), "cargo" varchar(100), "sexo" varchar(100), "fechaNacim" varchar(100), "rutJefe" varchar(100), "email" varchar(100), CONSTRAINT "PK_50520e143164423141553867558" PRIMARY KEY ("id"))`, undefined);
         await queryRunner.query(`ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4c5fa3bc158c089f076ec35d08" FOREIGN KEY ("parentId") REFERENCES "Menu"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "Menu" ADD CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0" FOREIGN KEY ("sistemaId") REFERENCES "Sistema"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
         await queryRunner.query(`ALTER TABLE "Menu" ADD CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0" FOREIGN KEY ("perfilId") REFERENCES "Perfil"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`, undefined);
@@ -32,6 +33,7 @@ export class CreateDB1577201095392 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "Menu" DROP CONSTRAINT "FK_02d7ea9adc75f9231dd3d0139f0"`, undefined);
         await queryRunner.query(`ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4e354780bbbd1079644db6bdb0"`, undefined);
         await queryRunner.query(`ALTER TABLE "Menu" DROP CONSTRAINT "FK_c4c5fa3bc158c089f076ec35d08"`, undefined);
+        await queryRunner.query(`DROP TABLE "iUsuario"`, undefined);
         await queryRunner.query(`DROP TABLE "RelUsuarioMenu"`, undefined);
         await queryRunner.query(`DROP TABLE "Usuario"`, undefined);
         await queryRunner.query(`DROP TABLE "Sexo"`, undefined);

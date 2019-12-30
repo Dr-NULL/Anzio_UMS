@@ -40,8 +40,19 @@ export class AppComponent implements OnInit {
       try {
         // Comprobar usuario System
         const data = await this.usuarioServ.getActive();
-        if (data.data.length === 0) {
+        if (
+          (data.data.length === 0) &&
+          (location.pathname !== '/setup')
+        ) {
+          this.dataSource.data = [];
+          this.isLogged = false;
           this.routerCtrl.navigate(['/setup']);
+          return;
+        } else if (
+          (data.data.length === 0) &&
+          (location.pathname === '/setup')
+        ) {
+          return;
         }
 
         // Comprobar Permisos

@@ -377,13 +377,14 @@ export class Api {
             })
         }
 
+        this.res.status(parseInt(arrFail[arrFail.length - 1].status))
         this.res.send({
             errors: arrFail,
             meta: this.meta
         })
     }
 
-    public catch(fail: Error) {
+    public catch(fail: any) {
         // Configurar errores
         this.res.contentType("application/vnd.api+json")
         
@@ -395,11 +396,17 @@ export class Api {
             param = this.req.body
         }
 
+        // Get message
+        let msg = fail.message
+        if (msg == null) {
+            msg = fail
+        }
+
         this.res.send({
             errors: [{
                 status: StatusCodes.cod500.status,
                 title: StatusCodes.cod500.title,
-                details: fail.message,
+                details: msg,
                 stack: fail.stack,
                 source: {
                     pointer: this.req.originalUrl,
